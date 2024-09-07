@@ -1,9 +1,12 @@
 import pluginJs from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
+import stylisticPluginJSX from "@stylistic/eslint-plugin-jsx";
 import vitest from "@vitest/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import neverthrow from "eslint-plugin-neverthrow";
 import pluginReact from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 import unusedImportsPlugin from "eslint-plugin-unused-imports";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -33,17 +36,25 @@ export default [
       },
     },
     plugins: {
+      "react": pluginReact,
+      "react-hooks": reactHooksPlugin,
       "@stylistic": stylistic,
       "import": importPlugin,
       "unused-imports": unusedImportsPlugin,
       neverthrow,
       vitest,
+      "@stylistic/jsx": stylisticPluginJSX,
+      "jsx-a11y": jsxA11yPlugin,
+
     },
     rules: {
       ...tseslint.configs.eslintRecommended.rules,
       ...tseslint.configs.strict.rules,
       ...tseslint.configs.strictTypeChecked.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
       ...stylistic.configs["recommended-flat"].rules,
+      ...stylisticPluginJSX.configs["all-flat"].rules,
+      ...jsxA11yPlugin.configs.recommended.rules,
       ...importPlugin.configs.rules,
       ...vitest.configs.recommended.rules,
       "@stylistic/indent": ["error", 2],
@@ -97,6 +108,13 @@ export default [
         },
       ],
       "unused-imports/no-unused-imports": "error",
+      "@stylistic/jsx/jsx-one-expression-per-line": [
+        "error",
+        { allow: "single-child" },
+      ],
+      "@stylistic/jsx/jsx-newline": ["error", { prevent: true }],
+      "@stylistic/jsx/jsx-indent": ["error", 2],
+      "@stylistic/jsx/jsx-indent-props": ["error", 2],
     },
   },
 ];
