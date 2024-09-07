@@ -1,6 +1,7 @@
 import pluginJs from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
+import neverthrow from "eslint-plugin-neverthrow";
 import pluginReact from "eslint-plugin-react";
 import unusedImportsPlugin from "eslint-plugin-unused-imports";
 import globals from "globals";
@@ -9,6 +10,8 @@ import tseslint from "typescript-eslint";
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  { ignores: ["dist", "node_modules"],
+  },
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     ...pluginReact.configs.flat.recommended,
@@ -33,6 +36,7 @@ export default [
       "@stylistic": stylistic,
       "import": importPlugin,
       "unused-imports": unusedImportsPlugin,
+      "neverthrow": neverthrow,
     },
     rules: {
       ...tseslint.configs.eslintRecommended.rules,
