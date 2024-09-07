@@ -1,5 +1,6 @@
 import pluginJs from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
+import vitest from "@vitest/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
 import neverthrow from "eslint-plugin-neverthrow";
 import pluginReact from "eslint-plugin-react";
@@ -10,7 +11,7 @@ import tseslint from "typescript-eslint";
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  { ignores: ["dist", "node_modules"] },
+  { ignores: ["dist", "src/gql/graphql.ts"] },
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     ...pluginReact.configs.flat.recommended,
@@ -35,7 +36,8 @@ export default [
       "@stylistic": stylistic,
       "import": importPlugin,
       "unused-imports": unusedImportsPlugin,
-      "neverthrow": neverthrow,
+      neverthrow,
+      vitest,
     },
     rules: {
       ...tseslint.configs.eslintRecommended.rules,
@@ -43,6 +45,7 @@ export default [
       ...tseslint.configs.strictTypeChecked.rules,
       ...stylistic.configs["recommended-flat"].rules,
       ...importPlugin.configs.rules,
+      ...vitest.configs.recommended.rules,
       "@stylistic/indent": ["error", 2],
       "@stylistic/quotes": [
         "error",
