@@ -10,8 +10,7 @@ import tseslint from "typescript-eslint";
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  { ignores: ["dist", "node_modules"],
-  },
+  { ignores: ["dist", "node_modules"] },
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     ...pluginReact.configs.flat.recommended,
