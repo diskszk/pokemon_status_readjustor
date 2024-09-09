@@ -1,13 +1,8 @@
 import { type Result, ok, err } from "neverthrow";
 
 import { API_ENDPOINT } from "@/constants";
-import type { Query_Root } from "@/gql/graphql";
 
-type ReturnType = {
-  data: Query_Root;
-};
-
-export async function queryPokeAPI(query: string): Promise<Result<Query_Root, Error>> {
+export async function queryPokeAPI<T>(query: string): Promise<Result<T, Error>> {
   const response = await fetch(API_ENDPOINT, {
     method: "POST",
     headers: {
@@ -18,7 +13,8 @@ export async function queryPokeAPI(query: string): Promise<Result<Query_Root, Er
   });
 
   if (response.ok) {
-    const { data } = await response.json() as ReturnType;
+    const data = await response.json() as T;
+
     return ok(data);
   }
   else {
