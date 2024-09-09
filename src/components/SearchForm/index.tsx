@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  VisuallyHiddenInput,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
@@ -79,10 +80,9 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
               <InputRightElement pointerEvents="none">
                 <SearchIcon color="gray.300" />
               </InputRightElement>
-              <input
+              <VisuallyHiddenInput
                 name="pokemon-en"
                 ref={pokemonEnInputRef}
-                type="hidden"
               />
             </InputGroup>
             <datalist

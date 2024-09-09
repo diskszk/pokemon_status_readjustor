@@ -1,6 +1,5 @@
 import type { PokemonNameChart } from "@/types";
-
-import { hiraganaToKana } from "../utils";
+import { hiraganaToKana } from "@/utils";
 
 export function suggestPokemonName(input: string, pokemonNameChart: PokemonNameChart[]): PokemonNameChart[] {
   if (!input) {
