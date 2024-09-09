@@ -1,10 +1,12 @@
 import type { PokemonNameChart } from "@/types";
 
-import { hiraToKana } from "../utils";
+import { hiraganaToKana } from "../utils";
 
-export function suggeestPokemonName(input: string, pokemonNameChart: PokemonNameChart[]): PokemonNameChart[] {
-  const inputKana = hiraToKana(input);
-
+export function suggestPokemonName(input: string, pokemonNameChart: PokemonNameChart[]): PokemonNameChart[] {
+  if (!input) {
+    return [];
+  }
+  const inputKana = hiraganaToKana(input);
   return pokemonNameChart.filter((val) => {
     if (val.ja.startsWith(inputKana)) {
       return val;

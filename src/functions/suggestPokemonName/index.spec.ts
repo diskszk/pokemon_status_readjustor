@@ -1,15 +1,14 @@
 import { expect, test } from "vitest";
 
+import { mockPokemons } from "@/mock/pokemons";
 import type { PokemonNameChart } from "@/types";
 
-import pokemonNameChartJson from "./pokemon.test.json";
-
-import { suggeestPokemonName } from ".";
+import { suggestPokemonName } from ".";
 
 test("「やど」の入力を受け取ると、「ヤドン、ヤドラン、ヤドキング」それぞれの英和名両方を返す", () => {
-  const pokemonNameChart: PokemonNameChart[] = pokemonNameChartJson;
+  const pokemonNameChart: PokemonNameChart[] = mockPokemons;
 
-  const searchResult = suggeestPokemonName("やど", pokemonNameChart);
+  const searchResult = suggestPokemonName("やど", pokemonNameChart);
 
   expect(searchResult).toEqual([
     { en: "slowpoke", ja: "ヤドン" },

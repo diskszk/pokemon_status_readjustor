@@ -1,16 +1,22 @@
 /// <reference types="vitest" />
 
-import react from "@vitejs/plugin-react";
+import { cwd } from "node:process";
+
+import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: [
-      { find: "@", replacement: "/src" },
-    ],
-  },
+  plugins: [
+    react({
+      jsxImportSource: "@emotion/react",
+      plugins: [["@swc/plugin-emotion", {}]],
+    }),
+    tsconfigPaths({
+      root: cwd(),
+    }),
+  ],
   test: {
     includeSource: ["src/**/*.{js,ts}"],
     globals: true,
