@@ -1,4 +1,4 @@
-import { Center, Flex, Heading, HStack, Image } from "@chakra-ui/react";
+import { Center, Flex, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
 import { useCallback, useMemo, type FormEvent } from "react";
 
 import { ResultTable, SearchForm, StatusTable } from "@/components";
@@ -27,6 +27,7 @@ export function App() {
       backgroundColor="gray.50"
       direction="column"
       gap="16px"
+      minHeight="100vh"
     >
       <Center border="1px">
         <Heading>ポケモンステータス調整</Heading>
@@ -52,6 +53,7 @@ export function App() {
         <StatusTable />
       </HStack>
       <ResultTable />
+      <Spacer />
     </Flex>
   );
 }

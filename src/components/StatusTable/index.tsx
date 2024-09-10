@@ -21,45 +21,46 @@ export function StatusTable() {
         pt="12px"
         textAlign="center"
       >
-        <Heading
-          as="h3"
-          size="sm"
-        >
-          header
-        </Heading>
+        <HStack alignItems="center">
+          <Heading
+            as="h3"
+            size="sm"
+          >
+            header
+          </Heading>
+          <FormControl>
+            <HStack>
+              <FormLabel m="0 2px">
+                レベル
+              </FormLabel>
+              <NumberInput
+                aria-label="レベル"
+                defaultValue={50}
+                max={100}
+                min={1}
+                size="sm"
+                variant="flushed"
+                width="60px"
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </HStack>
+          </FormControl>
+          <Button
+            aria-label="リセット"
+            size="xs"
+          >
+            リセット
+          </Button>
+        </HStack>
       </CardHeader>
       <CardBody py="8px">
         <VStack>
-          <HStack alignItems="center">
-            <FormControl>
-              <HStack>
-                <FormLabel m="0 2px">
-                  レベル
-                </FormLabel>
-                <NumberInput
-                  aria-label="レベル"
-                  defaultValue={50}
-                  max={100}
-                  min={1}
-                  size="sm"
-                  variant="flushed"
-                  width="60px"
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </HStack>
-            </FormControl>
-            <Button
-              aria-label="リセット"
-              size="xs"
-            >
-              リセット
-            </Button>
-          </HStack>
+
           <TableContainer>
             <Table
               size="sm"

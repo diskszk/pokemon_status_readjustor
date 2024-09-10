@@ -68,6 +68,7 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
             <InputGroup>
               <Input
                 autoComplete="off"
+                borderColor="blue.200"
                 css={inputCss}
                 list="suggested-list"
                 name="pokemon-ja"
