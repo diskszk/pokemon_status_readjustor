@@ -1,5 +1,5 @@
 import { MinusIcon, SmallAddIcon } from "@chakra-ui/icons";
-import { Button, HStack, IconButton, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tbody, Td, Th, Tr } from "@chakra-ui/react";
+import { Button, IconButton, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tbody, Td, Th, Tr, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
 import { toJaStatusSpecies } from "@/utils";
@@ -9,9 +9,10 @@ type Props = {
   value: number;
 };
 
+const INPUT_GROUP_WIDTH = "152px";
 const TABLE_WIDTH = "100px";
 
-export function TableBody({ name, value }: Props) {
+export function TableBody({ name }: Props) {
   const [effort, setEffort] = useState(0);
   const [individual, setIndividual] = useState(31);
 
@@ -37,7 +38,7 @@ export function TableBody({ name, value }: Props) {
           </NumberInput>
         </Td>
         <Td>
-          <InputGroup width="160px">
+          <InputGroup width={INPUT_GROUP_WIDTH}>
             <NumberInput
               aria-label="努力値"
               defaultValue={0}
@@ -55,28 +56,32 @@ export function TableBody({ name, value }: Props) {
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            <InputRightElement gap="4px">
-              <Button
-                aria-label="努力値を最大"
-                height="24px"
-                onClick={() => setEffort(252)}
-                size="sm"
-              >
-                252
-              </Button>
-              <Button
-                aria-label="努力値を0"
-                height="24px"
-                onClick={() => setEffort(0)}
-                size="sm"
-              >
-                0
-              </Button>
+            <InputRightElement>
+              <VStack gap="4px">
+                <Button
+                  aria-label="努力値を最大"
+                  height="16px"
+                  onClick={() => setEffort(252)}
+                  size="xs"
+                  width="44px"
+                >
+                  MAX
+                </Button>
+                <Button
+                  aria-label="努力値を0"
+                  height="16px"
+                  onClick={() => setEffort(0)}
+                  size="xs"
+                  width="44px"
+                >
+                  MIN
+                </Button>
+              </VStack>
             </InputRightElement>
           </InputGroup>
         </Td>
         <Td>
-          <InputGroup width="160px">
+          <InputGroup width={INPUT_GROUP_WIDTH}>
             <NumberInput
               aria-label="個体値"
               defaultValue={31}
@@ -94,54 +99,50 @@ export function TableBody({ name, value }: Props) {
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            <InputRightElement gap="4px">
-              <Button
-                aria-label="個体値を最高"
-                height="24px"
-                onClick={() => setIndividual(31)}
-                size="sm"
-              >
-                31
-              </Button>
-              <Button
-                aria-label="個体値を0"
-                height="24px"
-                onClick={() => setIndividual(0)}
-                size="sm"
-              >
-                0
-              </Button>
+            <InputRightElement>
+              <VStack gap="4px">
+                <Button
+                  aria-label="個体値を最高"
+                  height="16px"
+                  onClick={() => setIndividual(31)}
+                  size="xs"
+                  width="44px"
+                >
+                  MAX
+                </Button>
+                <Button
+                  aria-label="個体値を0"
+                  height="16px"
+                  onClick={() => setIndividual(0)}
+                  size="xs"
+                  width="44px"
+                >
+                  MIN
+                </Button>
+              </VStack>
             </InputRightElement>
           </InputGroup>
         </Td>
-        <Td
-          aria-label="種族値"
-          isNumeric
-        >
-          {value}
-        </Td>
         <Td>
           {jaSpacesName !== "HP" && (
-            <HStack gap="4px">
+            <VStack gap="4px">
               <IconButton
-                aria-label="性格をプラス補正"
+                aria-label="上方補正"
                 colorScheme="blue"
-                height="24px"
+                height="16px"
                 icon={<SmallAddIcon />}
-                onClick={() => void 0}
-                size="sm"
+                size="xs"
                 variant="outline"
               />
               <IconButton
-                aria-label="性格をマイナス補正"
+                aria-label="上方補正"
                 colorScheme="pink"
-                height="24px"
+                height="16px"
                 icon={<MinusIcon />}
-                onClick={() => void 0}
-                size="sm"
+                size="xs"
                 variant="outline"
               />
-            </HStack>
+            </VStack>
           )}
         </Td>
       </Tr>

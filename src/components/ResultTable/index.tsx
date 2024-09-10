@@ -4,13 +4,20 @@ import { TableBody } from "./TableBody";
 
 export function ResultTable() {
   return (
-    <Card>
-      <CardHeader textAlign="center">
-        <Heading size="sm">
+    <Card minWidth="66%">
+      <CardHeader
+        pb="8px"
+        pt="12px"
+        textAlign="center"
+      >
+        <Heading
+          as="h2"
+          size="sm"
+        >
           使用するアイテム
         </Heading>
       </CardHeader>
-      <CardBody>
+      <CardBody py="8px">
         <TableContainer>
           <Table
             size="sm"
@@ -68,6 +75,11 @@ export function ResultTable() {
               </Tr>
               <Tr />
             </Thead>
+            <TableBody />
+            <TableBody />
+            <TableBody />
+            <TableBody />
+            <TableBody />
             <TableBody />
           </Table>
         </TableContainer>

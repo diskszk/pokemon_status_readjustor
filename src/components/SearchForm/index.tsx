@@ -2,7 +2,6 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Flex,
   FormControl,
-  FormLabel,
   Input,
   InputGroup,
   InputRightElement,
@@ -65,7 +64,6 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
     <Flex>
       <form onSubmit={handleSubmit}>
         <FormControl>
-          <FormLabel pl="8px">ポケモンを検索</FormLabel>
           <Flex>
             <InputGroup>
               <Input
