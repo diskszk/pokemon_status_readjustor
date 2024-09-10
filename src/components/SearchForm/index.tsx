@@ -2,10 +2,10 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Flex,
   FormControl,
-  FormLabel,
   Input,
   InputGroup,
   InputRightElement,
+  VisuallyHiddenInput,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
@@ -64,11 +64,11 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
     <Flex>
       <form onSubmit={handleSubmit}>
         <FormControl>
-          <FormLabel pl="8px">ポケモンを検索</FormLabel>
           <Flex>
             <InputGroup>
               <Input
                 autoComplete="off"
+                borderColor="blue.200"
                 css={inputCss}
                 list="suggested-list"
                 name="pokemon-ja"
@@ -79,10 +79,9 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
               <InputRightElement pointerEvents="none">
                 <SearchIcon color="gray.300" />
               </InputRightElement>
-              <input
+              <VisuallyHiddenInput
                 name="pokemon-en"
                 ref={pokemonEnInputRef}
-                type="hidden"
               />
             </InputGroup>
             <datalist
