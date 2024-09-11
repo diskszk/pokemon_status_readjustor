@@ -2,22 +2,36 @@ import { MinusIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { Button, IconButton, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tbody, Td, Th, Tr, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
+import { HP } from "@/constants";
+import { calcActualValue, calcHPActualValue } from "@/functions";
+import type { StatusSpeciesEN } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
 type Props = {
-  name: string;
-  value: number;
+  level: number;
+  pokemonName: string;
+  speciesName: StatusSpeciesEN;
+  baseStat: number;
 };
 
 const INPUT_GROUP_WIDTH = "152px";
 const TABLE_WIDTH = "100px";
 
-export function TableBody({ name }: Props) {
+export function TableBody({ speciesName, baseStat, level, pokemonName }: Props) {
   const [effort, setEffort] = useState(0);
   const [individual, setIndividual] = useState(31);
 
-  const jaSpacesName = toJaStatusSpecies(name);
+  const natureCorrection = 1;
 
+  const actualValue = speciesName === HP
+    ? calcHPActualValue({
+      baseStat, individual, effort, level, pokemonName,
+    })
+    : calcActualValue({
+      baseStat, individual, effort, level, natureCorrection,
+    });
+
+  const jaSpacesName = toJaStatusSpecies(speciesName);
   return (
     <Tbody>
       <Tr>
@@ -25,8 +39,8 @@ export function TableBody({ name }: Props) {
         <Td>
           <NumberInput
             aria-label="実数値"
-            defaultValue={100}
-            min={1} // calc
+            defaultValue={actualValue}
+            min={1}
             variant="flushed"
             width={TABLE_WIDTH}
           >
