@@ -1,4 +1,4 @@
-import { Center, Flex, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
+import { Center, Flex, Grid, GridItem, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
 import { useCallback, useMemo, type FormEvent } from "react";
 
 import { ResultTable, SearchForm, StatusTable } from "@/components";
@@ -46,13 +46,21 @@ export function App() {
           src={imageSrc}
         />
       </HStack>
-      <HStack
-        spacing="32px"
+      <Grid
+        gap="32px"
+        templateColumns="repeat(2, 1fr)"
+        templateRows="auto, 1fr"
       >
-        <StatusTable />
-        <StatusTable />
-      </HStack>
-      <ResultTable />
+        <GridItem>
+          <StatusTable />
+        </GridItem>
+        <GridItem>
+          <StatusTable />
+        </GridItem>
+        <GridItem gridColumn="span 2">
+          <ResultTable />
+        </GridItem>
+      </Grid>
       <Spacer />
     </Flex>
   );
