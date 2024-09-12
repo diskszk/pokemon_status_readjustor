@@ -2,7 +2,7 @@ import { Center, Flex, Grid, GridItem, Heading, HStack, Image, Spacer } from "@c
 import { useCallback, useMemo, type FormEvent } from "react";
 
 import { ResultTable, SearchForm, StatusTable } from "@/components";
-import { mockPokemons } from "@/mock/pokemons";
+import { garchomp, mockPokemons } from "@/mock/pokemons";
 
 import pokemonsJson from "../pokemon.json";
 
@@ -52,10 +52,10 @@ export function App() {
         templateRows="auto, 1fr"
       >
         <GridItem>
-          <StatusTable />
+          <StatusTable pokemon={garchomp} />
         </GridItem>
         <GridItem>
-          <StatusTable />
+          <StatusTable pokemon={garchomp} />
         </GridItem>
         <GridItem gridColumn="span 2">
           <ResultTable />

@@ -1,23 +1,68 @@
-import { Tr, Th, Tbody, Td } from "@chakra-ui/react";
-import { css } from "@emotion/react";
+import { Tr, Th, Tbody, Td, Text } from "@chakra-ui/react";
 
-export function TableBody() {
+import { items } from "@/constants";
+import { getItemAmount } from "@/functions/getItemAmount";
+import type { StatusSpeciesEN } from "@/types";
+import { toJaStatusSpecies } from "@/utils";
+
+type Props = {
+  speciesName: StatusSpeciesEN;
+  diffAmount: number;
+};
+
+export function TableBody({ speciesName, diffAmount }: Props) {
+  const item = items.find(({ type }) => speciesName === type);
+
+  const { largeIncrease, smallIncrease, decrease } = getItemAmount(diffAmount);
+
   return (
     <Tbody>
-      <Tr css={css(`
-       th, td {
-          padding-top: 8px;
-          padding-bottom: 8px;
-        }
-      `)}
-      >
-        <Th>HP</Th>
-        <Td>+ 200</Td>
-        <Td>
-          マックスアップ / 2
+      <Tr>
+        <Th py="8px">{toJaStatusSpecies(speciesName)}</Th>
+        <Td py="8px">
+          <Text align="right">
+            {diffAmount}
+          </Text>
         </Td>
-        <Td>{}</Td>
-        <Td>{}</Td>
+        <Td py="8px">
+          {largeIncrease ? (
+            <Text align="right">
+              {item?.largeIncrease}
+              {" / "}
+              {largeIncrease}
+            </Text>
+          ) : (
+            <Text align="right">
+              0
+            </Text>
+          )}
+        </Td>
+        <Td py="8px">
+          {smallIncrease ? (
+            <Text align="right">
+              {item?.smallIncrease}
+              {" / "}
+              {smallIncrease}
+            </Text>
+          ) : (
+            <Text align="right">
+              0
+            </Text>
+          )}
+        </Td>
+        <Td py="8px">
+          {decrease ? (
+            <Text align="right">
+              {item?.decrease}
+              {" / "}
+              {decrease}
+            </Text>
+          ) : (
+            <Text align="right">
+              0
+            </Text>
+          )}
+        </Td>
       </Tr>
     </Tbody>
   );

@@ -1,30 +1,28 @@
-import type { STATUS_SPECIES } from "@/constants/term";
-import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/constants/term";
+import { ATK_JA, DEF_JA, HP_JA, SP_ATK_JA, SP_DEF_JA, SPD_JA } from "@/constants/term";
+import type { StatusSpeciesEN, StatusSpeciesJA } from "@/types";
 
-type ReturnType = typeof STATUS_SPECIES[number] | "";
-
-export function toJaStatusSpecies(str: string): ReturnType {
+export function toJaStatusSpecies(str: StatusSpeciesEN): StatusSpeciesJA {
   switch (str.toLowerCase()) {
     case "hp": {
-      return HP;
+      return HP_JA;
     }
     case "attack": {
-      return ATK;
+      return ATK_JA;
     }
     case "defense": {
-      return DEF;
+      return DEF_JA;
     }
     case "special-attack": {
-      return SP_ATK;
+      return SP_ATK_JA;
     }
     case "special-defense": {
-      return SP_DEF;
+      return SP_DEF_JA;
     }
     case "speed": {
-      return SPD;
+      return SPD_JA;
     }
     default: {
-      return "";
+      throw new Error("Invalid Value");
     }
   }
 }

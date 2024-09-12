@@ -115,6 +115,7 @@ export default [
       "@stylistic/jsx/jsx-newline": ["error", { prevent: true }],
       "@stylistic/jsx/jsx-indent": ["error", 2],
       "@stylistic/jsx/jsx-indent-props": ["error", 2],
+      "@stylistic/multiline-ternary": ["error", "never"],
     },
   },
 ];

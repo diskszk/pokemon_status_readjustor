@@ -1,19 +1,17 @@
 import { Button, Card, CardBody, CardHeader, FormControl, FormLabel, Heading, HStack, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Table, TableContainer, Th, Thead, Tr, VStack } from "@chakra-ui/react";
+import { useState } from "react";
+
+import type { Pokemon } from "@/types";
 
 import { TableBody } from "./TableBody";
 
-const garchomp = {
-  baseStats: [
-    { value: 108, name: "hp" },
-    { value: 130, name: "attack" },
-    { value: 95, name: "defense" },
-    { value: 80, name: "special-attack" },
-    { value: 85, name: "special-defense" },
-    { value: 102, name: "speed" },
-  ],
+type Props = {
+  pokemon: Pokemon;
 };
 
-export function StatusTable() {
+export function StatusTable({ pokemon }: Props) {
+  const [level, setLevel] = useState(50);
+
   return (
     <Card borderRadius="lg">
       <CardHeader
@@ -35,10 +33,11 @@ export function StatusTable() {
               </FormLabel>
               <NumberInput
                 aria-label="レベル"
-                defaultValue={50}
                 max={100}
                 min={1}
+                onChange={(value) => setLevel(Number(value))}
                 size="sm"
+                value={level}
                 variant="flushed"
                 width="60px"
               >
@@ -60,7 +59,6 @@ export function StatusTable() {
       </CardHeader>
       <CardBody py="8px">
         <VStack>
-
           <TableContainer>
             <Table
               size="sm"
@@ -76,10 +74,13 @@ export function StatusTable() {
                 </Tr>
                 <Tr />
               </Thead>
-              {garchomp.baseStats.map((stat, key) => (
+              {pokemon.baseStats.map((p, key) => (
                 <TableBody
-                  {...stat}
+                  baseStat={p.value}
                   key={key}
+                  level={level}
+                  pokemonName={pokemon.name}
+                  speciesName={p.name}
                 />
               ))}
             </Table>

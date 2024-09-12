@@ -1,4 +1,4 @@
-import type { PokemonNameChart } from "@/types";
+import type { Pokemon, PokemonNameChart } from "@/types";
 
 export const mockPokemons = [
   {
@@ -38,3 +38,15 @@ export const mockPokemons = [
     ja: "ヤドキング",
   },
 ] satisfies PokemonNameChart[];
+
+export const garchomp = {
+  name: "garchomp",
+  baseStats: [
+    { value: 108, name: "hp" },
+    { value: 130, name: "attack" },
+    { value: 95, name: "defense" },
+    { value: 80, name: "special-attack" },
+    { value: 85, name: "special-defense" },
+    { value: 102, name: "speed" },
+  ],
+} satisfies Pokemon;
