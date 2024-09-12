@@ -1,5 +1,5 @@
 import { Center, Flex, Grid, GridItem, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
-import { useCallback, useMemo, type FormEvent } from "react";
+import { useCallback, useMemo, useState, type FormEvent } from "react";
 
 import { ResultTable, SearchForm, StatusTable } from "@/components";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
@@ -9,6 +9,8 @@ import pokemonsJson from "../pokemon.json";
 const imageSrc = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png";
 
 export function App() {
+  const [pokemon] = useState(garchomp);
+
   const pokemons = useMemo(() => import.meta.env.MODE === "production" ? pokemonsJson : mockPokemons, []);
 
   const onSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
@@ -52,10 +54,16 @@ export function App() {
         templateRows="auto, 1fr"
       >
         <GridItem>
-          <StatusTable pokemon={garchomp} />
+          <StatusTable
+            pokemon={pokemon}
+            type="current"
+          />
         </GridItem>
         <GridItem>
-          <StatusTable pokemon={garchomp} />
+          <StatusTable
+            pokemon={pokemon}
+            type="readjusted"
+          />
         </GridItem>
         <GridItem gridColumn="span 2">
           <ResultTable />

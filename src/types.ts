@@ -17,3 +17,8 @@ export type Pokemon = {
   name: string;
   baseStats: BaseStat[];
 };
+
+export type EffortValueState = {
+  type: StatusSpeciesEN;
+  value: number;
+};

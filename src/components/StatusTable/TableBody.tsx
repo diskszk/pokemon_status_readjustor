@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { HP } from "@/constants";
 import { calcActualValue, calcHPActualValue } from "@/functions";
+import { useAdjustedEffortValue, useCurrentEffortValue } from "@/hooks";
 import type { StatusSpeciesEN } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
@@ -12,28 +13,39 @@ type Props = {
   pokemonName: string;
   speciesName: StatusSpeciesEN;
   baseStat: number;
+  type: "current" | "readjusted";
 };
 
 const INPUT_GROUP_WIDTH = "152px";
 const TABLE_WIDTH = "100px";
 
-export function TableBody({ speciesName, baseStat, level, pokemonName }: Props) {
-  const [effort, setEffort] = useState(0);
+const MAX_EFFORT_VALUE = 252;
+const MAX_TOTAL_EFFORT_VALUE = 510;
+
+export function TableBody({ speciesName, baseStat, level, pokemonName, type }: Props) {
   const [individual, setIndividual] = useState(31);
+  const hooks = type === "current" ? useCurrentEffortValue : useAdjustedEffortValue;
+
+  const { setEffortValue, totalEffortValue, allEffortValue } = hooks();
+
+  const effortValue = allEffortValue.find((v) => v.type === speciesName);
+
+  if (!effortValue) {
+    throw new Error();
+  }
 
   const natureCorrection = 1;
 
   const actualValue = speciesName === HP ? calcHPActualValue({
-    baseStat, individual, effort, level, pokemonName,
+    baseStat, individual, effort: effortValue.value, level, pokemonName,
   }) : calcActualValue({
-    baseStat, individual, effort, level, natureCorrection,
+    baseStat, individual, effort: effortValue.value, level, natureCorrection,
   });
 
-  const jaSpacesName = toJaStatusSpecies(speciesName);
   return (
     <Tbody>
       <Tr>
-        <Th>{jaSpacesName}</Th>
+        <Th>{toJaStatusSpecies(speciesName)}</Th>
         <Td>
           <NumberInput
             aria-label="実数値"
@@ -54,11 +66,12 @@ export function TableBody({ speciesName, baseStat, level, pokemonName }: Props) 
             <NumberInput
               aria-label="努力値"
               defaultValue={0}
-              max={252}
+              isInvalid={totalEffortValue > MAX_TOTAL_EFFORT_VALUE}
+              max={MAX_EFFORT_VALUE}
               min={0}
-              onChange={(value) => setEffort(Number(value))}
-              step={effort === 0 ? 4 : 8}
-              value={effort}
+              onChange={(value) => setEffortValue({ type: speciesName, value: Number(value) })}
+              step={4}
+              value={effortValue.value}
               variant="flushed"
               width={TABLE_WIDTH}
             >
@@ -73,7 +86,10 @@ export function TableBody({ speciesName, baseStat, level, pokemonName }: Props) 
                 <Button
                   aria-label="努力値を最大"
                   height="16px"
-                  onClick={() => setEffort(252)}
+                  onClick={() => setEffortValue({
+                    ...effortValue,
+                    value: MAX_EFFORT_VALUE,
+                  })}
                   size="xs"
                   width="44px"
                 >
@@ -82,7 +98,10 @@ export function TableBody({ speciesName, baseStat, level, pokemonName }: Props) 
                 <Button
                   aria-label="努力値を0"
                   height="16px"
-                  onClick={() => setEffort(0)}
+                  onClick={() => setEffortValue({
+                    ...effortValue,
+                    value: 0,
+                  })}
                   size="xs"
                   width="44px"
                 >
@@ -136,7 +155,7 @@ export function TableBody({ speciesName, baseStat, level, pokemonName }: Props) 
           </InputGroup>
         </Td>
         <Td>
-          {jaSpacesName !== "HP" && (
+          {speciesName !== HP && (
             <VStack gap="4px">
               <IconButton
                 aria-label="上方補正"
