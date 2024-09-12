@@ -1,16 +1,29 @@
 import { Button, Card, CardBody, CardHeader, FormControl, FormLabel, Heading, HStack, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Table, TableContainer, Th, Thead, Tr, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
+import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/constants";
+import { useAdjustedEffortValue, useCurrentEffortValue } from "@/hooks";
 import type { Pokemon } from "@/types";
 
 import { TableBody } from "./TableBody";
 
 type Props = {
   pokemon: Pokemon;
+  type: "current" | "readjusted";
 };
 
-export function StatusTable({ pokemon }: Props) {
+export function StatusTable({ pokemon, type }: Props) {
   const [level, setLevel] = useState(50);
+
+  const hooks = type === "current" ? useCurrentEffortValue : useAdjustedEffortValue;
+
+  const { setEffortValue, totalEffortValue } = hooks();
+
+  const handleReset = useCallback(() => {
+    [HP, ATK, DEF, SP_ATK, SP_DEF, SPD].map((type) => {
+      setEffortValue({ type, value: 0 });
+    });
+  }, [setEffortValue]);
 
   return (
     <Card borderRadius="lg">
@@ -51,6 +64,7 @@ export function StatusTable({ pokemon }: Props) {
           </FormControl>
           <Button
             aria-label="リセット"
+            onClick={handleReset}
             size="xs"
           >
             リセット
@@ -81,11 +95,17 @@ export function StatusTable({ pokemon }: Props) {
                   level={level}
                   pokemonName={pokemon.name}
                   speciesName={p.name}
+                  type={type}
                 />
               ))}
             </Table>
           </TableContainer>
         </VStack>
+        <p>
+          {totalEffortValue}
+          {" / "}
+          total
+        </p>
       </CardBody>
     </Card>
   );

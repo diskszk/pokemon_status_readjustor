@@ -9,7 +9,7 @@ import type { ComponentProps } from "react";
 import { StatusTable } from ".";
 
 export default {
-  title: "components/CurrentStatus",
+  title: "components/StatusTable",
 } satisfies StoryDefault;
 
 type Props = ComponentProps<typeof StatusTable>;
@@ -17,6 +17,7 @@ type Props = ComponentProps<typeof StatusTable>;
 export const Garchomp: Story<Props> = (props) => (
   <StatusTable {...props} />
 );
+
 Garchomp.args = { pokemon: garchomp };
 
 const shedinja = {
@@ -33,4 +34,4 @@ const shedinja = {
 export const Shedinja: Story<Props> = (props) => (
   <StatusTable {...props} />
 );
-Shedinja.args = { pokemon: shedinja };
+Shedinja.args = { pokemon: shedinja, type: "current" };
