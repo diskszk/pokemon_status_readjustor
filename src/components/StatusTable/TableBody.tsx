@@ -23,13 +23,11 @@ export function TableBody({ speciesName, baseStat, level, pokemonName }: Props) 
 
   const natureCorrection = 1;
 
-  const actualValue = speciesName === HP
-    ? calcHPActualValue({
-      baseStat, individual, effort, level, pokemonName,
-    })
-    : calcActualValue({
-      baseStat, individual, effort, level, natureCorrection,
-    });
+  const actualValue = speciesName === HP ? calcHPActualValue({
+    baseStat, individual, effort, level, pokemonName,
+  }) : calcActualValue({
+    baseStat, individual, effort, level, natureCorrection,
+  });
 
   const jaSpacesName = toJaStatusSpecies(speciesName);
   return (

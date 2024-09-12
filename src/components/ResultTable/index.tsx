@@ -1,14 +1,24 @@
 import { TableContainer, Table, Thead, Tr, Th, Text, Image, Stack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Box, Card, CardBody } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 
+import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/constants";
+
 import { TableBody } from "./TableBody";
+
+const dummyProps = [
+  { speciesName: HP, diffAmount: 144 },
+  { speciesName: ATK, diffAmount: -20 },
+  { speciesName: DEF, diffAmount: -252 },
+  { speciesName: SP_ATK, diffAmount: 244 },
+  { speciesName: SP_DEF, diffAmount: 12 },
+  { speciesName: SPD, diffAmount: 4 },
+];
 
 export function ResultTable() {
   return (
     <Accordion
       allowMultiple
       defaultIndex={[0]}
-      minWidth="66%"
     >
       <Card>
         <CardBody>
@@ -93,12 +103,12 @@ export function ResultTable() {
                     </Tr>
                     <Tr />
                   </Thead>
-                  <TableBody />
-                  <TableBody />
-                  <TableBody />
-                  <TableBody />
-                  <TableBody />
-                  <TableBody />
+                  {dummyProps.map((v, key) => (
+                    <TableBody
+                      {...v}
+                      key={key}
+                    />
+                  ))}
                 </Table>
               </TableContainer>
             </AccordionPanel>
