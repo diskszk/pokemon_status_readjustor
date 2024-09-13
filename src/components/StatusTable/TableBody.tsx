@@ -1,5 +1,4 @@
-import { MinusIcon, SmallAddIcon } from "@chakra-ui/icons";
-import { Button, IconButton, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tbody, Td, Th, Tr, VStack } from "@chakra-ui/react";
+import { Button, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tbody, Td, Th, Tr, VStack, Text } from "@chakra-ui/react";
 import { useState } from "react";
 
 import { HP } from "@/constants";
@@ -7,6 +6,9 @@ import { calcActualValue, calcHPActualValue } from "@/functions";
 import { useAdjustedEffortValue, useCurrentEffortValue } from "@/hooks";
 import type { StatusSpeciesEN } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
+
+import { RadioButton } from "./RadioButton";
+import { useNature } from "./useNature";
 
 type Props = {
   level: number;
@@ -34,12 +36,14 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
     throw new Error();
   }
 
-  const natureCorrection = 1;
+  const { plusNature, minusNature } = useNature();
+
+  const nature = plusNature === speciesName ? 1.1 : minusNature === speciesName ? 0.9 : 1;
 
   const actualValue = speciesName === HP ? calcHPActualValue({
     baseStat, individual, effort: effortValue.value, level, pokemonName,
   }) : calcActualValue({
-    baseStat, individual, effort: effortValue.value, level, natureCorrection,
+    baseStat, individual, effort: effortValue.value, level, nature,
   });
 
   return (
@@ -155,24 +159,11 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
           </InputGroup>
         </Td>
         <Td>
-          {speciesName !== HP && (
+          {speciesName === HP ? (
+            <Text>+ / -</Text>
+          ) : (
             <VStack gap="4px">
-              <IconButton
-                aria-label="上方補正"
-                colorScheme="blue"
-                height="16px"
-                icon={<SmallAddIcon />}
-                size="xs"
-                variant="outline"
-              />
-              <IconButton
-                aria-label="上方補正"
-                colorScheme="pink"
-                height="16px"
-                icon={<MinusIcon />}
-                size="xs"
-                variant="outline"
-              />
+              <RadioButton speciesName={speciesName} />
             </VStack>
           )}
         </Td>
