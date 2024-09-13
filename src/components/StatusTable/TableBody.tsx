@@ -70,7 +70,7 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
               max={MAX_EFFORT_VALUE}
               min={0}
               onChange={(value) => setEffortValue({ type: speciesName, value: Number(value) })}
-              step={4}
+              step={effortValue.value === 0 ? 4 : 8}
               value={effortValue.value}
               variant="flushed"
               width={TABLE_WIDTH}
