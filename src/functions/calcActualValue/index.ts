@@ -4,8 +4,9 @@
  */
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function calcActualValue({ baseStat, individual, effort, level, natureCorrection }: {
-  baseStat: number; individual: number; effort: number; level: number; natureCorrection: (1 | 1.1 | 0.1);
+export function calcActualValue({ baseStat, individual, effort, level, nature,
+}: {
+  baseStat: number; individual: number; effort: number; level: number; nature: number;
 }): number {
   // validate
 
