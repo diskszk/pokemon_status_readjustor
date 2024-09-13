@@ -1,7 +1,7 @@
 import { Button, Card, CardBody, CardHeader, FormControl, FormLabel, Heading, HStack, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Table, TableContainer, Th, Thead, Tr, VStack } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 
-import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/constants";
+import { initialState } from "@/atoms";
 import { useAdjustedEffortValue, useCurrentEffortValue } from "@/hooks";
 import type { Pokemon } from "@/types";
 
@@ -20,8 +20,8 @@ export function StatusTable({ pokemon, type }: Props) {
   const { setEffortValue, totalEffortValue } = hooks();
 
   const handleReset = useCallback(() => {
-    [HP, ATK, DEF, SP_ATK, SP_DEF, SPD].map((type) => {
-      setEffortValue({ type, value: 0 });
+    initialState.map((s) => {
+      setEffortValue(s);
     });
   }, [setEffortValue]);
 
