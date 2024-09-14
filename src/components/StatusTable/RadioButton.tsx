@@ -1,9 +1,8 @@
 import { HStack } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 
+import { useNature } from "@/hooks";
 import type { StatusSpeciesEN } from "@/types";
-
-import { useNature } from "./useNature";
 
 type Props = {
   speciesName: StatusSpeciesEN;
