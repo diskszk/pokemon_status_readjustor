@@ -1,29 +1,29 @@
 import { Button, Card, CardBody, CardHeader, FormControl, FormLabel, Heading, HStack, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Table, TableContainer, Th, Thead, Tr, VStack } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 
-import { initialState } from "@/atoms";
-import { useAdjustedEffortValue, useCurrentEffortValue } from "@/hooks";
+import { adjustedEffortValueAtom, currentEffortValueAtom, initialState } from "@/atoms";
+import { useEffortValue } from "@/hooks";
 import type { Pokemon } from "@/types";
 
 import { TableBody } from "./TableBody";
 
 type Props = {
   pokemon: Pokemon;
-  type: "current" | "readjusted";
+  type: "current" | "adjusted";
 };
 
 export function StatusTable({ pokemon, type }: Props) {
   const [level, setLevel] = useState(50);
 
-  const hooks = type === "current" ? useCurrentEffortValue : useAdjustedEffortValue;
+  const effortValueAtom = type === "current" ? currentEffortValueAtom : adjustedEffortValueAtom;
 
-  const { setEffortValue, totalEffortValue } = hooks();
+  const { updateEffortValue } = useEffortValue(effortValueAtom);
 
   const handleReset = useCallback(() => {
     initialState.map((s) => {
-      setEffortValue(s);
+      updateEffortValue(s);
     });
-  }, [setEffortValue]);
+  }, [updateEffortValue]);
 
   return (
     <Card borderRadius="lg">
@@ -101,11 +101,6 @@ export function StatusTable({ pokemon, type }: Props) {
             </Table>
           </TableContainer>
         </VStack>
-        <p>
-          {totalEffortValue}
-          {" / "}
-          total
-        </p>
       </CardBody>
     </Card>
   );

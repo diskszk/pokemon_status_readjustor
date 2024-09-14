@@ -1,22 +1,15 @@
 import { Button, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tbody, Td, Th, Tr, VStack, Text } from "@chakra-ui/react";
 import { useState } from "react";
 
+import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
 import { HP } from "@/constants";
 import { calcActualValue, calcHPActualValue } from "@/functions";
-import { useAdjustedEffortValue, useCurrentEffortValue } from "@/hooks";
+import { useEffortValue } from "@/hooks";
 import type { StatusSpeciesEN } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
 import { RadioButton } from "./RadioButton";
 import { useNature } from "./useNature";
-
-type Props = {
-  level: number;
-  pokemonName: string;
-  speciesName: StatusSpeciesEN;
-  baseStat: number;
-  type: "current" | "readjusted";
-};
 
 const INPUT_GROUP_WIDTH = "152px";
 const TABLE_WIDTH = "100px";
@@ -24,11 +17,19 @@ const TABLE_WIDTH = "100px";
 const MAX_EFFORT_VALUE = 252;
 const MAX_TOTAL_EFFORT_VALUE = 510;
 
+type Props = {
+  level: number;
+  pokemonName: string;
+  speciesName: StatusSpeciesEN;
+  baseStat: number;
+  type: "current" | "adjusted";
+};
+
 export function TableBody({ speciesName, baseStat, level, pokemonName, type }: Props) {
   const [individual, setIndividual] = useState(31);
-  const hooks = type === "current" ? useCurrentEffortValue : useAdjustedEffortValue;
+  const effortValueAtom = type === "current" ? currentEffortValueAtom : adjustedEffortValueAtom;
 
-  const { setEffortValue, totalEffortValue, allEffortValue } = hooks();
+  const { totalEffortValue, allEffortValue, updateEffortValue } = useEffortValue(effortValueAtom);
 
   const effortValue = allEffortValue.find((v) => v.type === speciesName);
 
@@ -73,7 +74,7 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
               isInvalid={totalEffortValue > MAX_TOTAL_EFFORT_VALUE}
               max={MAX_EFFORT_VALUE}
               min={0}
-              onChange={(value) => setEffortValue({ type: speciesName, value: Number(value) })}
+              onChange={(value) => updateEffortValue({ type: speciesName, value: Number(value) })}
               step={effortValue.value === 0 ? 4 : 8}
               value={effortValue.value}
               variant="flushed"
@@ -90,7 +91,7 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
                 <Button
                   aria-label="努力値を最大"
                   height="16px"
-                  onClick={() => setEffortValue({
+                  onClick={() => updateEffortValue({
                     ...effortValue,
                     value: MAX_EFFORT_VALUE,
                   })}
@@ -102,7 +103,7 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
                 <Button
                   aria-label="努力値を0"
                   height="16px"
-                  onClick={() => setEffortValue({
+                  onClick={() => updateEffortValue({
                     ...effortValue,
                     value: 0,
                   })}
