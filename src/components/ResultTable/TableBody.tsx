@@ -1,7 +1,7 @@
 import { Tr, Th, Tbody, Td, Text } from "@chakra-ui/react";
 
 import { items } from "@/constants";
-import { getItemAmount } from "@/functions/getItemAmount";
+import { getItemAmount } from "@/functions";
 import type { StatusSpeciesEN } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
