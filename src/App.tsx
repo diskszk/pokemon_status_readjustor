@@ -62,7 +62,7 @@ export function App() {
         <GridItem>
           <StatusTable
             pokemon={pokemon}
-            type="readjusted"
+            type="adjusted"
           />
         </GridItem>
         <GridItem gridColumn="span 2">
