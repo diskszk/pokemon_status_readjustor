@@ -1,7 +1,31 @@
-import { Button, Card, CardBody, CardHeader, FormControl, FormLabel, Heading, HStack, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Table, TableContainer, Th, Thead, Tr, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  FormControl,
+  FormLabel,
+  Heading,
+  HStack,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Table,
+  TableContainer,
+  Th,
+  Thead,
+  Tr,
+  VStack,
+} from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 
-import { adjustedEffortValueAtom, currentEffortValueAtom, initialState } from "@/atoms";
+import {
+  adjustedEffortValueAtom,
+  currentEffortValueAtom,
+  initialState,
+} from "@/atoms";
 import { useEffortValue } from "@/hooks";
 import type { Pokemon } from "@/types";
 
@@ -41,9 +65,7 @@ export function StatusTable({ pokemon, type }: Props) {
           </Heading>
           <FormControl>
             <HStack>
-              <FormLabel m="0 2px">
-                レベル
-              </FormLabel>
+              <FormLabel m="0 2px">レベル</FormLabel>
               <NumberInput
                 aria-label="レベル"
                 max={100}

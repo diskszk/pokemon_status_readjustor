@@ -1,15 +1,29 @@
-import { Button, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tbody, Td, Th, Tr, VStack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  InputGroup,
+  InputRightElement,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Tbody,
+  Td,
+  Th,
+  Tr,
+  VStack,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
 import { HP } from "@/constants";
 import { calcActualValue, calcHPActualValue } from "@/functions";
-import { useEffortValue } from "@/hooks";
+import { useEffortValue, useNature } from "@/hooks";
 import type { StatusSpeciesEN } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
 import { RadioButton } from "./RadioButton";
-import { useNature } from "./useNature";
 
 const INPUT_GROUP_WIDTH = "152px";
 const TABLE_WIDTH = "100px";
@@ -25,7 +39,13 @@ type Props = {
   type: "current" | "adjusted";
 };
 
-export function TableBody({ speciesName, baseStat, level, pokemonName, type }: Props) {
+export function TableBody({
+  speciesName,
+  baseStat,
+  level,
+  pokemonName,
+  type,
+}: Props) {
   const [individual, setIndividual] = useState(31);
   const effortValueAtom = type === "current" ? currentEffortValueAtom : adjustedEffortValueAtom;
 
@@ -42,9 +62,17 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
   const nature = plusNature === speciesName ? 1.1 : minusNature === speciesName ? 0.9 : 1;
 
   const actualValue = speciesName === HP ? calcHPActualValue({
-    baseStat, individual, effort: effortValue.value, level, pokemonName,
+    baseStat,
+    individual,
+    effort: effortValue.value,
+    level,
+    pokemonName,
   }) : calcActualValue({
-    baseStat, individual, effort: effortValue.value, level, nature,
+    baseStat,
+    individual,
+    effort: effortValue.value,
+    level,
+    nature,
   });
 
   return (
@@ -74,7 +102,8 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
               isInvalid={totalEffortValue > MAX_TOTAL_EFFORT_VALUE}
               max={MAX_EFFORT_VALUE}
               min={0}
-              onChange={(value) => updateEffortValue({ type: speciesName, value: Number(value) })}
+              onChange={(value) =>
+                updateEffortValue({ type: speciesName, value: Number(value) })}
               step={effortValue.value === 0 ? 4 : 8}
               value={effortValue.value}
               variant="flushed"
@@ -91,10 +120,11 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
                 <Button
                   aria-label="努力値を最大"
                   height="16px"
-                  onClick={() => updateEffortValue({
-                    ...effortValue,
-                    value: MAX_EFFORT_VALUE,
-                  })}
+                  onClick={() =>
+                    updateEffortValue({
+                      ...effortValue,
+                      value: MAX_EFFORT_VALUE,
+                    })}
                   size="xs"
                   width="44px"
                 >
@@ -103,10 +133,11 @@ export function TableBody({ speciesName, baseStat, level, pokemonName, type }: P
                 <Button
                   aria-label="努力値を0"
                   height="16px"
-                  onClick={() => updateEffortValue({
-                    ...effortValue,
-                    value: 0,
-                  })}
+                  onClick={() =>
+                    updateEffortValue({
+                      ...effortValue,
+                      value: 0,
+                    })}
                   size="xs"
                   width="44px"
                 >
