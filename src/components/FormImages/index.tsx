@@ -33,6 +33,7 @@ export function FormImages({ pokemonForms, setPokemonForms }: Props) {
           onClick={() => handleClick(form)}
         >
           <Image
+            alt={`${form.name}の画像`}
             boxSize={index === 0 ? "120px" : "90px"}
             src={form.imageSrc}
           />
