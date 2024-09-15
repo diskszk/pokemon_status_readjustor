@@ -2,11 +2,13 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Flex,
   FormControl,
+  FormHelperText,
   Input,
   InputGroup,
   InputRightElement,
   Spinner,
   VisuallyHiddenInput,
+  VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
@@ -70,39 +72,42 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
       <form onSubmit={handleSubmit}>
         <FormControl>
           <Flex>
-            <InputGroup>
-              <Input
-                autoComplete="off"
-                borderColor="blue.200"
-                css={inputCss}
-                list="suggested-list"
-                name="pokemon-ja"
-                onChange={handleChange}
-                placeholder="ポケモンの名前"
-                type="search"
-              />
-              <InputRightElement pointerEvents="none">
-                {formDisabled ? (
-                  <Spinner
-                    color="gray.300"
-                    size="sm"
-                  />
-                ) : (
-                  <SearchIcon color="gray.300" />
-                )}
-              </InputRightElement>
-              <VisuallyHiddenInput
-                name="pokemon-en"
-                ref={pokemonEnInputRef}
-              />
-              <button
-                disabled={formDisabled}
-                hidden
-                type="submit"
-              >
-                submit
-              </button>
-            </InputGroup>
+            <VStack>
+              <InputGroup>
+                <Input
+                  autoComplete="off"
+                  borderColor="blue.200"
+                  css={inputCss}
+                  list="suggested-list"
+                  name="pokemon-ja"
+                  onChange={handleChange}
+                  placeholder="(例) ガブリアス"
+                  type="search"
+                />
+                <InputRightElement pointerEvents="none">
+                  {formDisabled ? (
+                    <Spinner
+                      color="gray.300"
+                      size="sm"
+                    />
+                  ) : (
+                    <SearchIcon color="gray.300" />
+                  )}
+                </InputRightElement>
+                <VisuallyHiddenInput
+                  name="pokemon-en"
+                  ref={pokemonEnInputRef}
+                />
+                <button
+                  disabled={formDisabled}
+                  hidden
+                  type="submit"
+                >
+                  submit
+                </button>
+              </InputGroup>
+              <FormHelperText>ポケモンの名前をカタカナで入力してください。</FormHelperText>
+            </VStack>
             <datalist
               id="suggested-list"
               ref={datalistRef}
