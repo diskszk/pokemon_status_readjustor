@@ -1,27 +1,40 @@
-import { Center, Flex, Grid, GridItem, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
+import { Center, Flex, Grid, GridItem, Heading, HStack, Spacer } from "@chakra-ui/react";
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 
-import { ResultTable, SearchForm, StatusTable } from "@/components";
+import { FormImages, ResultTable, SearchForm, StatusTable } from "@/components";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
 
 import pokemonsJson from "../pokemon.json";
+import { usePokemonForms } from "./queries/pokemonForms";
 
-const imageSrc = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png";
+import type { PokemonForm } from "./types";
 
 export function App() {
-  const [pokemon] = useState(garchomp);
-
   const pokemons = useMemo(() => import.meta.env.MODE === "production" ? pokemonsJson : mockPokemons, []);
 
-  const onSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
+  const [pokemon] = useState(garchomp);
+  const [pokemonForms, setPokemonForms] = useState<PokemonForm[]>(garchomp.forms);
+  const { queryPokemonForm } = usePokemonForms();
+
+  const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const form = new FormData(event.currentTarget);
 
     const ja = form.get("pokemon-ja");
     const en = form.get("pokemon-en");
 
     console.log("data", { ja, en });
-  }, []);
+
+    if (!en) {
+      alert("404");
+      return;
+    }
+
+    const { pokemonForms: newPokemonForms } = await queryPokemonForm(en?.toString());
+
+    setPokemonForms(newPokemonForms || []);
+  }, [queryPokemonForm]);
 
   return (
     <Flex
@@ -36,16 +49,12 @@ export function App() {
       </Center>
       <HStack>
         <SearchForm
-          handleSubmit={onSubmit}
+          handleSubmit={onSubmitSearchForm}
           pokemons={pokemons}
         />
-        <Image
-          boxSize="120px"
-          src={imageSrc}
-        />
-        <Image
-          boxSize="60px"
-          src={imageSrc}
+        <FormImages
+          pokemonForms={pokemonForms}
+          setPokemonForms={setPokemonForms}
         />
       </HStack>
       <Grid
