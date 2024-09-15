@@ -3,7 +3,7 @@ on:
   pull_request:
 
 jobs:
-  cache-and-install:
+  Continuous-Integration:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,27 +17,11 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
-
-  lint:
-    needs: [cache-and-install]
-    runs-on: ubuntu-latest
-    steps:
-      - run: pnpm run lint
-
-  check-type:
-    needs: [cache-and-install]
-    runs-on: ubuntu-latest
-    steps:
-      - run: pnpm run check:type
-
-  test:
-    needs: [cache-and-install]
-    runs-on: ubuntu-latest
-    steps:
-      - run: pnpm run test
-
-  build:
-    needs: [cache-and-install]
-    runs-on: ubuntu-latest
-    steps:
-      - run: pnpm build
+      - name: lint
+        run: pnpm run lint
+      - name: check-type
+        run: pnpm run check:type
+      - name: test
+        run: pnpm run test
+      - name: build-check
+        run: pnpm run build
