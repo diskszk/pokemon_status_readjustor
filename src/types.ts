@@ -8,17 +8,23 @@ export type PokemonNameChart = {
 export type StatusSpeciesEN = typeof STATUS_SPECIES[number];
 export type StatusSpeciesJA = typeof STATUS_SPECIES_JA[number];
 
-export type BaseStat = {
-  value: number;
-  name: StatusSpeciesEN;
-};
-
 export type Pokemon = {
   name: string;
   baseStats: BaseStat[];
+  forms: PokemonForm[];
 };
 
 export type EffortValueState = {
   type: StatusSpeciesEN;
   value: number;
+};
+
+export type PokemonForm = {
+  name: string;
+  imageSrc: string;
+};
+
+export type BaseStat = {
+  value: number;
+  name: StatusSpeciesEN;
 };

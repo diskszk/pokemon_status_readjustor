@@ -1,6 +1,8 @@
-import { useQuery } from "urql";
+import { useCallback } from "react";
+import { useClient } from "urql";
 
 import type { Pokemon_V2_Pokemon, Query_Root } from "@/gql/graphql";
+import type { PokemonForm } from "@/types";
 
 import { QueryPokemonForms } from "./query";
 
@@ -11,39 +13,35 @@ type Pokemon = Pick<Pokemon_V2_Pokemon, "name" | "pokemon_v2_pokemonsprites">;
 type PokemonSpecies = Pick<Query_Root, "pokemon_v2_pokemonspecies"> & {
   pokemon_v2_pokemons: Pokemon[];
 };
- type QueryReturnType = {
-   pokemon_v2_pokemonspecies: PokemonSpecies[];
- };
-
-type PokemonForm = {
-  name: string;
-  imageSrc: string;
+type QueryReturnType = {
+  pokemon_v2_pokemonspecies: PokemonSpecies[];
 };
 
-export function usePokemonForms(name: string): {
-  data: PokemonForm[] | undefined;
-  fetching: boolean;
-  error: CombinedError | undefined;
-} {
-  const [result] = useQuery<QueryReturnType>({
-    query: QueryPokemonForms,
-    variables: { name },
-  });
+export function usePokemonForms() {
+  const client = useClient();
 
-  const { data, fetching, error } = result;
+  const queryPokemonForm = useCallback(async (name: string): Promise<{
+    pokemonForms: PokemonForm[] | undefined;
+    error: CombinedError | undefined;
+  }> => {
+    const { data, error } = await client.query<QueryReturnType>(QueryPokemonForms, { name });
 
-  const pokemons = data?.pokemon_v2_pokemonspecies[0].pokemon_v2_pokemons;
+    const pokemons = data?.pokemon_v2_pokemonspecies[0].pokemon_v2_pokemons;
 
-  const forms = pokemons?.map((pokemon) => (
-    {
-      name: pokemon.name,
-      imageSrc: pokemon.pokemon_v2_pokemonsprites[0].sprites || "",
-    }
-  ));
+    const pokemonForms = pokemons?.map((pokemon) => (
+      {
+        name: pokemon.name,
+        imageSrc: pokemon.pokemon_v2_pokemonsprites[0].sprites || "",
+      }
+    ));
+
+    return {
+      pokemonForms,
+      error,
+    };
+  }, [client]);
 
   return {
-    data: forms,
-    fetching,
-    error,
+    queryPokemonForm,
   };
 }
