@@ -5,6 +5,7 @@ import { FormImages, ResultTable, SearchForm, StatusTable } from "@/components";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
 
 import pokemonsJson from "../pokemon.json";
+import { useErrorToast } from "./hooks";
 import { usePokemonForms } from "./queries/pokemonForms";
 
 import type { PokemonForm } from "./types";
@@ -16,25 +17,37 @@ export function App() {
   const [pokemonForms, setPokemonForms] = useState<PokemonForm[]>(garchomp.forms);
   const { queryPokemonForm } = usePokemonForms();
 
+  const { showErrorToast } = useErrorToast();
+
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const form = new FormData(event.currentTarget);
-
     const ja = form.get("pokemon-ja");
     const en = form.get("pokemon-en");
 
-    console.log("data", { ja, en });
-
-    if (!en) {
-      alert("404");
+    if (!ja) {
       return;
     }
 
-    const { pokemonForms: newPokemonForms } = await queryPokemonForm(en?.toString());
+    if (!en) {
+      showErrorToast({
+        description: `${ja}は存在しない可能性があります。`,
+      });
+      return;
+    }
 
-    setPokemonForms(newPokemonForms || []);
-  }, [queryPokemonForm]);
+    const { pokemonForms: newPokemonForms, error } = await queryPokemonForm(en?.toString());
+
+    if (error || !newPokemonForms) {
+      showErrorToast({
+        description: "ポケモンの画像の取得に失敗しました。",
+      });
+      return;
+    }
+
+    setPokemonForms(newPokemonForms);
+  }, [queryPokemonForm, showErrorToast]);
 
   return (
     <Flex
