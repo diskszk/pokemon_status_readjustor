@@ -5,6 +5,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Spinner,
   VisuallyHiddenInput,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -31,9 +32,11 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
 
   const pokemonEnInputRef = useRef<HTMLInputElement>(null);
   const datalistRef = useRef<HTMLDataListElement>(null);
+  const [formDisabled, setFormDisabled] = useState(false);
 
   const handleChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     inputValue$.next(event.target.value);
+    setFormDisabled(true);
   }, []);
 
   useEffect(() => {
@@ -55,6 +58,8 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
       if (pokemonEnInputRef.current) {
         pokemonEnInputRef.current.value = enName || "";
       }
+
+      setFormDisabled(false);
     });
 
     return () => subscription.unsubscribe();
@@ -62,12 +67,7 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
 
   return (
     <Flex>
-      <form onSubmit={(event) => {
-        event.preventDefault();
-        setSuggested([]);
-        handleSubmit(event);
-      }}
-      >
+      <form onSubmit={handleSubmit}>
         <FormControl>
           <Flex>
             <InputGroup>
@@ -82,13 +82,21 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
                 type="search"
               />
               <InputRightElement pointerEvents="none">
-                <SearchIcon color="gray.300" />
+                {formDisabled ? (
+                  <Spinner
+                    color="gray.300"
+                    size="sm"
+                  />
+                ) : (
+                  <SearchIcon color="gray.300" />
+                )}
               </InputRightElement>
               <VisuallyHiddenInput
                 name="pokemon-en"
                 ref={pokemonEnInputRef}
               />
               <button
+                disabled={formDisabled}
                 hidden
                 type="submit"
               >
