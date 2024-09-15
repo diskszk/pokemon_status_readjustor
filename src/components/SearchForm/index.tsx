@@ -62,7 +62,12 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
 
   return (
     <Flex>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        setSuggested([]);
+        handleSubmit(event);
+      }}
+      >
         <FormControl>
           <Flex>
             <InputGroup>
@@ -83,6 +88,12 @@ export function SearchForm({ pokemons, handleSubmit }: Props) {
                 name="pokemon-en"
                 ref={pokemonEnInputRef}
               />
+              <button
+                hidden
+                type="submit"
+              >
+                submit
+              </button>
             </InputGroup>
             <datalist
               id="suggested-list"

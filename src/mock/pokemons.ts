@@ -49,4 +49,8 @@ export const garchomp = {
     { value: 85, name: "special-defense" },
     { value: 102, name: "speed" },
   ],
+  forms: [{
+    name: "garchomp",
+    imageSrc: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png",
+  }],
 } satisfies Pokemon;
