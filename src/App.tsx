@@ -1,4 +1,4 @@
-import { Center, Flex, Grid, GridItem, Heading, HStack, Spacer } from "@chakra-ui/react";
+import { Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } from "@chakra-ui/react";
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 
 import { FormImages, ResultTable, SearchForm, StatusTable } from "@/components";
@@ -17,6 +17,7 @@ export function App() {
   const [pokemonForms, setPokemonForms] = useState<PokemonForm[]>(garchomp.forms);
   const { queryPokemonForm } = usePokemonForms();
 
+  const [loading, setLoading] = useState(false);
   const { showErrorToast } = useErrorToast();
 
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
@@ -36,7 +37,7 @@ export function App() {
       });
       return;
     }
-
+    setLoading(true);
     const { pokemonForms: newPokemonForms, error } = await queryPokemonForm(en?.toString());
 
     if (error || !newPokemonForms) {
@@ -47,6 +48,8 @@ export function App() {
     }
 
     setPokemonForms(newPokemonForms);
+
+    setLoading(false);
   }, [queryPokemonForm, showErrorToast]);
 
   return (
@@ -65,10 +68,12 @@ export function App() {
           handleSubmit={onSubmitSearchForm}
           pokemons={pokemons}
         />
-        <FormImages
-          pokemonForms={pokemonForms}
-          setPokemonForms={setPokemonForms}
-        />
+        <Skeleton isLoaded={!loading}>
+          <FormImages
+            pokemonForms={pokemonForms}
+            setPokemonForms={setPokemonForms}
+          />
+        </Skeleton>
       </HStack>
       <Grid
         gap="32px"
