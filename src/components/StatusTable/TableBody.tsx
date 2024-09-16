@@ -17,10 +17,10 @@ import {
 import { useMemo, useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
-import { HP } from "@/constants";
+import { CURRENT, HP } from "@/constants";
 import { calcActualValue, calcHPActualValue } from "@/functions";
 import { useEffortValue, useErrorToast, useNature } from "@/hooks";
-import type { StatusSpeciesEN } from "@/types";
+import type { StatusSpeciesEN, StatusType } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
 import { RadioButton } from "./RadioButton";
@@ -37,7 +37,7 @@ type Props = {
   pokemonName: string;
   speciesName: StatusSpeciesEN;
   baseStat: number;
-  type: "current" | "adjusted";
+  statusType: StatusType;
 };
 
 export function TableBody({
@@ -45,10 +45,10 @@ export function TableBody({
   baseStat,
   level,
   pokemonName,
-  type,
+  statusType,
 }: Props) {
   const [individual, setIndividual] = useState(31);
-  const effortValueAtom = type === "current" ? currentEffortValueAtom : adjustedEffortValueAtom;
+  const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
 
   const { totalEffortValue, allEffortValue, updateEffortValue } = useEffortValue(effortValueAtom);
 
