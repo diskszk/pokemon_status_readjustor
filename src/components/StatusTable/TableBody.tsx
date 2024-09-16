@@ -12,18 +12,15 @@ import {
   Th,
   Tr,
   VStack,
-  Text,
 } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
 import { CURRENT, HP } from "@/constants";
 import { calcActualValue, calcHPActualValue } from "@/functions";
-import { useEffortValue, useErrorToast, useNature } from "@/hooks";
+import { useEffortValue, useErrorToast } from "@/hooks";
 import type { StatusSpeciesEN, StatusType } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
-
-import { RadioButton } from "./RadioButton";
 
 const INPUT_GROUP_WIDTH = "152px";
 const TABLE_WIDTH = "100px";
@@ -62,9 +59,7 @@ export function TableBody({
     throw Error();
   }
 
-  const { plusNature, minusNature } = useNature();
-
-  const nature = plusNature === speciesName ? 1.1 : minusNature === speciesName ? 0.9 : 1;
+  const [nature, setNature] = useState(1);
 
   const actualValue = useMemo(() => speciesName === HP ? calcHPActualValue({
     baseStat,
@@ -198,12 +193,27 @@ export function TableBody({
           </InputGroup>
         </Td>
         <Td>
-          {speciesName === HP ? (
-            <Text>+ / -</Text>
-          ) : (
-            <VStack gap="4px">
-              <RadioButton speciesName={speciesName} />
-            </VStack>
+          {speciesName !== HP && (
+            <NumberInput
+              aria-label="性格補正"
+              defaultValue={String(1)}
+              height="16px"
+              max={1.1}
+              min={0.9}
+              onChange={(value) => {
+                setNature(Number(value));
+              }}
+              size="xs"
+              step={0.1}
+              variant="flushed"
+              width={TABLE_WIDTH}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
           )}
         </Td>
       </Tr>
