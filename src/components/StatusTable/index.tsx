@@ -88,9 +88,9 @@ export function StatusTable({ pokemon, statusType }: Props) {
           <Button
             aria-label="リセット"
             onClick={handleReset}
-            size="xs"
+            size="sm"
           >
-            リセット
+            努力値リセット
           </Button>
         </HStack>
       </CardHeader>
