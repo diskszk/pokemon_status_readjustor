@@ -30,6 +30,7 @@ const TABLE_WIDTH = "100px";
 
 const MAX_EFFORT_VALUE = 252;
 const MAX_TOTAL_EFFORT_VALUE = 510;
+const MAX_INDIVIDUAL_VALUE = 31;
 
 type Props = {
   level: number;
@@ -152,7 +153,7 @@ export function TableBody({
             <NumberInput
               aria-label="個体値"
               defaultValue={31}
-              max={31}
+              max={MAX_INDIVIDUAL_VALUE}
               min={0}
               onChange={(value) => setIndividual(Number(value))}
               step={1}
