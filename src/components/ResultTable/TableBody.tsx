@@ -2,26 +2,25 @@ import { Tr, Th, Tbody, Td, Text } from "@chakra-ui/react";
 
 import { items } from "@/constants";
 import { getItemAmount } from "@/functions";
-import type { StatusSpeciesEN } from "@/types";
+import type { EffortValueState } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
 type Props = {
-  speciesName: StatusSpeciesEN;
-  diffAmount: number;
+  effortValueDiff: EffortValueState;
 };
 
-export function TableBody({ speciesName, diffAmount }: Props) {
-  const item = items.find(({ type }) => speciesName === type);
+export function TableBody({ effortValueDiff }: Props) {
+  const item = items.find(({ type }) => effortValueDiff.type === type);
 
-  const { largeIncrease, smallIncrease, decrease } = getItemAmount(diffAmount);
+  const { largeIncrease, smallIncrease, decrease } = getItemAmount(effortValueDiff.value);
 
   return (
     <Tbody>
       <Tr>
-        <Th py="8px">{toJaStatusSpecies(speciesName)}</Th>
+        <Th py="8px">{toJaStatusSpecies(effortValueDiff.type)}</Th>
         <Td py="8px">
           <Text align="right">
-            {diffAmount}
+            {effortValueDiff.value}
           </Text>
         </Td>
         <Td py="8px">
