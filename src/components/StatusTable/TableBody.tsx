@@ -14,12 +14,12 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
 import { HP } from "@/constants";
 import { calcActualValue, calcHPActualValue } from "@/functions";
-import { useEffortValue, useNature } from "@/hooks";
+import { useEffortValue, useErrorToast, useNature } from "@/hooks";
 import type { StatusSpeciesEN } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
@@ -30,6 +30,7 @@ const TABLE_WIDTH = "100px";
 
 const MAX_EFFORT_VALUE = 252;
 const MAX_TOTAL_EFFORT_VALUE = 510;
+const MAX_INDIVIDUAL_VALUE = 31;
 
 type Props = {
   level: number;
@@ -53,15 +54,19 @@ export function TableBody({
 
   const effortValue = allEffortValue.find((v) => v.type === speciesName);
 
+  const { showErrorToast } = useErrorToast();
   if (!effortValue) {
-    throw new Error();
+    showErrorToast({
+      description: "努力値が不正な値です。",
+    });
+    throw Error();
   }
 
   const { plusNature, minusNature } = useNature();
 
   const nature = plusNature === speciesName ? 1.1 : minusNature === speciesName ? 0.9 : 1;
 
-  const actualValue = speciesName === HP ? calcHPActualValue({
+  const actualValue = useMemo(() => speciesName === HP ? calcHPActualValue({
     baseStat,
     individual,
     effort: effortValue.value,
@@ -73,7 +78,7 @@ export function TableBody({
     effort: effortValue.value,
     level,
     nature,
-  });
+  }), [baseStat, effortValue.value, individual, level, nature, pokemonName, speciesName]);
 
   return (
     <Tbody>
@@ -84,6 +89,7 @@ export function TableBody({
             aria-label="実数値"
             defaultValue={actualValue}
             min={1}
+            value={actualValue}
             variant="flushed"
             width={TABLE_WIDTH}
           >
@@ -102,8 +108,9 @@ export function TableBody({
               isInvalid={totalEffortValue > MAX_TOTAL_EFFORT_VALUE}
               max={MAX_EFFORT_VALUE}
               min={0}
-              onChange={(value) =>
-                updateEffortValue({ type: speciesName, value: Number(value) })}
+              onChange={(value) => {
+                updateEffortValue({ type: speciesName, value: Number(value) });
+              }}
               step={effortValue.value === 0 ? 4 : 8}
               value={effortValue.value}
               variant="flushed"
@@ -152,7 +159,7 @@ export function TableBody({
             <NumberInput
               aria-label="個体値"
               defaultValue={31}
-              max={31}
+              max={MAX_INDIVIDUAL_VALUE}
               min={0}
               onChange={(value) => setIndividual(Number(value))}
               step={1}
