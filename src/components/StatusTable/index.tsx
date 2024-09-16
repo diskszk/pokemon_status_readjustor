@@ -28,9 +28,10 @@ type Props = {
   pokemonBaseStats: BaseStat[];
   statusType: StatusType;
   pokemonName: string;
+  header: string;
 };
 
-export function StatusTable({ pokemonBaseStats, statusType, pokemonName }: Props) {
+export function StatusTable({ pokemonBaseStats, statusType, pokemonName, header }: Props) {
   const [level, setLevel] = useState(50);
 
   return (
@@ -38,14 +39,15 @@ export function StatusTable({ pokemonBaseStats, statusType, pokemonName }: Props
       <CardHeader
         pb="8px"
         pt="12px"
-        textAlign="center"
       >
         <HStack alignItems="center">
           <Heading
             as="h3"
+            px="16px"
             size="sm"
+            width="100%"
           >
-            header
+            {header}
           </Heading>
           <FormControl>
             <HStack>
