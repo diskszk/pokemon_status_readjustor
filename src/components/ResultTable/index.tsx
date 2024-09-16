@@ -1,20 +1,21 @@
 import { TableContainer, Table, Thead, Tr, Th, Text, Image, Stack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Box, Card, CardBody } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 
-import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/constants";
+import { getEffortValueDiff } from "@/functions";
+import type { EffortValueState } from "@/types";
 
 import { TableBody } from "./TableBody";
 
-const dummyProps = [
-  { speciesName: HP, diffAmount: 144 },
-  { speciesName: ATK, diffAmount: -20 },
-  { speciesName: DEF, diffAmount: -252 },
-  { speciesName: SP_ATK, diffAmount: 244 },
-  { speciesName: SP_DEF, diffAmount: 12 },
-  { speciesName: SPD, diffAmount: 4 },
-];
+type Props = {
+  currentEffortValues: EffortValueState[];
+  adjustedEffortValues: EffortValueState[];
+};
 
-export function ResultTable() {
+export function ResultTable({
+  currentEffortValues, adjustedEffortValues,
+}: Props) {
+  const diff = getEffortValueDiff(currentEffortValues, adjustedEffortValues);
+
   return (
     <Accordion
       allowMultiple
@@ -103,9 +104,9 @@ export function ResultTable() {
                     </Tr>
                     <Tr />
                   </Thead>
-                  {dummyProps.map((v, key) => (
+                  {diff.map((effortValueDiff, key) => (
                     <TableBody
-                      {...v}
+                      effortValueDiff={effortValueDiff}
                       key={key}
                     />
                   ))}

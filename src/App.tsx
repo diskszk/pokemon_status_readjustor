@@ -6,9 +6,10 @@ import { ADJUSTED, CURRENT } from "@/constants";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
 import { usePokemonForms } from "@/queries/pokemonForms";
 
-import { useErrorToast } from "./hooks";
+import { useEffortValue, useErrorToast } from "./hooks";
 import { type PokemonForm, type BaseStat } from "./types";
 import pokemonsJson from "../pokemon.json";
+import { adjustedEffortValueAtom, currentEffortValueAtom } from "./atoms";
 import { usePokemonBaseStats } from "./queries/pokemonBaseStats";
 
 export function App() {
@@ -97,6 +98,9 @@ export function App() {
     setLoading(false);
   }, [pokemonForms, queryBaseStats, showErrorToast]);
 
+  const { allEffortValue: currentAllEffortValue } = useEffortValue(currentEffortValueAtom);
+  const { allEffortValue: adjustedAllEffortValue } = useEffortValue(adjustedEffortValueAtom);
+
   return (
     <Flex
       align="center"
@@ -144,7 +148,10 @@ export function App() {
           </Skeleton>
         </GridItem>
         <GridItem gridColumn="span 2">
-          <ResultTable />
+          <ResultTable
+            adjustedEffortValues={adjustedAllEffortValue}
+            currentEffortValues={currentAllEffortValue}
+          />
         </GridItem>
       </Grid>
       <Spacer />
