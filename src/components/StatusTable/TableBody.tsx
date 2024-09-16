@@ -13,17 +13,17 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
 import { CURRENT, HP } from "@/constants";
-import { calcActualValue, calcHPActualValue } from "@/functions";
+import { calcActualValue, calcHPActualValue, calcEffortValue, calcHPEffortValue } from "@/functions";
 import { useEffortValue, useErrorToast } from "@/hooks";
 import type { StatusSpeciesEN, StatusType } from "@/types";
 import { toJaStatusSpecies } from "@/utils";
 
 const INPUT_GROUP_WIDTH = "152px";
-const TABLE_WIDTH = "100px";
+const TABLE_WIDTH = "92px";
 
 const MAX_EFFORT_VALUE = 252;
 const MAX_TOTAL_EFFORT_VALUE = 510;
@@ -61,7 +61,7 @@ export function TableBody({
 
   const [nature, setNature] = useState(1);
 
-  const actualValue = useMemo(() => speciesName === HP ? calcHPActualValue({
+  const [actualValue, setActualValue] = useState(useMemo(() => speciesName === HP ? calcHPActualValue({
     baseStat,
     individual,
     effort: effortValue.value,
@@ -73,7 +73,44 @@ export function TableBody({
     effort: effortValue.value,
     level,
     nature,
-  }), [baseStat, effortValue.value, individual, level, nature, pokemonName, speciesName]);
+  }), [baseStat, effortValue.value, individual, level, nature, pokemonName, speciesName]));
+
+  const minimumActualValue = speciesName === HP ? calcHPActualValue({
+    baseStat,
+    individual,
+    effort: 0,
+    level,
+    pokemonName,
+  }) : calcActualValue({
+    baseStat,
+    individual,
+    effort: 0,
+    level,
+    nature,
+  });
+  const maximumActualValue = speciesName === HP ? calcHPActualValue({
+    baseStat,
+    individual,
+    effort: 252,
+    level,
+    pokemonName,
+  }) : calcActualValue({
+    baseStat,
+    individual,
+    effort: 252,
+    level,
+    nature,
+  });
+
+  const updateActualValue = useCallback((updateValue: Partial<typeof calcActualValue | typeof calcHPActualValue>) => {
+    const newActualValue = speciesName === HP ? calcHPActualValue({
+      baseStat, individual, effort: effortValue.value, level, pokemonName, ...updateValue,
+    }) : calcActualValue({
+      baseStat, individual, effort: effortValue.value, level, nature, ...updateValue,
+    });
+
+    setActualValue(newActualValue);
+  }, [baseStat, effortValue.value, individual, level, nature, pokemonName, speciesName]);
 
   return (
     <Tbody>
@@ -83,7 +120,17 @@ export function TableBody({
           <NumberInput
             aria-label="実数値"
             defaultValue={actualValue}
-            min={1}
+            max={maximumActualValue}
+            min={minimumActualValue}
+            onChange={(value) => {
+              setActualValue(Number(value));
+              const newEffortValue = speciesName === HP ? calcHPEffortValue({
+                actual: Number(value), level, baseStat, individual,
+              }) : calcEffortValue({
+                actual: Number(value), level, baseStat, individual, nature,
+              });
+              updateEffortValue({ type: speciesName, value: newEffortValue });
+            }}
             value={actualValue}
             variant="flushed"
             width={TABLE_WIDTH}
@@ -105,6 +152,8 @@ export function TableBody({
               min={0}
               onChange={(value) => {
                 updateEffortValue({ type: speciesName, value: Number(value) });
+
+                updateActualValue({ effort: Number(value) });
               }}
               step={effortValue.value === 0 ? 4 : 8}
               value={effortValue.value}
@@ -122,11 +171,13 @@ export function TableBody({
                 <Button
                   aria-label="努力値を最大"
                   height="16px"
-                  onClick={() =>
+                  onClick={() => {
                     updateEffortValue({
                       ...effortValue,
                       value: MAX_EFFORT_VALUE,
-                    })}
+                    });
+                    updateActualValue({ effort: MAX_EFFORT_VALUE });
+                  }}
                   size="xs"
                   width="44px"
                 >
@@ -135,11 +186,13 @@ export function TableBody({
                 <Button
                   aria-label="努力値を0"
                   height="16px"
-                  onClick={() =>
+                  onClick={() => {
                     updateEffortValue({
                       ...effortValue,
                       value: 0,
-                    })}
+                    });
+                    updateActualValue({ effort: 0 });
+                  }}
                   size="xs"
                   width="44px"
                 >
@@ -156,7 +209,10 @@ export function TableBody({
               defaultValue={31}
               max={MAX_INDIVIDUAL_VALUE}
               min={0}
-              onChange={(value) => setIndividual(Number(value))}
+              onChange={(value) => {
+                setIndividual(Number(value));
+                updateActualValue({ individual: Number(value) });
+              }}
               step={1}
               value={individual}
               variant="flushed"
@@ -173,7 +229,10 @@ export function TableBody({
                 <Button
                   aria-label="個体値を最高"
                   height="16px"
-                  onClick={() => setIndividual(31)}
+                  onClick={() => {
+                    setIndividual(MAX_INDIVIDUAL_VALUE);
+                    updateActualValue({ individual: MAX_INDIVIDUAL_VALUE });
+                  }}
                   size="xs"
                   width="44px"
                 >
@@ -182,7 +241,10 @@ export function TableBody({
                 <Button
                   aria-label="個体値を0"
                   height="16px"
-                  onClick={() => setIndividual(0)}
+                  onClick={() => {
+                    setIndividual(0);
+                    updateActualValue({ individual: 0 });
+                  }}
                   size="xs"
                   width="44px"
                 >
@@ -202,11 +264,12 @@ export function TableBody({
               min={0.9}
               onChange={(value) => {
                 setNature(Number(value));
+                updateActualValue({ nature: Number(value) });
               }}
-              size="xs"
+              size="sm"
               step={0.1}
               variant="flushed"
-              width={TABLE_WIDTH}
+              width="64px"
             >
               <NumberInputField />
               <NumberInputStepper>
