@@ -1,4 +1,4 @@
-import { Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } from "@chakra-ui/react";
+import { Box, Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } from "@chakra-ui/react";
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 
 import { FormImages, ResultTable, SearchForm, StatusTable } from "@/components";
@@ -109,9 +109,14 @@ export function App() {
       gap="16px"
       minHeight="100vh"
     >
-      <Center border="1px">
-        <Heading>ポケモンステータス調整</Heading>
-      </Center>
+      <Box
+        minWidth="100vw"
+        pt="16px"
+      >
+        <Center>
+          <Heading>ステータス再調整ツール</Heading>
+        </Center>
+      </Box>
       <HStack>
         <SearchForm
           handleSubmit={onSubmitSearchForm}

@@ -13,7 +13,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
 import { CURRENT, HP } from "@/constants";
@@ -111,6 +111,10 @@ export function TableBody({
 
     setActualValue(newActualValue);
   }, [baseStat, effortValue.value, individual, level, nature, pokemonName, speciesName]);
+
+  useEffect(() => {
+    updateActualValue(level);
+  }, [level, updateActualValue]);
 
   return (
     <Tbody>
