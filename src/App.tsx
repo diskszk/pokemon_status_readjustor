@@ -141,6 +141,7 @@ export function App() {
         <GridItem>
           <Skeleton isLoaded={!loading}>
             <StatusTable
+              header="現在のステータス"
               pokemonBaseStats={pokemonBaseStats}
               pokemonName={pokemonName}
               statusType={CURRENT}
@@ -150,6 +151,7 @@ export function App() {
         <GridItem>
           <Skeleton isLoaded={!loading}>
             <StatusTable
+              header="調整後のステータス"
               pokemonBaseStats={pokemonBaseStats}
               pokemonName={pokemonName}
               statusType={ADJUSTED}
