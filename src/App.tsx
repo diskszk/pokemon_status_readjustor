@@ -31,17 +31,21 @@ export function App() {
 
     const form = new FormData(event.currentTarget);
     const ja = form.get("pokemon-ja");
-    const en = form.get("pokemon-en");
+    let en = form.get("pokemon-en")?.toString();
 
     if (!ja) {
       return;
     }
 
     if (!en) {
-      showErrorToast({
-        description: `${ja}は存在しない可能性があります。`,
-      });
-      return;
+      en = pokemons.find((pokemon) => pokemon.ja === ja)?.en;
+
+      if (!en) {
+        showErrorToast({
+          description: `${ja}は存在しない可能性があります。`,
+        });
+        return;
+      }
     }
     setLoading(true);
     const { pokemonForms: newPokemonForms, error } = await queryPokemonForm(en?.toString());
@@ -67,7 +71,7 @@ export function App() {
 
     setPokemonBaseStats(stats);
     setLoading(false);
-  }, [queryBaseStats, queryPokemonForm, showErrorToast]);
+  }, [pokemons, queryBaseStats, queryPokemonForm, showErrorToast]);
 
   const handleClickPokemonImage = useCallback(async (target: PokemonForm) => {
     /* ポケモンの姿を並び替える */
