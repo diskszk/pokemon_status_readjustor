@@ -5,6 +5,7 @@ import { FormImages, ResultTable, SearchForm, StatusTable } from "@/components";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
 
 import pokemonsJson from "../pokemon.json";
+import { ADJUSTED, CURRENT } from "./constants";
 import { useErrorToast } from "./hooks";
 import { usePokemonForms } from "./queries/pokemonForms";
 
@@ -83,13 +84,13 @@ export function App() {
         <GridItem>
           <StatusTable
             pokemon={pokemon}
-            type="current"
+            statusType={CURRENT}
           />
         </GridItem>
         <GridItem>
           <StatusTable
             pokemon={pokemon}
-            type="adjusted"
+            statusType={ADJUSTED}
           />
         </GridItem>
         <GridItem gridColumn="span 2">

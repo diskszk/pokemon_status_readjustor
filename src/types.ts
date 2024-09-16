@@ -1,4 +1,4 @@
-import type { STATUS_SPECIES, STATUS_SPECIES_JA } from "@/constants";
+import type { ADJUSTED, CURRENT, STATUS_SPECIES, STATUS_SPECIES_JA } from "@/constants";
 
 export type PokemonNameChart = {
   en: string;
@@ -28,3 +28,5 @@ export type BaseStat = {
   value: number;
   name: StatusSpeciesEN;
 };
+
+export type StatusType = typeof CURRENT | typeof ADJUSTED;
