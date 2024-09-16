@@ -1,24 +1,14 @@
 import { Box, HStack, Image } from "@chakra-ui/react";
-import { useCallback } from "react";
 
 import type { PokemonForm } from "@/types";
 
-import type { Dispatch, SetStateAction } from "react";
-
 type Props = {
   pokemonForms: PokemonForm[];
-  setPokemonForms: Dispatch<SetStateAction<PokemonForm[]>>;
+  handleClickPokemonImage: (target: PokemonForm) => void;
+
 };
 
-export function FormImages({ pokemonForms, setPokemonForms }: Props) {
-  const handleClick = useCallback((target: PokemonForm) => {
-    /* ポケモンの姿を並び替える */
-    const newArray: PokemonForm[] = [];
-    const rest = pokemonForms.filter((f) => f.name !== target.name);
-    newArray.push(target, ...rest);
-    setPokemonForms(newArray);
-  }, [pokemonForms, setPokemonForms]);
-
+export function FormImages({ pokemonForms, handleClickPokemonImage }: Props) {
   return (
     <HStack
       alignItems="flex-end"
@@ -30,7 +20,7 @@ export function FormImages({ pokemonForms, setPokemonForms }: Props) {
           cursor={index === 0 ? "default" : "pointer"}
           disabled={index === 0}
           key={index}
-          onClick={() => handleClick(form)}
+          onClick={() => handleClickPokemonImage(form)}
         >
           <Image
             alt={`${form.name}の画像`}
