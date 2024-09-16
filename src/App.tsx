@@ -2,21 +2,25 @@ import { Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } from 
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 
 import { FormImages, ResultTable, SearchForm, StatusTable } from "@/components";
+import { ADJUSTED, CURRENT } from "@/constants";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
+import { usePokemonForms } from "@/queries/pokemonForms";
 
-import pokemonsJson from "../pokemon.json";
-import { ADJUSTED, CURRENT } from "./constants";
 import { useErrorToast } from "./hooks";
-import { usePokemonForms } from "./queries/pokemonForms";
-
-import type { PokemonForm } from "./types";
+import { type PokemonForm, type BaseStat } from "./types";
+import pokemonsJson from "../pokemon.json";
+import { usePokemonBaseStats } from "./queries/pokemonBaseStats";
 
 export function App() {
   const pokemons = useMemo(() => import.meta.env.MODE === "production" ? pokemonsJson : mockPokemons, []);
 
-  const [pokemon] = useState(garchomp);
   const [pokemonForms, setPokemonForms] = useState<PokemonForm[]>(garchomp.forms);
   const { queryPokemonForm } = usePokemonForms();
+
+  const [pokemonName, setPokemonName] = useState("");
+  const [pokemonBaseStats, setPokemonBaseStats] = useState<BaseStat[]>(garchomp.baseStats);
+
+  const { queryBaseStats } = usePokemonBaseStats();
 
   const [loading, setLoading] = useState(false);
   const { showErrorToast } = useErrorToast();
@@ -49,9 +53,49 @@ export function App() {
     }
 
     setPokemonForms(newPokemonForms);
+    setPokemonName(newPokemonForms[0].name);
 
+    const { stats, error: queryBaseStatsError } = await queryBaseStats(newPokemonForms[0].name);
+
+    if (queryBaseStatsError || !stats) {
+      showErrorToast({
+        description: "データの取得に失敗しました",
+      });
+      return;
+    }
+
+    setPokemonBaseStats(stats);
     setLoading(false);
-  }, [queryPokemonForm, showErrorToast]);
+  }, [queryBaseStats, queryPokemonForm, showErrorToast]);
+
+  const handleClickPokemonImage = useCallback(async (target: PokemonForm) => {
+    /* ポケモンの姿を並び替える */
+    const newArray: PokemonForm[] = [];
+    const rest = pokemonForms.filter((f) => f.name !== target.name);
+    newArray.push(target, ...rest);
+    if (!newArray[0].name) {
+      showErrorToast({
+        description: "データの取得に失敗しました",
+      });
+      return;
+    }
+
+    setPokemonForms(newArray);
+    setPokemonName(newArray[0].name);
+
+    setLoading(true);
+    const { stats, error } = await queryBaseStats(newArray[0].name);
+
+    if (error || !stats) {
+      showErrorToast({
+        description: "データの取得に失敗しました",
+      });
+      return;
+    }
+
+    setPokemonBaseStats(stats);
+    setLoading(false);
+  }, [pokemonForms, queryBaseStats, showErrorToast]);
 
   return (
     <Flex
@@ -71,8 +115,8 @@ export function App() {
         />
         <Skeleton isLoaded={!loading}>
           <FormImages
+            handleClickPokemonImage={handleClickPokemonImage}
             pokemonForms={pokemonForms}
-            setPokemonForms={setPokemonForms}
           />
         </Skeleton>
       </HStack>
@@ -82,16 +126,22 @@ export function App() {
         templateRows="auto, 1fr"
       >
         <GridItem>
-          <StatusTable
-            pokemon={pokemon}
-            statusType={CURRENT}
-          />
+          <Skeleton isLoaded={!loading}>
+            <StatusTable
+              pokemonBaseStats={pokemonBaseStats}
+              pokemonName={pokemonName}
+              statusType={CURRENT}
+            />
+          </Skeleton>
         </GridItem>
         <GridItem>
-          <StatusTable
-            pokemon={pokemon}
-            statusType={ADJUSTED}
-          />
+          <Skeleton isLoaded={!loading}>
+            <StatusTable
+              pokemonBaseStats={pokemonBaseStats}
+              pokemonName={pokemonName}
+              statusType={ADJUSTED}
+            />
+          </Skeleton>
         </GridItem>
         <GridItem gridColumn="span 2">
           <ResultTable />

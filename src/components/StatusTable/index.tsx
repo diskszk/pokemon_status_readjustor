@@ -28,16 +28,17 @@ import {
 } from "@/atoms";
 import { CURRENT } from "@/constants";
 import { useEffortValue } from "@/hooks";
-import type { Pokemon, StatusType } from "@/types";
+import type { BaseStat, StatusType } from "@/types";
 
 import { TableBody } from "./TableBody";
 
 type Props = {
-  pokemon: Pokemon;
+  pokemonBaseStats: BaseStat[];
   statusType: StatusType;
+  pokemonName: string;
 };
 
-export function StatusTable({ pokemon, statusType }: Props) {
+export function StatusTable({ pokemonBaseStats, statusType, pokemonName }: Props) {
   const [level, setLevel] = useState(50);
 
   const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
@@ -111,12 +112,12 @@ export function StatusTable({ pokemon, statusType }: Props) {
                 </Tr>
                 <Tr />
               </Thead>
-              {pokemon.baseStats.map((p, key) => (
+              {pokemonBaseStats.map((p, key) => (
                 <TableBody
                   baseStat={p.value}
                   key={key}
                   level={level}
-                  pokemonName={pokemon.name}
+                  pokemonName={pokemonName}
                   speciesName={p.name}
                   statusType={statusType}
                 />
