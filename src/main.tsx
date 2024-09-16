@@ -7,6 +7,7 @@ import { API_ENDPOINT } from "@/constants";
 
 import { App } from "./App.tsx";
 import "./index.css";
+import { Head } from "./components/index.ts";
 
 const client = new Client({
   url: API_ENDPOINT,
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider value={client}>
       <ChakraProvider resetCSS={true}>
+        <Head />
         <App />
       </ChakraProvider>
     </Provider>
