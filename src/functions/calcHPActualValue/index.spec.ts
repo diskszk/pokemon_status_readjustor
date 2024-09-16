@@ -38,6 +38,15 @@ test("レベル76, 種族値110, 努力値192, 個体値31の場合, HP実数値
     pokemonName: "annihilape",
   })).toBe(313);
 });
+test("レベル38, 種族値108, 個体値31, 努力値204の場合、 HP実数値は161となる", () => {
+  expect(calcHPActualValue({
+    baseStat: 108,
+    individual: 31,
+    effort: 204,
+    level: 38,
+    pokemonName: "garchomp",
+  })).toBe(161);
+});
 test("ヌケニンの場合、値がなんであれ1になる", () => {
   expect(calcHPActualValue({
     pokemonName: "shedinja",
