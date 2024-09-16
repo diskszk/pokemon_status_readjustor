@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardBody,
   CardHeader,
@@ -19,15 +18,8 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
-import {
-  adjustedEffortValueAtom,
-  currentEffortValueAtom,
-  initialState,
-} from "@/atoms";
-import { CURRENT } from "@/constants";
-import { useEffortValue } from "@/hooks";
 import type { BaseStat, StatusType } from "@/types";
 
 import { TableBody } from "./TableBody";
@@ -40,16 +32,6 @@ type Props = {
 
 export function StatusTable({ pokemonBaseStats, statusType, pokemonName }: Props) {
   const [level, setLevel] = useState(50);
-
-  const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
-
-  const { updateEffortValue } = useEffortValue(effortValueAtom);
-
-  const handleReset = useCallback(() => {
-    initialState.map((s) => {
-      updateEffortValue(s);
-    });
-  }, [updateEffortValue]);
 
   return (
     <Card borderRadius="lg">
@@ -86,13 +68,6 @@ export function StatusTable({ pokemonBaseStats, statusType, pokemonName }: Props
               </NumberInput>
             </HStack>
           </FormControl>
-          <Button
-            aria-label="リセット"
-            onClick={handleReset}
-            size="sm"
-          >
-            努力値リセット
-          </Button>
         </HStack>
       </CardHeader>
       <CardBody py="8px">
