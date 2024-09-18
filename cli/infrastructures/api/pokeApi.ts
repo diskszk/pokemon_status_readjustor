@@ -1,9 +1,9 @@
 import { type Result, ok, err } from "neverthrow";
 
-import { API_ENDPOINT } from "@/constants";
+const apiEndpoint = process.env.API_ENDPOINT;
 
 export async function queryPokeAPI<T>(query: string): Promise<Result<T, Error>> {
-  const response = await fetch(API_ENDPOINT, {
+  const response = await fetch(apiEndpoint!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

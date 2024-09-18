@@ -3,11 +3,14 @@ import path from "node:path";
 
 import appRoot from "app-root-path";
 
-import { getAllPokemonName } from "../src/api";
+import { convert } from "./convert";
+import { getAllPokemonName } from "./getAllPokemonName";
 
-async function generatePokemonChartJson() {
-  const pokemonNameChart = await getAllPokemonName();
+export async function generatePokemonChartJson() {
   const root = appRoot.toString();
+
+  const allPokemonName = await getAllPokemonName();
+  const pokemonNameChart = convert(allPokemonName);
 
   try {
     await writeFile(path.resolve(root, "pokemon.json"), JSON.stringify(pokemonNameChart, null, 2));
@@ -18,5 +21,3 @@ async function generatePokemonChartJson() {
     process.exit(1);
   }
 }
-
-await generatePokemonChartJson();

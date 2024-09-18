@@ -11,7 +11,7 @@
     "test": "vitest run",
     "preview": "vite preview",
     "codegen": "graphql-codegen --config codegen.ts",
-    "gen:pokemon-chart": "tsx cli/generatePokemonChartJson.ts",
+    "gen:pokemon-chart": "tsx --env-file=.env cli/command.ts",
     "ladle": "ladle serve",
     "build:ladle": "ladle build -o ladle-static",
     "preview:ladle": "ladle preview -o ./ladle-static",

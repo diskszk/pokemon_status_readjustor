@@ -25,6 +25,6 @@
     },
     "types": ["@emotion/react/types/css-prop"]
   },
-  "include": ["src", ".ladle"],
+  "include": ["src", ".ladle", "cli/infrastructures/api/pokeApi.ts", "cli/features/names/getAllPokemonName.ts", "cli/infrastructures/queries/queryAllPokemonName.ts"],
   "exclude": ["src/**/*.stories.tsx", "src/mock/*.ts"]
 }
