@@ -2,7 +2,7 @@ import { useSetAtom } from "jotai";
 import { useCallback, useEffect } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
-import { formDisabledAtom } from "../store";
+import { formDisabledAtom } from "../stores";
 
 const inputValue$ = new BehaviorSubject("");
 const DEBOUNCE_TIME = 500;

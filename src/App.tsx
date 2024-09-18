@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { Box, Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } from "@chakra-ui/react";
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 

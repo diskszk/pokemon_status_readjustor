@@ -1,23 +1,22 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useRef, useState } from "react";
 
+import { formDisabledAtom } from "@/features/search/stores";
 import { suggestPokemonName } from "@/functions";
 import { useErrorToast } from "@/hooks";
-import { mockPokemons } from "@/mock/pokemons";
 import { usePokemonBaseStats } from "@/queries/pokemonBaseStats/usePokemonBaseStats";
 import { usePokemonForms } from "@/queries/pokemonForms";
 import { useDebouncedInput } from "@/search/hooks";
-import { formDisabledAtom } from "@/search/store";
 import { pokemonFormsAtom, pokemonNameAtom, pokemonBaseStatsAtom, loadingAtom } from "@/stores";
 import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";
-import pokemonsJson from "../../../../../pokemon.json";
+import { getPokemons } from "../logics";
 
 import type { FormEvent } from "react";
 
 export function Container() {
-  const pokemons = useMemo(() => import.meta.env.MODE === "production" ? pokemonsJson : mockPokemons, []);
+  const pokemons = useMemo(() => getPokemons(), []);
   const { queryBaseStats } = usePokemonBaseStats();
   const { queryPokemonForm } = usePokemonForms();
 
