@@ -21,7 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/search/*": ["src/features/search/*"]
     },
     "types": ["@emotion/react/types/css-prop"]
   },
