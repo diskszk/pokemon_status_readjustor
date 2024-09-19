@@ -1,17 +1,17 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useRef, useState } from "react";
 
+import type { PokemonNameChart } from "@/_types";
 import { formDisabledAtom } from "@/features/search/stores";
-import { suggestPokemonName } from "@/functions";
 import { useErrorToast } from "@/hooks";
-import { usePokemonBaseStats } from "@/queries/pokemonBaseStats/usePokemonBaseStats";
-import { usePokemonForms } from "@/queries/pokemonForms";
+import { usePokemonBaseStats } from "@/infrastructures/queries/pokemonBaseStats/usePokemonBaseStats";
+import { usePokemonForms } from "@/infrastructures/queries/pokemonForms";
 import { useDebouncedInput } from "@/search/hooks";
 import { pokemonFormsAtom, pokemonNameAtom, pokemonBaseStatsAtom, loadingAtom } from "@/stores";
-import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";
-import { getPokemons } from "../logics";
+import { getPokemons } from "../logic";
+import { suggestPokemonName } from "../logic/suggestPokemonName";
 
 import type { FormEvent } from "react";
 

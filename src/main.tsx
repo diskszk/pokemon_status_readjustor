@@ -3,10 +3,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { cacheExchange, Client, fetchExchange, Provider } from "urql";
 
-import { API_ENDPOINT } from "@/constants";
+import { API_ENDPOINT } from "@/_constants/index.ts";
 
 import "./index.css";
-import { Head } from "./components/index.ts";
+import { Head } from "./meta/head";
 import { Home } from "./pages/index.page.tsx";
 
 const client = new Client({

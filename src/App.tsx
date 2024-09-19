@@ -4,16 +4,15 @@
 import { Box, Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } from "@chakra-ui/react";
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 
-import { FormImages, ResultTable, SearchForm, StatusTable } from "@/components";
-import { ADJUSTED, CURRENT } from "@/constants";
+import { FormImages, ResultTable, SearchForm, StatusTable } from "@/_components";
+import { ADJUSTED, CURRENT } from "@/_constants";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
-import { usePokemonForms } from "@/queries/pokemonForms";
 
+import { type PokemonForm, type BaseStat } from "./_types";
 import { useEffortValue, useErrorToast } from "./hooks";
-import { type PokemonForm, type BaseStat } from "./types";
 import pokemonsJson from "../pokemon.json";
-import { adjustedEffortValueAtom, currentEffortValueAtom } from "./atoms";
-import { usePokemonBaseStats } from "./queries/pokemonBaseStats";
+import { adjustedEffortValueAtom, currentEffortValueAtom } from "./_atoms";
+import { usePokemonBaseStats } from "./infrastructures/queries/pokemonBaseStats";
 
 export function App() {
   const pokemons = useMemo(() => import.meta.env.MODE === "production" ? pokemonsJson : mockPokemons, []);

@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue } from "jotai";
 import { useCallback } from "react";
 
-import type { EffortValueState } from "@/types";
+import type { EffortValueState } from "@/_types";
 
 import type { PrimitiveAtom } from "jotai";
 

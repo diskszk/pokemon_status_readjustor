@@ -22,7 +22,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@/search/*": ["src/features/search/*"]
+      "@/search/*": ["src/features/search/*"],
+      "@/status/*": ["src/features/status/*"],
+      "@/forms/*": ["src/features/forms/*"],
+      "@/differences/*": ["src/features/differences/*"]
     },
     "types": ["@emotion/react/types/css-prop"]
   },
