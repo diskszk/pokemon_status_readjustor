@@ -1,6 +1,6 @@
 import { Box, HStack, Image } from "@chakra-ui/react";
 
-import type { PokemonForm } from "@/_types";
+import type { PokemonForm } from "../types";
 
 type Props = {
   pokemonForms: PokemonForm[];
@@ -8,7 +8,7 @@ type Props = {
 
 };
 
-export function FormImages({ pokemonForms, handleClickPokemonImage }: Props) {
+export function Presentation({ pokemonForms, handleClickPokemonImage }: Props) {
   return (
     <HStack
       alignItems="flex-end"
