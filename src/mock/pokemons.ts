@@ -1,4 +1,5 @@
-import type { Pokemon, PokemonNameChart } from "@/_types";
+import type { Pokemon } from "@/_types";
+import type { PokemonNameChart } from "@/features/search/types";
 
 export const mockPokemons = [
   {

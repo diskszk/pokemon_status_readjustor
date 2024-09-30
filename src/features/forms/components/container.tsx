@@ -1,8 +1,9 @@
 import { Skeleton } from "@chakra-ui/react";
+import { useAtom } from "jotai";
 import { useCallback, useState } from "react";
 
 import { useErrorToast } from "@/hooks";
-import { usePokemonName } from "@/hooks/usePokemonName";
+import { pokemonNameAtom } from "@/stores";
 
 import { Presentation } from "./presentation";
 import { usePokemonFormsQuery } from "../hooks/usePokemonFormsQuery";
@@ -10,7 +11,7 @@ import { usePokemonFormsQuery } from "../hooks/usePokemonFormsQuery";
 import type { PokemonForm } from "../types";
 
 export function Container() {
-  const { pokemonName, setPokemonName } = usePokemonName();
+  const [pokemonName, setPokemonName] = useAtom(pokemonNameAtom);
 
   const { pokemonFormsData, error, fetching } = usePokemonFormsQuery(pokemonName);
 

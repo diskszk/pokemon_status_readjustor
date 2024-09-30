@@ -1,24 +1,22 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import type { PokemonNameChart } from "@/_types";
 import { formDisabledAtom } from "@/features/search/stores";
 import { useErrorToast } from "@/hooks";
 import { usePokemonBaseStats } from "@/infrastructures/queries/pokemonBaseStats/usePokemonBaseStats";
-import { usePokemonForms } from "@/infrastructures/queries/pokemonForms";
 import { useDebouncedInput } from "@/search/hooks";
-import { pokemonFormsAtom, pokemonNameAtom, pokemonBaseStatsAtom, loadingAtom } from "@/stores";
+import { pokemonNameAtom, pokemonBaseStatsAtom, loadingAtom } from "@/stores";
 
 import { Presentation } from "./presentation";
 import { getPokemons } from "../logic";
 import { suggestPokemonName } from "../logic/suggestPokemonName";
 
+import type { PokemonNameChart } from "../types";
 import type { FormEvent } from "react";
 
 export function Container() {
   const pokemons = useMemo(() => getPokemons(), []);
   const { queryBaseStats } = usePokemonBaseStats();
-  const { queryPokemonForm } = usePokemonForms();
 
   const [suggested, setSuggested] = useState<PokemonNameChart[]>([]);
 
@@ -29,7 +27,6 @@ export function Container() {
   const formDisabled = useAtomValue(formDisabledAtom);
   const setLoading = useSetAtom(loadingAtom);
 
-  const setPokemonForms = useSetAtom(pokemonFormsAtom);
   const setPokemonName = useSetAtom(pokemonNameAtom);
   const setPokemonBaseStats = useSetAtom(pokemonBaseStatsAtom);
 
@@ -38,36 +35,22 @@ export function Container() {
 
     const form = new FormData(event.currentTarget);
     const ja = form.get("pokemon-ja");
-    let en = form.get("pokemon-en")?.toString();
+    const en = form.get("pokemon-en")?.toString();
 
     if (!ja) {
       return;
     }
 
     if (!en) {
-      en = pokemons.find((pokemon) => pokemon.ja === ja)?.en;
-
-      if (!en) {
-        showErrorToast({
-          description: `${ja}は存在しない可能性があります。`,
-        });
-        return;
-      }
-    }
-    setLoading(true);
-    const { pokemonForms: newPokemonForms, error } = await queryPokemonForm(en?.toString());
-
-    if (error || !newPokemonForms) {
       showErrorToast({
-        description: "ポケモンの画像の取得に失敗しました。",
+        description: `${ja}は存在しない可能性があります。`,
       });
       return;
     }
+    setLoading(true);
+    setPokemonName(en);
 
-    setPokemonForms(newPokemonForms);
-    setPokemonName(newPokemonForms[0].name);
-
-    const { stats, error: queryBaseStatsError } = await queryBaseStats(newPokemonForms[0].name);
+    const { stats, error: queryBaseStatsError } = await queryBaseStats(en);
 
     if (queryBaseStatsError || !stats) {
       showErrorToast({
@@ -78,7 +61,7 @@ export function Container() {
 
     setPokemonBaseStats(stats);
     setLoading(false);
-  }, [pokemons, queryBaseStats, queryPokemonForm, setLoading, setPokemonBaseStats, setPokemonForms, setPokemonName, showErrorToast]);
+  }, [queryBaseStats, setLoading, setPokemonBaseStats, setPokemonName, showErrorToast]);
 
   const { handleChange } = useDebouncedInput((inputValue) => {
     const suggestResult = suggestPokemonName(inputValue, pokemons);
