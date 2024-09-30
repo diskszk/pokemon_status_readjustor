@@ -1,5 +1,5 @@
-import { HP_JA, ATK_JA, DEF_JA, SP_ATK_JA, SP_DEF_JA, SPD_JA } from "@/_constants";
 import type { StatusSpeciesEN, StatusSpeciesJA } from "@/_types";
+import { HP_JA, ATK_JA, DEF_JA, SP_ATK_JA, SP_DEF_JA, SPD_JA } from "@/features/constants";
 
 export function toJaStatusSpecies(str: StatusSpeciesEN): StatusSpeciesJA {
   switch (str.toLowerCase()) {

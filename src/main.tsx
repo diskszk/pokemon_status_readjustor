@@ -3,7 +3,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { cacheExchange, Client, fetchExchange, Provider } from "urql";
 
-import { API_ENDPOINT } from "@/_constants/index.ts";
+import { API_ENDPOINT } from "@/features/constants/index.ts";
 
 import "./index.css";
 import { Head } from "./meta/head";

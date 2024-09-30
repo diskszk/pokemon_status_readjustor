@@ -15,10 +15,10 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/_atoms";
-import { CURRENT, HP } from "@/_constants";
 import type { StatusSpeciesEN, StatusType } from "@/_types";
-import { useEffortValue, useErrorToast } from "@/hooks";
+import { CURRENT, HP } from "@/features/constants";
+import { useEffortValue, useErrorToast } from "@/features/hooks";
+import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/features/stores/effortValueAtom";
 
 import { calcActualValue } from "../logic/calcActualValue";
 import { calcEffortValue } from "../logic/calcEffortValue";

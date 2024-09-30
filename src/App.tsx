@@ -5,13 +5,13 @@ import { Box, Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } 
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 
 import { FormImages, ResultTable, SearchForm, StatusTable } from "@/_components";
-import { ADJUSTED, CURRENT } from "@/_constants";
+import { ADJUSTED, CURRENT } from "@/features/constants";
 import { garchomp, mockPokemons } from "@/mock/pokemons";
 
 import { type PokemonForm, type BaseStat } from "./_types";
-import { useEffortValue, useErrorToast } from "./hooks";
 import pokemonsJson from "../pokemon.json";
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "./_atoms";
+import { useEffortValue, useErrorToast } from "./features/hooks";
 import { usePokemonBaseStats } from "./infrastructures/queries/pokemonBaseStats";
 
 export function App() {

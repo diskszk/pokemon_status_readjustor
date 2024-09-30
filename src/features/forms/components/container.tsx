@@ -2,8 +2,8 @@ import { Skeleton } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { useCallback, useState } from "react";
 
-import { useErrorToast } from "@/hooks";
-import { pokemonNameAtom } from "@/stores";
+import { useErrorToast } from "@/features/hooks";
+import { pokemonNameAtom } from "@/features/stores";
 
 import { Presentation } from "./presentation";
 import { usePokemonFormsQuery } from "../hooks/usePokemonFormsQuery";

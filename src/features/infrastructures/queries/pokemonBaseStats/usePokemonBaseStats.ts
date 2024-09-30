@@ -2,10 +2,10 @@ import { useCallback } from "react";
 import { useClient } from "urql";
 
 import type { BaseStat, StatusSpeciesEN } from "@/_types";
-import type { Pokemon_V2_Pokemon } from "@/infrastructures/gql/graphql";
 
 import { QueryPokemonBaseStats } from "./query";
 
+import type { Pokemon_V2_Pokemon } from "../../gql/graphql";
 import type { CombinedError } from "urql";
 
 type QueryReturnType = {

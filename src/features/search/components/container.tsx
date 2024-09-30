@@ -1,11 +1,11 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useRef, useState } from "react";
 
+import { useErrorToast } from "@/features/hooks";
+import { usePokemonBaseStats } from "@/features/infrastructures/queries/pokemonBaseStats";
 import { formDisabledAtom } from "@/features/search/stores";
-import { useErrorToast } from "@/hooks";
-import { usePokemonBaseStats } from "@/infrastructures/queries/pokemonBaseStats/usePokemonBaseStats";
+import { loadingAtom, pokemonBaseStatsAtom, pokemonNameAtom } from "@/features/stores";
 import { useDebouncedInput } from "@/search/hooks";
-import { pokemonNameAtom, pokemonBaseStatsAtom, loadingAtom } from "@/stores";
 
 import { Presentation } from "./presentation";
 import { getPokemons } from "../logic";

@@ -1,4 +1,4 @@
-import { HP, ATK, DEF, SP_ATK, SP_DEF, SPD } from "@/_constants";
+import { HP, ATK, DEF, SP_ATK, SP_DEF, SPD } from "@/features/constants";
 
 export const items = [
   { largeIncrease: "マックスアップ", smallIncrease: "たいりょくのハネ", decrease: "ザロクのみ", type: HP },

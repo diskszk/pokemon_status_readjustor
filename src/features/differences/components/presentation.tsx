@@ -2,20 +2,16 @@ import { TableContainer, Table, Thead, Tr, Th, Text, Image, Stack, Accordion, Ac
 import { css } from "@emotion/react";
 
 import type { EffortValueState } from "@/_types";
-import { getEffortValueDiff } from "@/differences/logic/getEffortValueDiff";
 
 import { TableBody } from "./TableBody";
 
 type Props = {
-  currentEffortValues: EffortValueState[];
-  adjustedEffortValues: EffortValueState[];
+  effortValueDiff: EffortValueState[];
 };
 
-export function ResultTable({
-  currentEffortValues, adjustedEffortValues,
+export function Presentation({
+  effortValueDiff,
 }: Props) {
-  const diff = getEffortValueDiff(currentEffortValues, adjustedEffortValues);
-
   return (
     <Accordion
       allowMultiple
@@ -104,7 +100,7 @@ export function ResultTable({
                     </Tr>
                     <Tr />
                   </Thead>
-                  {diff.map((effortValueDiff, key) => (
+                  {effortValueDiff.map((effortValueDiff, key) => (
                     <TableBody
                       effortValueDiff={effortValueDiff}
                       key={key}
