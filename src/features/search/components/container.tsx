@@ -43,13 +43,15 @@ export function Container() {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const ja = form.get("pokemon-ja");
-    const en = form.get("pokemon-en")?.toString();
+    let en = form.get("pokemon-en")?.toString();
 
     if (!ja) {
       return;
     }
 
     if (!en) {
+      en = pokemons.find((pokemon) => pokemon.ja === ja)?.en;
+
       showErrorToast({
         description: `${ja}は存在しない可能性があります。`,
       });
@@ -69,7 +71,7 @@ export function Container() {
 
     setPokemonForm(pokemonForms);
     setLoading(false);
-  }, [queryPokemonForm, setLoading, setPokemonForm, setPokemonName, showErrorToast]);
+  }, [pokemons, queryPokemonForm, setLoading, setPokemonForm, setPokemonName, showErrorToast]);
 
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
