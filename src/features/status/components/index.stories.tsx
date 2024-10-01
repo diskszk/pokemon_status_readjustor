@@ -18,7 +18,7 @@ export const Garchomp: Story<Props> = (props) => (
   <StatusTable {...props} />
 );
 
-Garchomp.args = { ...garchomp, statusType: "current", header: "ステータス" };
+Garchomp.args = { pokemonBaseStats: garchomp.baseStats, pokemonName: garchomp.name, statusType: "current", header: "ステータス" };
 
 export const Shedinja: Story<Props> = (props) => (
   <StatusTable {...props} />
@@ -35,4 +35,4 @@ const shedinja = {
   ],
   forms: [],
 } satisfies Pokemon;
-Shedinja.args = { ...shedinja, statusType: "adjusted", header: "ステータス" };
+Shedinja.args = { pokemonBaseStats: shedinja.baseStats, pokemonName: shedinja.name, statusType: "adjusted", header: "ステータス" };

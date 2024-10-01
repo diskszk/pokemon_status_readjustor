@@ -21,8 +21,9 @@ import {
 import { useState } from "react";
 
 import type { BaseStat, StatusType } from "@/_types";
+import { HP } from "@/features/constants";
 
-import { TableBody } from "./TableBody";
+import { HpStatusTableBody, StatusTableBody } from "./StatusTableBody";
 
 type Props = {
   pokemonBaseStats: BaseStat[];
@@ -90,14 +91,23 @@ export function StatusTable({ pokemonBaseStats, statusType, pokemonName, header 
                 <Tr />
               </Thead>
               {pokemonBaseStats.map((p, key) => (
-                <TableBody
-                  baseStat={p.value}
-                  key={key}
-                  level={level}
-                  pokemonName={pokemonName}
-                  speciesName={p.name}
-                  statusType={statusType}
-                />
+                p.name === HP ? (
+                  <HpStatusTableBody
+                    baseStat={p.value}
+                    key={key}
+                    level={level}
+                    pokemonName={pokemonName}
+                    statusType={statusType}
+                  />
+                ) : (
+                  <StatusTableBody
+                    baseStat={p.value}
+                    key={key}
+                    level={level}
+                    speciesName={p.name}
+                    statusType={statusType}
+                  />
+                )
               ))}
             </Table>
           </TableContainer>
