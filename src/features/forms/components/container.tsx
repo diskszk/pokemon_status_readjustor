@@ -1,23 +1,20 @@
 import { Skeleton } from "@chakra-ui/react";
-import { useAtom } from "jotai";
-import { useCallback, useState } from "react";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useCallback } from "react";
 
 import { useErrorToast } from "@/features/hooks";
-import { pokemonNameAtom } from "@/features/stores";
+import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/stores";
 
 import { Presentation } from "./presentation";
-import { usePokemonFormsQuery } from "../hooks/usePokemonFormsQuery";
 
 import type { PokemonForm } from "../types";
 
 export function Container() {
-  const [pokemonName, setPokemonName] = useAtom(pokemonNameAtom);
+  const setPokemonName = useSetAtom(pokemonNameAtom);
+  const [pokemonForms, setPokemonForms] = useAtom(pokemonFormsAtom);
 
-  const { pokemonFormsData, error, fetching } = usePokemonFormsQuery(pokemonName);
-
+  const loading = useAtomValue(loadingAtom);
   const { showErrorToast } = useErrorToast();
-
-  const [pokemonForms, setPokemonForms] = useState<PokemonForm[]>(pokemonFormsData);
 
   const handleClickPokemonImage = useCallback(async (target: PokemonForm) => {
     /* ポケモンの姿を並び替える */
@@ -33,15 +30,10 @@ export function Container() {
 
     setPokemonForms(newArray);
     setPokemonName(newArray[0].name);
-  }, [pokemonForms, setPokemonName, showErrorToast]);
-
-  if (error) {
-    showErrorToast({ description: "ポケモンの画像の取得に失敗しました" });
-    return;
-  }
+  }, [pokemonForms, setPokemonForms, setPokemonName, showErrorToast]);
 
   return (
-    <Skeleton isLoaded={!fetching}>
+    <Skeleton isLoaded={!loading}>
       <Presentation
         handleClickPokemonImage={handleClickPokemonImage}
         pokemonForms={pokemonForms}

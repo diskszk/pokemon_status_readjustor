@@ -1,173 +1,30 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+import { ChakraProvider } from "@chakra-ui/react";
+import { StrictMode } from "react";
+import { HelmetProvider } from "react-helmet-async";
+import { cacheExchange, Client, fetchExchange, Provider } from "urql";
 
-import { Box, Center, Flex, Grid, GridItem, Heading, HStack, Skeleton, Spacer } from "@chakra-ui/react";
-import { useCallback, useMemo, useState, type FormEvent } from "react";
+import { API_ENDPOINT } from "@/features/constants/index.ts";
 
-import { FormImages, ResultTable, SearchForm, StatusTable } from "@/_components";
-import { ADJUSTED, CURRENT } from "@/features/constants";
-import { garchomp, mockPokemons } from "@/mock/pokemons";
+import { Head } from "./meta/head";
+import { Home } from "./pages/index.page.tsx";
 
-import { type PokemonForm, type BaseStat } from "./_types";
-import pokemonsJson from "../pokemon.json";
-import { adjustedEffortValueAtom, currentEffortValueAtom } from "./_atoms";
-import { useEffortValue, useErrorToast } from "./features/hooks";
-import { usePokemonBaseStats } from "./infrastructures/queries/pokemonBaseStats";
+const client = new Client({
+  url: API_ENDPOINT,
+  exchanges: [cacheExchange, fetchExchange],
+});
 
 export function App() {
-  const pokemons = useMemo(() => import.meta.env.MODE === "production" ? pokemonsJson : mockPokemons, []);
-
-  const [pokemonForms, setPokemonForms] = useState<PokemonForm[]>(garchomp.forms);
-  const { queryPokemonForm } = usePokemonForms();
-
-  const [pokemonName, setPokemonName] = useState("");
-  const [pokemonBaseStats, setPokemonBaseStats] = useState<BaseStat[]>(garchomp.baseStats);
-
-  const { queryBaseStats } = usePokemonBaseStats();
-
-  const [loading, setLoading] = useState(false);
-  const { showErrorToast } = useErrorToast();
-
-  const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const form = new FormData(event.currentTarget);
-    const ja = form.get("pokemon-ja");
-    let en = form.get("pokemon-en")?.toString();
-
-    if (!ja) {
-      return;
-    }
-
-    if (!en) {
-      en = pokemons.find((pokemon) => pokemon.ja === ja)?.en;
-
-      if (!en) {
-        showErrorToast({
-          description: `${ja}は存在しない可能性があります。`,
-        });
-        return;
-      }
-    }
-    setLoading(true);
-    const { pokemonForms: newPokemonForms, error } = await queryPokemonForm(en?.toString());
-
-    if (error || !newPokemonForms) {
-      showErrorToast({
-        description: "ポケモンの画像の取得に失敗しました。",
-      });
-      return;
-    }
-
-    setPokemonForms(newPokemonForms);
-    setPokemonName(newPokemonForms[0].name);
-
-    const { stats, error: queryBaseStatsError } = await queryBaseStats(newPokemonForms[0].name);
-
-    if (queryBaseStatsError || !stats) {
-      showErrorToast({
-        description: "データの取得に失敗しました",
-      });
-      return;
-    }
-
-    setPokemonBaseStats(stats);
-    setLoading(false);
-  }, [pokemons, queryBaseStats, queryPokemonForm, showErrorToast]);
-
-  const handleClickPokemonImage = useCallback(async (target: PokemonForm) => {
-    /* ポケモンの姿を並び替える */
-    const newArray: PokemonForm[] = [];
-    const rest = pokemonForms.filter((f) => f.name !== target.name);
-    newArray.push(target, ...rest);
-    if (!newArray[0].name) {
-      showErrorToast({
-        description: "データの取得に失敗しました",
-      });
-      return;
-    }
-
-    setPokemonForms(newArray);
-    setPokemonName(newArray[0].name);
-
-    setLoading(true);
-    const { stats, error } = await queryBaseStats(newArray[0].name);
-
-    if (error || !stats) {
-      showErrorToast({
-        description: "データの取得に失敗しました",
-      });
-      return;
-    }
-
-    setPokemonBaseStats(stats);
-    setLoading(false);
-  }, [pokemonForms, queryBaseStats, showErrorToast]);
-
-  const { allEffortValue: currentAllEffortValue } = useEffortValue(currentEffortValueAtom);
-  const { allEffortValue: adjustedAllEffortValue } = useEffortValue(adjustedEffortValueAtom);
-
   return (
-    <Flex
-      align="center"
-      backgroundColor="gray.50"
-      direction="column"
-      gap="16px"
-      minHeight="100vh"
-    >
-      <Box
-        minWidth="100vw"
-        pt="16px"
-      >
-        <Center>
-          <Heading>ステータス再調整ツール</Heading>
-        </Center>
-      </Box>
-      <HStack>
-        <SearchForm
-          handleSubmit={onSubmitSearchForm}
-          pokemons={pokemons}
-        />
-        <Skeleton isLoaded={!loading}>
-          <FormImages
-            handleClickPokemonImage={handleClickPokemonImage}
-            pokemonForms={pokemonForms}
-          />
-        </Skeleton>
-      </HStack>
-      <Grid
-        gap="32px"
-        templateColumns="repeat(2, 1fr)"
-        templateRows="auto, 1fr"
-      >
-        <GridItem>
-          <Skeleton isLoaded={!loading}>
-            <StatusTable
-              header="現在のステータス"
-              pokemonBaseStats={pokemonBaseStats}
-              pokemonName={pokemonName}
-              statusType={CURRENT}
-            />
-          </Skeleton>
-        </GridItem>
-        <GridItem>
-          <Skeleton isLoaded={!loading}>
-            <StatusTable
-              header="調整後のステータス"
-              pokemonBaseStats={pokemonBaseStats}
-              pokemonName={pokemonName}
-              statusType={ADJUSTED}
-            />
-          </Skeleton>
-        </GridItem>
-        <GridItem gridColumn="span 2">
-          <ResultTable
-            adjustedEffortValues={adjustedAllEffortValue}
-            currentEffortValues={currentAllEffortValue}
-          />
-        </GridItem>
-      </Grid>
-      <Spacer />
-    </Flex>
+    <StrictMode>
+      <Provider value={client}>
+        <ChakraProvider resetCSS={true}>
+          <HelmetProvider>
+            <Head />
+            <Home />
+            {/* <Test /> */}
+          </HelmetProvider>
+        </ChakraProvider>
+      </Provider>
+    </StrictMode>
   );
 }

@@ -1,11 +1,11 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BehaviorSubject, debounceTime } from "rxjs";
 
+import { usePokemonFormsQuery } from "@/features/forms/hooks";
 import { useErrorToast } from "@/features/hooks";
-import { usePokemonBaseStats } from "@/features/infrastructures/queries/pokemonBaseStats";
 import { formDisabledAtom } from "@/features/search/stores";
-import { loadingAtom, pokemonBaseStatsAtom, pokemonNameAtom } from "@/features/stores";
-import { useDebouncedInput } from "@/search/hooks";
+import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/stores";
 
 import { Presentation } from "./presentation";
 import { getPokemons } from "../logic";
@@ -14,9 +14,11 @@ import { suggestPokemonName } from "../logic/suggestPokemonName";
 import type { PokemonNameChart } from "../types";
 import type { FormEvent } from "react";
 
+const inputValue$ = new BehaviorSubject("");
+const DEBOUNCE_TIME = 500;
+
 export function Container() {
   const pokemons = useMemo(() => getPokemons(), []);
-  const { queryBaseStats } = usePokemonBaseStats();
 
   const [suggested, setSuggested] = useState<PokemonNameChart[]>([]);
 
@@ -28,8 +30,14 @@ export function Container() {
   const setLoading = useSetAtom(loadingAtom);
 
   const setPokemonName = useSetAtom(pokemonNameAtom);
-  const setPokemonBaseStats = useSetAtom(pokemonBaseStatsAtom);
 
+  const handleChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    inputValue$.next(event.target.value);
+  }, []);
+
+  const { queryPokemonForm } = usePokemonFormsQuery();
+
+  const setPokemonForm = useSetAtom(pokemonFormsAtom);
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -50,38 +58,42 @@ export function Container() {
     setLoading(true);
     setPokemonName(en);
 
-    const { stats, error: queryBaseStatsError } = await queryBaseStats(en);
+    const { pokemonForms, error } = await queryPokemonForm(en);
 
-    if (queryBaseStatsError || !stats) {
+    if (error || !pokemonForms) {
       showErrorToast({
         description: "データの取得に失敗しました",
       });
       return;
     }
 
-    setPokemonBaseStats(stats);
+    setPokemonForm(pokemonForms);
     setLoading(false);
-  }, [queryBaseStats, setLoading, setPokemonBaseStats, setPokemonName, showErrorToast]);
+  }, [queryPokemonForm, setLoading, setPokemonForm, setPokemonName, showErrorToast]);
 
-  const { handleChange } = useDebouncedInput((inputValue) => {
-    const suggestResult = suggestPokemonName(inputValue, pokemons);
+  useEffect(() => {
+    const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
+      const suggestResult = suggestPokemonName(inputValue, pokemons);
 
-    setSuggested(suggestResult);
+      setSuggested(suggestResult);
 
-    if (!datalistRef.current) {
-      return;
-    }
+      if (!datalistRef.current) {
+        return;
+      }
 
-    // 入力値と一致するポケモンの英語名をinputに設定する
-    const options = datalistRef.current.querySelectorAll("option");
-    const option = Array.from(options).find((option) => option.value === inputValue);
+      // 入力値と一致するポケモンの英語名をinputに設定する
+      const options = datalistRef.current.querySelectorAll("option");
+      const option = Array.from(options).find((option) => option.value === inputValue);
 
-    const enName = option ? option.getAttribute("data-en") : null;
+      const enName = option ? option.getAttribute("data-en") : null;
 
-    if (pokemonEnInputRef.current) {
-      pokemonEnInputRef.current.value = enName || "";
-    }
-  });
+      if (pokemonEnInputRef.current) {
+        pokemonEnInputRef.current.value = enName || "";
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [pokemons]);
 
   return (
     <Presentation

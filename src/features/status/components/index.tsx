@@ -1,118 +1,46 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  FormControl,
-  FormLabel,
-  Heading,
-  HStack,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Table,
-  TableContainer,
-  Th,
-  Thead,
-  Tr,
-  VStack,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { HStack, Skeleton } from "@chakra-ui/react";
+import { useAtomValue } from "jotai";
 
-import type { BaseStat, StatusType } from "@/_types";
-import { HP } from "@/features/constants";
+import { ADJUSTED, CURRENT } from "@/features/constants";
+import { useErrorToast } from "@/features/hooks";
+import { pokemonNameAtom } from "@/features/stores";
+import { garchomp } from "@/mock/pokemons";
 
-import { HpStatusTableBody, StatusTableBody } from "./StatusTableBody";
+import { usePokemonBaseStats } from "../hooks";
+import { StatusTable } from "./StatusTable";
 
-type Props = {
-  pokemonBaseStats: BaseStat[];
-  statusType: StatusType;
-  pokemonName: string;
-  header: string;
-};
+export function StatusTableWrapper() {
+  const pokemonName = useAtomValue(pokemonNameAtom);
 
-export function StatusTable({ pokemonBaseStats, statusType, pokemonName, header }: Props) {
-  const [level, setLevel] = useState(50);
+  const { showErrorToast } = useErrorToast();
+  const { baseStatsData, fetching, error } = usePokemonBaseStats(pokemonName);
+
+  if (error) {
+    showErrorToast({
+      description: "データの取得に失敗しました",
+    });
+  }
+
+  const baseStats = baseStatsData || garchomp.baseStats;
 
   return (
-    <Card borderRadius="lg">
-      <CardHeader
-        pb="8px"
-        pt="12px"
-      >
-        <HStack alignItems="center">
-          <Heading
-            as="h3"
-            px="16px"
-            size="sm"
-            width="100%"
-          >
-            {header}
-          </Heading>
-          <FormControl>
-            <HStack>
-              <FormLabel m="0 2px">レベル</FormLabel>
-              <NumberInput
-                aria-label="レベル"
-                max={100}
-                min={1}
-                onChange={(value) => setLevel(Number(value))}
-                size="sm"
-                value={level}
-                variant="flushed"
-                width="60px"
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </HStack>
-          </FormControl>
-        </HStack>
-      </CardHeader>
-      <CardBody py="8px">
-        <VStack>
-          <TableContainer>
-            <Table
-              size="sm"
-              variant="simple"
-            >
-              <Thead alignItems="center">
-                <Tr>
-                  <Th />
-                  <Th>実数値</Th>
-                  <Th>努力値</Th>
-                  <Th>個体値</Th>
-                  <Th>性格</Th>
-                </Tr>
-                <Tr />
-              </Thead>
-              {pokemonBaseStats.map((p, key) => (
-                p.name === HP ? (
-                  <HpStatusTableBody
-                    baseStat={p.value}
-                    key={key}
-                    level={level}
-                    pokemonName={pokemonName}
-                    statusType={statusType}
-                  />
-                ) : (
-                  <StatusTableBody
-                    baseStat={p.value}
-                    key={key}
-                    level={level}
-                    speciesName={p.name}
-                    statusType={statusType}
-                  />
-                )
-              ))}
-            </Table>
-          </TableContainer>
-        </VStack>
-      </CardBody>
-    </Card>
+    <HStack spacing="32px">
+      <Skeleton isLoaded={!fetching}>
+        <StatusTable
+          header="現在のステータス"
+          pokemonBaseStats={baseStats}
+          pokemonName={pokemonName}
+          statusType={CURRENT}
+        />
+      </Skeleton>
+      <Skeleton isLoaded={!fetching}>
+        <StatusTable
+          header="調整後のステータス"
+          pokemonBaseStats={baseStats}
+          pokemonName={pokemonName}
+          statusType={ADJUSTED}
+        />
+      </Skeleton>
+    </HStack>
   );
 }

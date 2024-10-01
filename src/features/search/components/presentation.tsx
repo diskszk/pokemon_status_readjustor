@@ -1,6 +1,6 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Flex, FormControl, VStack, InputGroup, Input, InputRightElement, Spinner, VisuallyHiddenInput, FormHelperText } from "@chakra-ui/react";
-import { forwardRef, type FormEventHandler, type RefObject } from "react";
+import { forwardRef, useImperativeHandle, type FormEventHandler, type RefObject } from "react";
 
 import { inputCss } from "./css";
 
@@ -15,14 +15,28 @@ type Props = {
   handleChangeSearchForm: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 };
 
-export const Presentation = forwardRef<HTMLElement, Props>(function Presentation({
-  formDisabled,
-  pokemonEnInputRef,
-  datalistRef,
-  suggested,
-  handleSubmit,
-  handleChangeSearchForm,
-}) {
+export const Presentation = forwardRef((
+  {
+    formDisabled,
+    pokemonEnInputRef,
+    datalistRef,
+    suggested,
+    handleSubmit,
+    handleChangeSearchForm,
+  }: Props, ref,
+) => {
+  useImperativeHandle(ref, () => {
+    const inputDom = pokemonEnInputRef.current;
+    const dataListDom = datalistRef.current;
+
+    if (inputDom != null && dataListDom != null) {
+      return [inputDom, dataListDom];
+    }
+    else {
+      return [];
+    }
+  });
+
   return (
     <Flex>
       <form onSubmit={handleSubmit}>
