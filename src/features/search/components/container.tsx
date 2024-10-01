@@ -1,10 +1,9 @@
-import { useAtomValue, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
 import { usePokemonFormsQuery } from "@/features/forms/hooks";
 import { useErrorToast } from "@/features/hooks";
-import { formDisabledAtom } from "@/features/search/stores";
 import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/stores";
 import type { PokemonNameChart } from "@/types";
 
@@ -26,12 +25,14 @@ export function Container() {
   const datalistRef = useRef<HTMLDataListElement>(null);
 
   const { showErrorToast } = useErrorToast();
-  const formDisabled = useAtomValue(formDisabledAtom);
   const setLoading = useSetAtom(loadingAtom);
 
   const setPokemonName = useSetAtom(pokemonNameAtom);
 
+  const [formDisabled, setFormDisabled] = useState(false);
+
   const handleChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormDisabled(true);
     inputValue$.next(event.target.value);
   }, []);
 
@@ -40,7 +41,6 @@ export function Container() {
   const setPokemonForm = useSetAtom(pokemonFormsAtom);
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const form = new FormData(event.currentTarget);
     const ja = form.get("pokemon-ja");
     const en = form.get("pokemon-en")?.toString();
@@ -90,6 +90,7 @@ export function Container() {
       if (pokemonEnInputRef.current) {
         pokemonEnInputRef.current.value = enName || "";
       }
+      setFormDisabled(false);
     });
 
     return () => subscription.unsubscribe();
