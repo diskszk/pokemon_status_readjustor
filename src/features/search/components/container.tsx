@@ -50,12 +50,13 @@ export function Container() {
     }
 
     if (!en) {
-      en = pokemons.find((pokemon) => pokemon.ja === ja)?.en;
-
-      showErrorToast({
-        description: `${ja}は存在しない可能性があります。`,
-      });
-      return;
+      if (!suggested) {
+        showErrorToast({
+          description: `${ja}は存在しない可能性があります。`,
+        });
+        return;
+      }
+      en = suggested[0].en;
     }
     setLoading(true);
     setPokemonName(en);

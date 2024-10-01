@@ -21,7 +21,6 @@ export function App() {
           <HelmetProvider>
             <Head />
             <Home />
-            {/* <Test /> */}
           </HelmetProvider>
         </ChakraProvider>
       </Provider>
