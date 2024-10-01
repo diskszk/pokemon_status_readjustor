@@ -5,7 +5,10 @@ import type { GlobalProvider } from "@ladle/react";
 
 export const Provider: GlobalProvider = ({ children }) => (
   <div>
-    <ChakraProvider resetCSS={true}>
+    <ChakraProvider
+      resetCSS={true}
+      toastOptions={{ defaultOptions: { position: "bottom" } }}
+    >
       {children}
     </ChakraProvider>
   </div>

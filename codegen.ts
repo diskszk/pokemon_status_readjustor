@@ -9,6 +9,10 @@ const config: CodegenConfig = {
       preset: "client",
       plugins: [],
     },
+    "cli/infrastructures/gql/": {
+      preset: "client",
+      plugins: [],
+    },
   },
 };
 

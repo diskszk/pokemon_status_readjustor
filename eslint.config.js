@@ -14,7 +14,7 @@ import tseslint from "typescript-eslint";
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  { ignores: ["dist", "src/gql/graphql.ts", "ladle-static"] },
+  { ignores: ["dist", "**/gql/graphql.ts", "ladle-static"] },
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     ...pluginReact.configs.flat.recommended,
