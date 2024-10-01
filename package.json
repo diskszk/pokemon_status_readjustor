@@ -24,7 +24,6 @@
     "@emotion/styled": "^11.13.0",
     "@ladle/react": "^4.1.1",
     "app-root-path": "^3.1.0",
-    "framer-motion": "^11.5.4",
     "jotai": "^2.9.3",
     "neverthrow": "^7.1.0",
     "react": "^18.3.1",
