@@ -1,6 +1,6 @@
 import { type Result, ok, err } from "neverthrow";
 
-const apiEndpoint = process.env.VITE_API_ENDPOINT;
+const apiEndpoint = "https://beta.pokeapi.co/graphql/v1beta";
 
 export async function queryPokeAPI<T>(query: string): Promise<Result<T, Error>> {
   const response = await fetch(apiEndpoint!, {
