@@ -25,10 +25,11 @@
       "@/search/*": ["src/features/search/*"],
       "@/status/*": ["src/features/status/*"],
       "@/forms/*": ["src/features/forms/*"],
-      "@/differences/*": ["src/features/differences/*"]
+      "@/differences/*": ["src/features/differences/*"],
+      "@/types": ["src/features/types.ts"]
     },
     "types": ["@emotion/react/types/css-prop"]
   },
   "include": ["src", ".ladle", "cli/infrastructures/api/pokeApi.ts", "cli/features/names/getAllPokemonName.ts", "cli/infrastructures/queries/queryAllPokemonName.ts"],
-  "exclude": ["src/**/*.stories.tsx", "src/mock/*.ts"]
+  "exclude": ["src/**/*.stories.tsx", "src/features/mock/*.ts"]
 }

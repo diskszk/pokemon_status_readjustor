@@ -1,10 +1,10 @@
 import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import { useState, useCallback, useEffect } from "react";
 
-import type { StatusSpeciesEN, StatusType } from "@/_types";
 import { CURRENT } from "@/features/constants";
 import { useEffortValue, useErrorToast } from "@/features/hooks";
 import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/features/stores/effortValueAtom";
+import type { StatusSpecies, StatusType } from "@/types";
 
 import { Presentation } from "./presentation";
 import { MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../../constants";
@@ -15,7 +15,7 @@ import type { MouseEventHandler } from "react";
 
 type Props = {
   level: number;
-  speciesName: StatusSpeciesEN;
+  speciesName: StatusSpecies;
   baseStat: number;
   statusType: StatusType;
 };
@@ -32,7 +32,7 @@ export function StatusTableBody({
 
   const { totalEffortValue, allEffortValue, updateEffortValue } = useEffortValue(effortValueAtom);
 
-  const effortValue = allEffortValue.find((v) => v.type === speciesName);
+  const effortValue = allEffortValue.find((v) => v.name === speciesName);
 
   const { showErrorToast } = useErrorToast();
   if (!effortValue) {
@@ -83,11 +83,11 @@ export function StatusTableBody({
     const newEffortValue = calcEffortValue({
       actual: value, level, baseStat, individual: individualValue, nature,
     });
-    updateEffortValue({ type: speciesName, value: newEffortValue });
+    updateEffortValue({ name: speciesName, value: newEffortValue });
   }, [baseStat, individualValue, level, nature, speciesName, updateEffortValue]);
 
   const handleChangeEffortValue: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {
-    updateEffortValue({ type: speciesName, value });
+    updateEffortValue({ name: speciesName, value });
 
     updateActualValue({ effort: value });
   }, [speciesName, updateActualValue, updateEffortValue]);

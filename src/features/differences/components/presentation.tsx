@@ -1,12 +1,12 @@
 import { TableContainer, Table, Thead, Tr, Th, Text, Image, Stack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Box, Card, CardBody } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 
-import type { EffortValueState } from "@/_types";
+import type { PokemonStatus } from "@/types";
 
 import { TableBody } from "./TableBody";
 
 type Props = {
-  effortValueDiff: EffortValueState[];
+  effortValueDiff: PokemonStatus[];
 };
 
 export function Presentation({

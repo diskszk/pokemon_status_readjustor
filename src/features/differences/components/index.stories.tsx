@@ -12,12 +12,12 @@ export default {
   title: "components/Differences",
   args: {
     effortValueDiff: [
-      { type: HP, value: 60 },
-      { type: ATK, value: 72 },
-      { type: DEF, value: 0 },
-      { type: SP_ATK, value: -84 },
-      { type: SP_DEF, value: 0 },
-      { type: SPD, value: -48 },
+      { name: HP, value: 60 },
+      { name: ATK, value: 72 },
+      { name: DEF, value: 0 },
+      { name: SP_ATK, value: -84 },
+      { name: SP_DEF, value: 0 },
+      { name: SPD, value: -48 },
     ],
   },
 } satisfies StoryDefault;

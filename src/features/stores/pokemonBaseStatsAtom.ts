@@ -1,5 +1,5 @@
 import { atom } from "jotai";
 
-import type { BaseStat } from "@/_types";
+import type { PokemonStatus } from "@/types";
 
-export const pokemonBaseStatsAtom = atom<BaseStat[]>([]);
+export const pokemonBaseStatsAtom = atom<PokemonStatus[]>([]);

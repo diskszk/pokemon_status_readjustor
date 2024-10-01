@@ -1,12 +1,10 @@
 import React from "react";
 
-import { garchomp } from "../../../mock/pokemons";
+import { StatusTable } from "./StatusTable";
+import { garchomp } from "../../mock/pokemons";
 
-import type { Pokemon } from "../../../_types";
 import type { StoryDefault, Story } from "@ladle/react";
 import type { ComponentProps } from "react";
-
-import { StatusTable } from ".";
 
 export default {
   title: "components/StatusTable",
@@ -34,5 +32,5 @@ const shedinja = {
     { value: 40, name: "speed" },
   ],
   forms: [],
-} satisfies Pokemon;
+};
 Shedinja.args = { pokemonBaseStats: shedinja.baseStats, pokemonName: shedinja.name, statusType: "adjusted", header: "ステータス" };

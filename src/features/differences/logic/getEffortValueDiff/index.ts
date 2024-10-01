@@ -1,13 +1,13 @@
-import type { EffortValueState } from "@/_types";
+import type { PokemonStatus } from "@/types";
 
-export function getEffortValueDiff(currentEffortValues: EffortValueState[],
-  adjustedEffortValues: EffortValueState[]): EffortValueState[] {
+export function getEffortValueDiff(currentEffortValues: PokemonStatus[],
+  adjustedEffortValues: PokemonStatus[]): PokemonStatus[] {
   return currentEffortValues.map((currentEffortValue) => {
-    const found = adjustedEffortValues.find(({ type }) => type === currentEffortValue.type);
+    const found = adjustedEffortValues.find(({ name }) => name === currentEffortValue.name);
 
     if (found) {
       return {
-        type: currentEffortValue.type,
+        name: currentEffortValue.name,
         value: currentEffortValue.value - found.value,
       };
     }

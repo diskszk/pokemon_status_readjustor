@@ -1,8 +1,8 @@
 import { useQuery } from "urql";
 
-import type { BaseStat, StatusSpeciesEN } from "@/_types";
 import type { Pokemon_V2_Pokemon } from "@/features/infrastructures/gql/graphql";
 import { QueryPokemonBaseStats } from "@/features/infrastructures/queries";
+import type { PokemonStatus, StatusSpecies } from "@/types";
 
 import type { CombinedError } from "urql";
 
@@ -11,7 +11,7 @@ import type { CombinedError } from "urql";
  };
 
 export function usePokemonBaseStats(name: string): {
-  baseStatsData: BaseStat[] | undefined;
+  baseStatsData: PokemonStatus[] | undefined;
   fetching: boolean;
   error: CombinedError | undefined;
 } {
@@ -26,7 +26,7 @@ export function usePokemonBaseStats(name: string): {
 
   const baseStatsData = pokemonStats?.map((p) => ({
     value: p.base_stat,
-    name: p.pokemon_v2_stat?.name as StatusSpeciesEN,
+    name: p.pokemon_v2_stat?.name as StatusSpecies,
   }));
 
   return {

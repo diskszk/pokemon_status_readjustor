@@ -1,6 +1,6 @@
 import { Box, HStack, Image } from "@chakra-ui/react";
 
-import type { PokemonForm } from "../types";
+import type { PokemonForm } from "@/types";
 
 type Props = {
   pokemonForms: PokemonForm[];

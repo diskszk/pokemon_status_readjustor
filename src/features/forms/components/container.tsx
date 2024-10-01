@@ -4,10 +4,9 @@ import { useCallback } from "react";
 
 import { useErrorToast } from "@/features/hooks";
 import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/stores";
+import type { PokemonForm } from "@/types";
 
 import { Presentation } from "./presentation";
-
-import type { PokemonForm } from "../types";
 
 export function Container() {
   const setPokemonName = useSetAtom(pokemonNameAtom);

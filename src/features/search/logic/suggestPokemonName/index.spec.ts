@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
 
-import { mockPokemons } from "@/mock/pokemons";
+import type { PokemonNameChart } from "@/types";
 
-import type { PokemonNameChart } from "../../types";
+import { mockPokemons } from "../../../mock/pokemons";
 
 import { suggestPokemonName } from ".";
 

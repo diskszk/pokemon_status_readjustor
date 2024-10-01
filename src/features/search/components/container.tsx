@@ -6,12 +6,12 @@ import { usePokemonFormsQuery } from "@/features/forms/hooks";
 import { useErrorToast } from "@/features/hooks";
 import { formDisabledAtom } from "@/features/search/stores";
 import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/stores";
+import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";
 import { getPokemons } from "../logic";
 import { suggestPokemonName } from "../logic/suggestPokemonName";
 
-import type { PokemonNameChart } from "../types";
 import type { FormEvent } from "react";
 
 const inputValue$ = new BehaviorSubject("");

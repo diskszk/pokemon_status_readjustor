@@ -20,13 +20,13 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-import type { BaseStat, StatusType } from "@/_types";
 import { HP } from "@/features/constants";
+import type { PokemonStatus, StatusType } from "@/types";
 
 import { HpStatusTableBody, StatusTableBody } from "./StatusTableBody";
 
 type Props = {
-  pokemonBaseStats: BaseStat[];
+  pokemonBaseStats: PokemonStatus[];
   statusType: StatusType;
   pokemonName: string;
   header: string;

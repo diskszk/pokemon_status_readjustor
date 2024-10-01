@@ -1,5 +1,6 @@
-import type { Pokemon } from "@/_types";
-import type { PokemonNameChart } from "@/features/search/types";
+import type { PokemonForm } from "@/types";
+
+import type { PokemonStatus, PokemonNameChart } from "../types";
 
 export const mockPokemons = [
   {
@@ -39,6 +40,12 @@ export const mockPokemons = [
     ja: "ヤドキング",
   },
 ] satisfies PokemonNameChart[];
+
+ type Pokemon = {
+   name: string;
+   baseStats: PokemonStatus[];
+   forms: PokemonForm[];
+ };
 
 export const garchomp = {
   name: "garchomp",

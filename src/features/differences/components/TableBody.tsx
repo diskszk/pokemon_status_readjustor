@@ -1,24 +1,24 @@
 import { Tr, Th, Tbody, Td, Text } from "@chakra-ui/react";
 
-import type { EffortValueState } from "@/_types";
 import { toJaStatusSpecies } from "@/features/status/logic/toJaStatusSpecies";
+import type { PokemonStatus } from "@/types";
 
 import { getItemAmount } from "../logic/getItemAmount";
 import { items } from "../models/items";
 
 type Props = {
-  effortValueDiff: EffortValueState;
+  effortValueDiff: PokemonStatus;
 };
 
 export function TableBody({ effortValueDiff }: Props) {
-  const item = items.find(({ type }) => effortValueDiff.type === type);
+  const item = items.find(({ type }) => effortValueDiff.name === type);
 
   const { largeIncrease, smallIncrease, decrease } = getItemAmount(effortValueDiff.value);
 
   return (
     <Tbody>
       <Tr>
-        <Th py="8px">{toJaStatusSpecies(effortValueDiff.type)}</Th>
+        <Th py="8px">{toJaStatusSpecies(effortValueDiff.name)}</Th>
         <Td py="8px">
           <Text align="right">
             {effortValueDiff.value}

@@ -1,16 +1,16 @@
 import { atom } from "jotai";
 
-import type { EffortValueState } from "@/_types";
 import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/features/constants";
+import type { PokemonStatus } from "@/types";
 
 export const initialState = [
-  { type: HP, value: 0 },
-  { type: ATK, value: 0 },
-  { type: DEF, value: 0 },
-  { type: SP_ATK, value: 0 },
-  { type: SP_DEF, value: 0 },
-  { type: SPD, value: 0 },
-] satisfies EffortValueState[];
+  { name: HP, value: 0 },
+  { name: ATK, value: 0 },
+  { name: DEF, value: 0 },
+  { name: SP_ATK, value: 0 },
+  { name: SP_DEF, value: 0 },
+  { name: SPD, value: 0 },
+] satisfies PokemonStatus[];
 
-export const currentEffortValueAtom = atom<EffortValueState[]>(initialState);
-export const adjustedEffortValueAtom = atom<EffortValueState[]>(initialState);
+export const currentEffortValueAtom = atom<PokemonStatus[]>(initialState);
+export const adjustedEffortValueAtom = atom<PokemonStatus[]>(initialState);

@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { useClient } from "urql";
 
-import type { PokemonForm } from "@/_types";
 import type { Pokemon_V2_Pokemon, Query_Root } from "@/features/infrastructures/gql/graphql";
 import { QueryPokemonForms } from "@/features/infrastructures/queries";
+import type { PokemonForm } from "@/types";
 
 import type { CombinedError } from "urql";
 

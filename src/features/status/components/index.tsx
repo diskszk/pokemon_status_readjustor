@@ -3,8 +3,8 @@ import { useAtomValue } from "jotai";
 
 import { ADJUSTED, CURRENT } from "@/features/constants";
 import { useErrorToast } from "@/features/hooks";
+import { garchomp } from "@/features/mock/pokemons";
 import { pokemonNameAtom } from "@/features/stores";
-import { garchomp } from "@/mock/pokemons";
 
 import { usePokemonBaseStats } from "../hooks";
 import { StatusTable } from "./StatusTable";

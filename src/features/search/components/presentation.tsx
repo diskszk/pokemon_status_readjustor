@@ -2,9 +2,9 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { Flex, FormControl, VStack, InputGroup, Input, InputRightElement, Spinner, VisuallyHiddenInput, FormHelperText } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, type FormEventHandler, type RefObject } from "react";
 
-import { inputCss } from "./css";
+import type { PokemonNameChart } from "@/types";
 
-import type { PokemonNameChart } from "../types";
+import { inputCss } from "./css";
 
 type Props = {
   formDisabled: boolean;

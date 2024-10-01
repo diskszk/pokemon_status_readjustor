@@ -1,7 +1,10 @@
-import type { StatusSpeciesEN, StatusSpeciesJA } from "@/_types";
+import type { STATUS_SPECIES_JA } from "@/features/constants";
 import { HP_JA, ATK_JA, DEF_JA, SP_ATK_JA, SP_DEF_JA, SPD_JA } from "@/features/constants";
+import type { StatusSpecies } from "@/types";
 
-export function toJaStatusSpecies(str: StatusSpeciesEN): StatusSpeciesJA {
+type StatusSpeciesJA = typeof STATUS_SPECIES_JA[number];
+
+export function toJaStatusSpecies(str: StatusSpecies): StatusSpeciesJA {
   switch (str.toLowerCase()) {
     case "hp": {
       return HP_JA;

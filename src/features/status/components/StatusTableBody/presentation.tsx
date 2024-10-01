@@ -13,7 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import type { StatusSpeciesEN } from "@/_types";
+import type { StatusSpecies } from "@/types";
 
 import { TABLE_WIDTH, INPUT_GROUP_WIDTH, MAX_TOTAL_EFFORT_VALUE, MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../../constants";
 import { toJaStatusSpecies } from "../../logic/toJaStatusSpecies";
@@ -22,7 +22,7 @@ import { ExtremeButton } from "../ExtremeButton";
 import type { MouseEventHandler } from "react";
 
 type Props = {
-  speciesName: StatusSpeciesEN;
+  speciesName: StatusSpecies;
   actualValue: number;
   maximumActualValue: number;
   minimumActualValue: number;

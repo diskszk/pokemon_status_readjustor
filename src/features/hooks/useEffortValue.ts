@@ -1,14 +1,14 @@
 import { useAtom, useAtomValue } from "jotai";
 import { useCallback } from "react";
 
-import type { EffortValueState } from "@/_types";
+import type { PokemonStatus } from "@/types";
 
 import type { PrimitiveAtom } from "jotai";
 
-export function useEffortValue(effortValueAtom: PrimitiveAtom<EffortValueState[]>): {
-  allEffortValue: EffortValueState[];
+export function useEffortValue(effortValueAtom: PrimitiveAtom<PokemonStatus[]>): {
+  allEffortValue: PokemonStatus[];
   totalEffortValue: number;
-  updateEffortValue: (newValue: EffortValueState) => void;
+  updateEffortValue: (newValue: PokemonStatus) => void;
 } {
   const allEffortValue = useAtomValue(effortValueAtom);
 
@@ -16,11 +16,11 @@ export function useEffortValue(effortValueAtom: PrimitiveAtom<EffortValueState[]
 
   const [, setEffortValue] = useAtom(effortValueAtom);
 
-  const updateEffortValue = useCallback((newValue: EffortValueState) => {
+  const updateEffortValue = useCallback((newValue: PokemonStatus) => {
     setEffortValue((prev) => {
       return prev.map((effortValue) => {
-        if (effortValue.type === newValue.type) {
-          return { type: effortValue.type, value: newValue.value };
+        if (effortValue.name === newValue.name) {
+          return { name: effortValue.name, value: newValue.value };
         }
         return effortValue;
       });

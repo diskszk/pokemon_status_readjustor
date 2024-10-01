@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
 
-import type { StatusType } from "@/_types";
 import { CURRENT, HP } from "@/features/constants";
 import { useEffortValue, useErrorToast } from "@/features/hooks";
 import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/features/stores/effortValueAtom";
+import type { StatusType } from "@/types";
 
 import { Presentation } from "./presentation";
 import { MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../../constants";
@@ -31,7 +31,7 @@ export function HpStatusTableBody({
 
   const { totalEffortValue, allEffortValue, updateEffortValue } = useEffortValue(effortValueAtom);
 
-  const effortValue = allEffortValue.find((v) => v.type === HP);
+  const effortValue = allEffortValue.find((v) => v.name === HP);
 
   const { showErrorToast } = useErrorToast();
   if (!effortValue) {
@@ -82,11 +82,11 @@ export function HpStatusTableBody({
     const newEffortValue = calcHPEffortValue({
       actual: value, level, baseStat, individual: individualValue,
     });
-    updateEffortValue({ type: HP, value: newEffortValue });
+    updateEffortValue({ name: HP, value: newEffortValue });
   }, [baseStat, individualValue, level, updateEffortValue]);
 
   const handleChangeEffortValue: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {
-    updateEffortValue({ type: HP, value });
+    updateEffortValue({ name: HP, value });
 
     updateActualValue({ effort: value });
   }, [updateActualValue, updateEffortValue]);
