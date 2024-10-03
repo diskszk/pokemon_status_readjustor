@@ -28,4 +28,3 @@ dist-ssr
 *storybook.log
 ladle-static
 *.tsbuildinfo
-.tool-versions
