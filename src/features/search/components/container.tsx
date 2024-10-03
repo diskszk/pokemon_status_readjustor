@@ -72,7 +72,7 @@ export function Container() {
 
     setPokemonForm(pokemonForms);
     setLoading(false);
-  }, [pokemons, queryPokemonForm, setLoading, setPokemonForm, setPokemonName, showErrorToast]);
+  }, [queryPokemonForm, setLoading, setPokemonForm, setPokemonName, showErrorToast, suggested]);
 
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
