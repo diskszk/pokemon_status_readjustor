@@ -16,11 +16,14 @@ import {
   Th,
   Thead,
   Tr,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-import { HP } from "@/features/constants";
+import { CURRENT, HP } from "@/features/constants";
+import { useEffortValue } from "@/features/hooks";
+import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/features/stores/effortValueAtom";
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { HpStatusTableBody, StatusTableBody } from "./StatusTableBody";
@@ -34,6 +37,9 @@ type Props = {
 
 export function StatusTable({ pokemonBaseStats, statusType, pokemonName, header }: Props) {
   const [level, setLevel] = useState(50);
+
+  const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
+  const { totalEffortValue } = useEffortValue(effortValueAtom);
 
   return (
     <Card borderRadius="lg">
@@ -112,6 +118,11 @@ export function StatusTable({ pokemonBaseStats, statusType, pokemonName, header 
             </Table>
           </TableContainer>
         </VStack>
+        <Text color={totalEffortValue > 510 ? "red" : "normal"}>
+          total:
+          {totalEffortValue}
+          /510
+        </Text>
       </CardBody>
     </Card>
   );
