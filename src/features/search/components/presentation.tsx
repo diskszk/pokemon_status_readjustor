@@ -8,8 +8,8 @@ import { inputCss } from "./css";
 
 type Props = {
   formDisabled: boolean;
-  pokemonEnInputRef: RefObject<HTMLInputElement>;
-  datalistRef: RefObject<HTMLDataListElement>;
+  pokemonEnInputRef: RefObject<HTMLInputElement | null>;
+  datalistRef: RefObject<HTMLDataListElement | null>;
   suggested: PokemonNameChart[];
   handleSubmit: FormEventHandler<HTMLFormElement>;
   handleChangeSearchForm: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
