@@ -19,7 +19,7 @@ import { TABLE_WIDTH, INPUT_GROUP_WIDTH, MAX_TOTAL_EFFORT_VALUE, MAX_EFFORT_VALU
 import { toJaStatusSpecies } from "../../logic/toJaStatusSpecies";
 import { ExtremeButton } from "../ExtremeButton";
 
-import type { MouseEventHandler } from "react";
+import type { MouseEventHandler, JSX } from "react";
 
 type Props = {
   speciesName: StatusSpecies;
