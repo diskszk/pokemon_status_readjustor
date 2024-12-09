@@ -8,6 +8,7 @@ import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/store
 import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";
+import { usePokemonIdQuery } from "../hooks";
 import { getPokemons } from "../logic";
 import { suggestPokemonName } from "../logic/suggestPokemonName";
 
@@ -37,33 +38,34 @@ export function Container() {
   }, []);
 
   const { queryPokemonForm } = usePokemonFormsQuery();
+  const { queryPokemonId } = usePokemonIdQuery();
 
   const setPokemonForm = useSetAtom(pokemonFormsAtom);
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const ja = form.get("pokemon-ja");
-    let en = form.get("pokemon-en")?.toString();
+    const name = form.get("pokemon-ja")?.toString();
 
-    if (!ja) {
+    if (!name) {
       return;
     }
 
-    if (!en) {
-      if (!suggested) {
-        showErrorToast({
-          description: `${ja}は存在しない可能性があります。`,
-        });
-        return;
-      }
-      en = suggested[0].en;
-    }
     setLoading(true);
-    setPokemonName(en);
+    setPokemonName(name);
 
-    const { pokemonForms, error } = await queryPokemonForm(en);
+    // idを取得する
+    const { id, error } = await queryPokemonId(name);
+    if (!id) {
+      showErrorToast({
+        description: `${name}存在しない可能性があります`,
+      });
+      return;
+    }
 
-    if (error || !pokemonForms) {
+    // TODO: しかるべきところに移す
+    const { pokemonForms, error: queryFormsError } = await queryPokemonForm(id);
+
+    if (error || !pokemonForms || queryFormsError) {
       showErrorToast({
         description: "データの取得に失敗しました",
       });
@@ -72,7 +74,7 @@ export function Container() {
 
     setPokemonForm(pokemonForms);
     setLoading(false);
-  }, [queryPokemonForm, setLoading, setPokemonForm, setPokemonName, showErrorToast, suggested]);
+  }, [queryPokemonForm, queryPokemonId, setLoading, setPokemonForm, setPokemonName, showErrorToast]);
 
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {

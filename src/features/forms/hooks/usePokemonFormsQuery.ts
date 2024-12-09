@@ -19,11 +19,11 @@ type QueryReturnType = {
 export function usePokemonFormsQuery() {
   const client = useClient();
 
-  const queryPokemonForm = useCallback(async (name: string): Promise<{
+  const queryPokemonForm = useCallback(async (id: number): Promise<{
     pokemonForms: PokemonForm[] | undefined;
     error: CombinedError | undefined;
   }> => {
-    const { data, error } = await client.query<QueryReturnType>(QueryPokemonForms, { name });
+    const { data, error } = await client.query<QueryReturnType>(QueryPokemonForms, { id });
 
     const pokemons = data?.pokemon_v2_pokemonspecies[0].pokemon_v2_pokemons;
 
