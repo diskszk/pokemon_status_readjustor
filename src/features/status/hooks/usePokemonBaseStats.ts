@@ -10,15 +10,15 @@ import type { CombinedError } from "urql";
    pokemon_v2_pokemon: Pick<Pokemon_V2_Pokemon, "pokemon_v2_pokemonstats">[];
  };
 
-export function usePokemonBaseStats(name: string): {
+export function usePokemonBaseStats(id: number): {
   baseStatsData: PokemonStatus[] | undefined;
   fetching: boolean;
   error: CombinedError | undefined;
 } {
   const [result] = useQuery<QueryReturnType>({
     query: QueryPokemonBaseStats,
-    variables: { name },
-    pause: !name,
+    variables: { id },
+    pause: !id,
   });
   const { data, fetching, error } = result;
 
