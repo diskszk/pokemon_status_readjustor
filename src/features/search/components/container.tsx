@@ -1,5 +1,5 @@
 import { useSetAtom } from "jotai";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
 import { usePokemonFormsQuery } from "@/features/forms/hooks";
@@ -22,9 +22,6 @@ export function Container() {
 
   const [suggested, setSuggested] = useState<PokemonNameChart[]>([]);
 
-  const pokemonEnInputRef = useRef<HTMLInputElement>(null);
-  const datalistRef = useRef<HTMLDataListElement>(null);
-
   const { showErrorToast } = useErrorToast();
   const setLoading = useSetAtom(loadingAtom);
 
@@ -44,20 +41,20 @@ export function Container() {
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const name = form.get("pokemon-ja")?.toString();
 
+    const name = form.get("pokemon-name");
     if (!name) {
       return;
     }
 
     setLoading(true);
-    setPokemonName(name);
+    setPokemonName(name.toString());
 
     // idを取得する
-    const { id, error } = await queryPokemonId(name);
+    const { id, error } = await queryPokemonId(name.toString());
     if (!id) {
       showErrorToast({
-        description: `${name}存在しない可能性があります`,
+        description: `${name}は存在しない可能性があります`,
       });
       return;
     }
@@ -82,19 +79,6 @@ export function Container() {
 
       setSuggested(suggestResult);
 
-      if (!datalistRef.current) {
-        return;
-      }
-
-      // 入力値と一致するポケモンの英語名をinputに設定する
-      const options = datalistRef.current.querySelectorAll("option");
-      const option = Array.from(options).find((option) => option.value === inputValue);
-
-      const enName = option ? option.getAttribute("data-en") : null;
-
-      if (pokemonEnInputRef.current) {
-        pokemonEnInputRef.current.value = enName || "";
-      }
       setFormDisabled(false);
     });
 
@@ -103,11 +87,9 @@ export function Container() {
 
   return (
     <Presentation
-      datalistRef={datalistRef}
       formDisabled={formDisabled}
       handleChangeSearchForm={handleChange}
       handleSubmit={onSubmitSearchForm}
-      pokemonEnInputRef={pokemonEnInputRef}
       suggested={suggested}
     />
   );
