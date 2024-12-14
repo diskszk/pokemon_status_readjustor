@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai";
 
-import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/features/stores/effortValueAtom";
+import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms/effortValueAtom";
 
 import { Presentation } from "./presentation";
 import { getEffortValueDiff } from "../logic/getEffortValueDiff";
