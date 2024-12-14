@@ -1,9 +1,9 @@
 import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import { useState, useCallback, useEffect } from "react";
 
+import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms/effortValueAtom";
 import { CURRENT } from "@/features/constants";
 import { useEffortValue, useErrorToast } from "@/features/hooks";
-import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/features/stores/effortValueAtom";
 import type { StatusSpecies, StatusType } from "@/types";
 
 import { Presentation } from "./presentation";

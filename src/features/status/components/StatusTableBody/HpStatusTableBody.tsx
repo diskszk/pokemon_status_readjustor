@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 
+import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms/effortValueAtom";
 import { CURRENT, HP } from "@/features/constants";
 import { useEffortValue, useErrorToast } from "@/features/hooks";
-import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/features/stores/effortValueAtom";
 import type { StatusType } from "@/types";
 
 import { Presentation } from "./presentation";
