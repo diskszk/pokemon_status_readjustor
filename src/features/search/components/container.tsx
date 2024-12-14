@@ -2,9 +2,9 @@ import { useSetAtom } from "jotai";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
+import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/atoms";
 import { usePokemonFormsQuery } from "@/features/forms/hooks";
 import { useErrorToast } from "@/features/hooks";
-import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/stores";
 import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";

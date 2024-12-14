@@ -21,9 +21,9 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
+import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms/effortValueAtom";
 import { CURRENT, HP } from "@/features/constants";
 import { useEffortValue } from "@/features/hooks";
-import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/features/stores/effortValueAtom";
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { HpStatusTableBody, StatusTableBody } from "./StatusTableBody";
