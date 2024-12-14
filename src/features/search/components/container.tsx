@@ -2,8 +2,7 @@ import { useSetAtom } from "jotai";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
-import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/atoms";
-import { usePokemonFormsQuery } from "@/features/forms/hooks";
+import { pokemonIdAtom } from "@/atoms";
 import { useErrorToast } from "@/features/hooks";
 import type { PokemonNameChart } from "@/types";
 
@@ -19,25 +18,19 @@ const DEBOUNCE_TIME = 500;
 
 export function Container() {
   const pokemons = useMemo(() => getPokemons(), []);
-
+  const { showErrorToast } = useErrorToast();
   const [suggested, setSuggested] = useState<PokemonNameChart[]>([]);
 
-  const { showErrorToast } = useErrorToast();
-  const setLoading = useSetAtom(loadingAtom);
-
-  const setPokemonName = useSetAtom(pokemonNameAtom);
-
   const [formDisabled, setFormDisabled] = useState(false);
+
+  const { queryPokemonId } = usePokemonIdQuery();
+  const setPokemonId = useSetAtom(pokemonIdAtom);
 
   const handleChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormDisabled(true);
     inputValue$.next(event.target.value);
   }, []);
 
-  const { queryPokemonForm } = usePokemonFormsQuery();
-  const { queryPokemonId } = usePokemonIdQuery();
-
-  const setPokemonForm = useSetAtom(pokemonFormsAtom);
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -47,31 +40,22 @@ export function Container() {
       return;
     }
 
-    setLoading(true);
-    setPokemonName(name.toString());
-
-    // idを取得する
     const { id, error } = await queryPokemonId(name.toString());
+
+    if (error) {
+      showErrorToast({
+        description: "データの取得に失敗しました",
+      });
+      return;
+    }
     if (!id) {
       showErrorToast({
         description: `${name}は存在しない可能性があります`,
       });
       return;
     }
-
-    // TODO: しかるべきところに移す
-    const { pokemonForms, error: queryFormsError } = await queryPokemonForm(id);
-
-    if (error || !pokemonForms || queryFormsError) {
-      showErrorToast({
-        description: "データの取得に失敗しました",
-      });
-      return;
-    }
-
-    setPokemonForm(pokemonForms);
-    setLoading(false);
-  }, [queryPokemonForm, queryPokemonId, setLoading, setPokemonForm, setPokemonName, showErrorToast]);
+    setPokemonId(id);
+  }, [queryPokemonId, setPokemonId, showErrorToast]);
 
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
