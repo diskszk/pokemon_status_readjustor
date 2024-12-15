@@ -38980,6 +38980,7 @@ export type Pokemon_V2_Pokemonmove = {
   __typename?: 'pokemon_v2_pokemonmove';
   id: Scalars['Int']['output'];
   level: Scalars['Int']['output'];
+  mastery?: Maybe<Scalars['Int']['output']>;
   move_id?: Maybe<Scalars['Int']['output']>;
   move_learn_method_id?: Maybe<Scalars['Int']['output']>;
   order?: Maybe<Scalars['Int']['output']>;
@@ -39056,6 +39057,7 @@ export type Pokemon_V2_Pokemonmove_Avg_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_avg_fields';
   id?: Maybe<Scalars['Float']['output']>;
   level?: Maybe<Scalars['Float']['output']>;
+  mastery?: Maybe<Scalars['Float']['output']>;
   move_id?: Maybe<Scalars['Float']['output']>;
   move_learn_method_id?: Maybe<Scalars['Float']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -39067,6 +39069,7 @@ export type Pokemon_V2_Pokemonmove_Avg_Fields = {
 export type Pokemon_V2_Pokemonmove_Avg_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39081,6 +39084,7 @@ export type Pokemon_V2_Pokemonmove_Bool_Exp = {
   _or?: InputMaybe<Array<Pokemon_V2_Pokemonmove_Bool_Exp>>;
   id?: InputMaybe<Int_Comparison_Exp>;
   level?: InputMaybe<Int_Comparison_Exp>;
+  mastery?: InputMaybe<Int_Comparison_Exp>;
   move_id?: InputMaybe<Int_Comparison_Exp>;
   move_learn_method_id?: InputMaybe<Int_Comparison_Exp>;
   order?: InputMaybe<Int_Comparison_Exp>;
@@ -39097,6 +39101,7 @@ export type Pokemon_V2_Pokemonmove_Max_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_max_fields';
   id?: Maybe<Scalars['Int']['output']>;
   level?: Maybe<Scalars['Int']['output']>;
+  mastery?: Maybe<Scalars['Int']['output']>;
   move_id?: Maybe<Scalars['Int']['output']>;
   move_learn_method_id?: Maybe<Scalars['Int']['output']>;
   order?: Maybe<Scalars['Int']['output']>;
@@ -39108,6 +39113,7 @@ export type Pokemon_V2_Pokemonmove_Max_Fields = {
 export type Pokemon_V2_Pokemonmove_Max_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39120,6 +39126,7 @@ export type Pokemon_V2_Pokemonmove_Min_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_min_fields';
   id?: Maybe<Scalars['Int']['output']>;
   level?: Maybe<Scalars['Int']['output']>;
+  mastery?: Maybe<Scalars['Int']['output']>;
   move_id?: Maybe<Scalars['Int']['output']>;
   move_learn_method_id?: Maybe<Scalars['Int']['output']>;
   order?: Maybe<Scalars['Int']['output']>;
@@ -39131,6 +39138,7 @@ export type Pokemon_V2_Pokemonmove_Min_Fields = {
 export type Pokemon_V2_Pokemonmove_Min_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39142,6 +39150,7 @@ export type Pokemon_V2_Pokemonmove_Min_Order_By = {
 export type Pokemon_V2_Pokemonmove_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39160,6 +39169,8 @@ export enum Pokemon_V2_Pokemonmove_Select_Column {
   /** column name */
   Level = 'level',
   /** column name */
+  Mastery = 'mastery',
+  /** column name */
   MoveId = 'move_id',
   /** column name */
   MoveLearnMethodId = 'move_learn_method_id',
@@ -39176,6 +39187,7 @@ export type Pokemon_V2_Pokemonmove_Stddev_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_stddev_fields';
   id?: Maybe<Scalars['Float']['output']>;
   level?: Maybe<Scalars['Float']['output']>;
+  mastery?: Maybe<Scalars['Float']['output']>;
   move_id?: Maybe<Scalars['Float']['output']>;
   move_learn_method_id?: Maybe<Scalars['Float']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -39187,6 +39199,7 @@ export type Pokemon_V2_Pokemonmove_Stddev_Fields = {
 export type Pokemon_V2_Pokemonmove_Stddev_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39199,6 +39212,7 @@ export type Pokemon_V2_Pokemonmove_Stddev_Pop_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_stddev_pop_fields';
   id?: Maybe<Scalars['Float']['output']>;
   level?: Maybe<Scalars['Float']['output']>;
+  mastery?: Maybe<Scalars['Float']['output']>;
   move_id?: Maybe<Scalars['Float']['output']>;
   move_learn_method_id?: Maybe<Scalars['Float']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -39210,6 +39224,7 @@ export type Pokemon_V2_Pokemonmove_Stddev_Pop_Fields = {
 export type Pokemon_V2_Pokemonmove_Stddev_Pop_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39222,6 +39237,7 @@ export type Pokemon_V2_Pokemonmove_Stddev_Samp_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_stddev_samp_fields';
   id?: Maybe<Scalars['Float']['output']>;
   level?: Maybe<Scalars['Float']['output']>;
+  mastery?: Maybe<Scalars['Float']['output']>;
   move_id?: Maybe<Scalars['Float']['output']>;
   move_learn_method_id?: Maybe<Scalars['Float']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -39233,6 +39249,7 @@ export type Pokemon_V2_Pokemonmove_Stddev_Samp_Fields = {
 export type Pokemon_V2_Pokemonmove_Stddev_Samp_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39252,6 +39269,7 @@ export type Pokemon_V2_Pokemonmove_Stream_Cursor_Input = {
 export type Pokemon_V2_Pokemonmove_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   level?: InputMaybe<Scalars['Int']['input']>;
+  mastery?: InputMaybe<Scalars['Int']['input']>;
   move_id?: InputMaybe<Scalars['Int']['input']>;
   move_learn_method_id?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<Scalars['Int']['input']>;
@@ -39264,6 +39282,7 @@ export type Pokemon_V2_Pokemonmove_Sum_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_sum_fields';
   id?: Maybe<Scalars['Int']['output']>;
   level?: Maybe<Scalars['Int']['output']>;
+  mastery?: Maybe<Scalars['Int']['output']>;
   move_id?: Maybe<Scalars['Int']['output']>;
   move_learn_method_id?: Maybe<Scalars['Int']['output']>;
   order?: Maybe<Scalars['Int']['output']>;
@@ -39275,6 +39294,7 @@ export type Pokemon_V2_Pokemonmove_Sum_Fields = {
 export type Pokemon_V2_Pokemonmove_Sum_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39287,6 +39307,7 @@ export type Pokemon_V2_Pokemonmove_Var_Pop_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_var_pop_fields';
   id?: Maybe<Scalars['Float']['output']>;
   level?: Maybe<Scalars['Float']['output']>;
+  mastery?: Maybe<Scalars['Float']['output']>;
   move_id?: Maybe<Scalars['Float']['output']>;
   move_learn_method_id?: Maybe<Scalars['Float']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -39298,6 +39319,7 @@ export type Pokemon_V2_Pokemonmove_Var_Pop_Fields = {
 export type Pokemon_V2_Pokemonmove_Var_Pop_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39310,6 +39332,7 @@ export type Pokemon_V2_Pokemonmove_Var_Samp_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_var_samp_fields';
   id?: Maybe<Scalars['Float']['output']>;
   level?: Maybe<Scalars['Float']['output']>;
+  mastery?: Maybe<Scalars['Float']['output']>;
   move_id?: Maybe<Scalars['Float']['output']>;
   move_learn_method_id?: Maybe<Scalars['Float']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -39321,6 +39344,7 @@ export type Pokemon_V2_Pokemonmove_Var_Samp_Fields = {
 export type Pokemon_V2_Pokemonmove_Var_Samp_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -39333,6 +39357,7 @@ export type Pokemon_V2_Pokemonmove_Variance_Fields = {
   __typename?: 'pokemon_v2_pokemonmove_variance_fields';
   id?: Maybe<Scalars['Float']['output']>;
   level?: Maybe<Scalars['Float']['output']>;
+  mastery?: Maybe<Scalars['Float']['output']>;
   move_id?: Maybe<Scalars['Float']['output']>;
   move_learn_method_id?: Maybe<Scalars['Float']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -39344,6 +39369,7 @@ export type Pokemon_V2_Pokemonmove_Variance_Fields = {
 export type Pokemon_V2_Pokemonmove_Variance_Order_By = {
   id?: InputMaybe<Order_By>;
   level?: InputMaybe<Order_By>;
+  mastery?: InputMaybe<Order_By>;
   move_id?: InputMaybe<Order_By>;
   move_learn_method_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
