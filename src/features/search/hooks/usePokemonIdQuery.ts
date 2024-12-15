@@ -21,6 +21,13 @@ export function usePokemonIdQuery(): {
   const queryPokemonId = useCallback(async (inputName: string) => {
     const { data, error } = await client.query<QueryReturnType>(QueryPokemonId, { inputName });
 
+    if (error) {
+      return {
+        error,
+        id: undefined,
+      };
+    }
+
     const speciesNames = data?.pokemon_v2_pokemonspeciesname[0];
 
     const id = speciesNames?.pokemon_species_id;
