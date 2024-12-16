@@ -1,18 +1,45 @@
-import { Provider } from "urql";
-import { vitest } from "vitest";
+import { Provider as JotaiProvider } from "jotai";
+import { useHydrateAtoms } from "jotai/utils";
+import { cacheExchange, Client, fetchExchange, Provider as UrqlProvider } from "urql";
 
-import type { PropsWithChildren } from "react";
+import { API_ENDPOINT } from "@/features/constants";
 
-const mockClient = {
-  executeQuery: vitest.fn(() => () => void 0),
-  executeMutation: vitest.fn(() => () => void 0),
-  executeSubscription: vitest.fn(() => () => void 0),
+import type { WritableAtom } from "jotai";
+import type { ReactNode } from "react";
+
+const mockClient = new Client({
+  url: API_ENDPOINT,
+  exchanges: [cacheExchange, fetchExchange],
+});
+
+type AtomValue<T> = Iterable<
+  readonly [WritableAtom<T, [T], unknown>, T]
+>;
+
+type AtomsHydratorProps<T> = {
+  atomValues: AtomValue<T>;
+  children: ReactNode;
 };
 
-export function TestWrapper({ children }: PropsWithChildren) {
+const AtomsHydrator = <T, >({ atomValues, children }: AtomsHydratorProps<T>) => {
+  useHydrateAtoms(new Map(atomValues));
+  return children;
+};
+
+export function TestWrapper<T>({
+  atomValues = [],
+  children,
+}: {
+  atomValues?: AtomValue<T>;
+  children: ReactNode;
+}) {
   return (
-    <Provider value={mockClient}>
-      {children}
-    </Provider>
+    <UrqlProvider value={mockClient}>
+      <JotaiProvider>
+        <AtomsHydrator atomValues={atomValues}>
+          {children}
+        </AtomsHydrator>
+      </JotaiProvider>
+    </UrqlProvider>
   );
 }
