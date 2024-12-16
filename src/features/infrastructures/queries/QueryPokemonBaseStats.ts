@@ -1,7 +1,7 @@
 import { gql } from "urql";
 
 export const QueryPokemonBaseStats = gql`
-  query ($id: Int!) {
+  query QueryPokemonBaseStats ($id: Int!) {
     pokemon_v2_pokemon(where: {id: {_eq: $id}}) {
       pokemon_v2_pokemonstats {
         base_stat
