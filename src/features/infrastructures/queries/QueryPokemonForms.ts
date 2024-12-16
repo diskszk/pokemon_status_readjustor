@@ -1,7 +1,7 @@
 import { gql } from "urql";
 
 export const QueryPokemonForms = gql`
-  query ($id: Int!) {
+  query QueryPokemonForms ($id: Int!) {
     pokemon_v2_pokemonspecies(where: {id: {_eq: $id}}) {
       pokemon_v2_pokemons {
         name
