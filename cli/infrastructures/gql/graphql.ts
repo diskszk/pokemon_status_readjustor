@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -58775,3 +58776,29 @@ export type Subscription_RootPokemon_V2_Versionname_StreamArgs = {
   cursor: Array<InputMaybe<Pokemon_V2_Versionname_Stream_Cursor_Input>>;
   where?: InputMaybe<Pokemon_V2_Versionname_Bool_Exp>;
 };
+
+export type QueryPokemonBaseStatsQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type QueryPokemonBaseStatsQuery = { __typename?: 'query_root', pokemon_v2_pokemon: Array<{ __typename?: 'pokemon_v2_pokemon', pokemon_v2_pokemonstats: Array<{ __typename?: 'pokemon_v2_pokemonstat', base_stat: number, pokemon_v2_stat?: { __typename?: 'pokemon_v2_stat', name: string } | null }> }> };
+
+export type QueryPokemonFormsQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type QueryPokemonFormsQuery = { __typename?: 'query_root', pokemon_v2_pokemonspecies: Array<{ __typename?: 'pokemon_v2_pokemonspecies', id: number, pokemon_v2_pokemons: Array<{ __typename?: 'pokemon_v2_pokemon', name: string, id: number, pokemon_v2_pokemonsprites: Array<{ __typename?: 'pokemon_v2_pokemonsprites', sprites: any }> }> }> };
+
+export type QueryPokemonIdQueryVariables = Exact<{
+  inputName: Scalars['String']['input'];
+}>;
+
+
+export type QueryPokemonIdQuery = { __typename?: 'query_root', pokemon_v2_pokemonspeciesname: Array<{ __typename?: 'pokemon_v2_pokemonspeciesname', pokemon_species_id?: number | null }> };
+
+
+export const QueryPokemonBaseStatsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryPokemonBaseStats"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pokemon_v2_pokemon"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pokemon_v2_pokemonstats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base_stat"}},{"kind":"Field","name":{"kind":"Name","value":"pokemon_v2_stat"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QueryPokemonBaseStatsQuery, QueryPokemonBaseStatsQueryVariables>;
+export const QueryPokemonFormsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryPokemonForms"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pokemon_v2_pokemonspecies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pokemon_v2_pokemons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pokemon_v2_pokemonsprites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sprites"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"path"},"value":{"kind":"StringValue","value":"other.official-artwork.front_default","block":false}}]}]}}]}}]}}]}}]} as unknown as DocumentNode<QueryPokemonFormsQuery, QueryPokemonFormsQueryVariables>;
+export const QueryPokemonIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryPokemonId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inputName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pokemon_v2_pokemonspeciesname"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inputName"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pokemon_species_id"}}]}}]}}]} as unknown as DocumentNode<QueryPokemonIdQuery, QueryPokemonIdQueryVariables>;

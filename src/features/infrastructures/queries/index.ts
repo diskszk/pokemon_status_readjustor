@@ -1,3 +1,3 @@
-export * from "./QueryPokemonForms";
-export * from "./QueryPokemonBaseStats";
-export * from "./QueryPokemonId";
+export * from "./QueryPokemonForms.query";
+export * from "./QueryPokemonBaseStats.query";
+export * from "./QueryPokemonId.query";
