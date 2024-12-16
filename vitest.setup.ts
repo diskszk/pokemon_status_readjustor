@@ -2,6 +2,8 @@ import { beforeAll, afterEach, afterAll } from "vitest";
 
 import { server } from "./src/mocks/node";
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+const mockApis = ["QueryPokemonForms"];
+
+beforeAll(() => server({ mockApis }).listen());
+afterEach(() => server({ mockApis }).resetHandlers());
+afterAll(() => server({ mockApis }).close());

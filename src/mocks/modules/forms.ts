@@ -1,95 +1,38 @@
 import { graphql, HttpResponse } from "msw";
 
-import type { CombinedError } from "urql";
+import type { QueryPokemonFormsQueryVariables, QueryPokemonFormsQuery } from "@/features/infrastructures/gql/graphql";
+
+import { graphqlError } from "./graphqlError";
+import { formsMockData } from "../mockData";
 
 const QUERY_NAME = "QueryPokemonForms";
 
-type Forms = {
-  pokemon_v2_pokemonspecies: [
-    {
-      pokemon_v2_pokemons: [
-        {
-          name: string;
-          pokemon_v2_pokemonsprites: [
-            {
-              sprites: string;
-            },
-          ];
-        },
-      ];
-    },
-  ];
-};
+const formsQueryHandler = graphql.query<QueryPokemonFormsQuery, QueryPokemonFormsQueryVariables>(QUERY_NAME, ({ variables }) => {
+  const { id } = variables;
 
-type FormsQuery = {
-  data: Forms | null;
-  errors: CombinedError[] | null;
-};
+  const found = formsMockData.find((data) => data.id === id);
 
-type FormsQueryVariable = {
-  speciesId: number;
-};
+  if (!found) {
+    return graphqlError(QUERY_NAME, "NOT_FOUND");
+  }
 
-const mockData = {
-  data: {
-    pokemon_v2_pokemonspecies: [
+  const pokemons = found.forms.map((f) => ({
+    name: f.name,
+    id: f.id,
+    pokemon_v2_pokemonsprites: [
       {
-        id: 3,
-        pokemon_v2_pokemons: [
-          {
-            name: "venusaur",
-            pokemon_v2_pokemonsprites: [
-              {
-                sprites: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
-              },
-            ],
-          },
-          {
-            name: "venusaur-mega",
-            pokemon_v2_pokemonsprites: [
-              {
-                sprites: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10033.png",
-              },
-            ],
-          },
-          {
-            name: "venusaur-gmax",
-            pokemon_v2_pokemonsprites: [
-              {
-                sprites: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10195.png",
-              },
-            ],
-          },
-        ],
+        sprites: f.sprites,
       },
     ],
-  },
-};
+  }));
 
-const formsQueryHandler = graphql.query<Forms, FormsQueryVariable>(QUERY_NAME, ({ variables }) => {
-  const { speciesId } = variables;
-
-  // const mockFound = mockData.data.pokemon_v2_pokemonspecies.find((mockData) => mockData.id === speciesId);
-
-  // if (!mockFound) {
-  //   return graphqlError(QUERY_NAME, "NOT_FOUND");
-  // }
-
-  return HttpResponse.json<FormsQuery>(
+  return HttpResponse.json(
     {
       data: {
         pokemon_v2_pokemonspecies: [
           {
-            pokemon_v2_pokemons: [
-              {
-                name: "mew",
-                pokemon_v2_pokemonsprites: [
-                  {
-                    sprites: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png",
-                  },
-                ],
-              },
-            ],
+            id: found.id,
+            pokemon_v2_pokemons: pokemons,
           },
         ],
       },
