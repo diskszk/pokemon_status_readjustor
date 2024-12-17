@@ -15,7 +15,8 @@
     "ladle": "ladle serve",
     "build:ladle": "ladle build -o ladle-static",
     "preview:ladle": "ladle preview -o ./ladle-static",
-    "ci": "run-s lint test check:type build"
+    "ci": "run-s lint test check:type build",
+    "msw:init": "npx msw init ./public --no-save"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.2",
@@ -68,5 +69,10 @@
     "vite": "^5.4.8",
     "vitest": "^2.1.2",
     "wrangler": "^3.79.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
