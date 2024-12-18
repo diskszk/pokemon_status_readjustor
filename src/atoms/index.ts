@@ -1,4 +1,5 @@
 export * from "./loadingAtom";
 export * from "./pokemonFormsAtom";
 export * from "./pokemonNameAtom";
-export * from "./pokemonIdAtom";
+export * from "./pokemonSpeciesIdAtom";
+export * from "./pokemonIndividualIdAtom";

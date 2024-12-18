@@ -1,42 +1,63 @@
-import { Skeleton } from "@chakra-ui/react";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { useCallback } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useCallback, useMemo, useState } from "react";
 
-import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/atoms";
+import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/features/hooks";
-import type { PokemonForm } from "@/types";
+import { garchomp } from "@/features/mock/pokemons";
+import type { PokemonForm } from "@/features/types";
 
 import { Presentation } from "./presentation";
+import { usePokemonFormsQuery } from "../hooks";
 
 export function Container() {
-  const setPokemonName = useSetAtom(pokemonNameAtom);
-  const [pokemonForms, setPokemonForms] = useAtom(pokemonFormsAtom);
-
-  const loading = useAtomValue(loadingAtom);
   const { showErrorToast } = useErrorToast();
 
-  const handleClickPokemonImage = useCallback(async (target: PokemonForm) => {
-    /* ポケモンの姿を並び替える */
-    const newArray: PokemonForm[] = [];
-    const rest = pokemonForms.filter((f) => f.name !== target.name);
-    newArray.push(target, ...rest);
-    if (!newArray[0].name) {
-      showErrorToast({
-        description: "データの取得に失敗しました",
-      });
-      return;
+  const pokemonSpeciesId = useAtomValue(pokemonSpeciesIdAtom);
+
+  const { pokemonForms, error } = usePokemonFormsQuery(pokemonSpeciesId);
+
+  if (error) {
+    showErrorToast({
+      description: "ポケモンの画像の取得に失敗しました",
+    });
+  }
+
+  const setPokemonIndividualId = useSetAtom(pokemonIndividualIdAtom);
+
+  const [selectedFormId, setSelectedFormId] = useState<number | undefined>(undefined);
+
+  const pokemonFormsView = useMemo(() => {
+    if (!pokemonForms) {
+      // デフォルト値を代入する
+      return [...garchomp.forms];
     }
 
-    setPokemonForms(newArray);
-    setPokemonName(newArray[0].name);
-  }, [pokemonForms, setPokemonForms, setPokemonName, showErrorToast]);
+    if (selectedFormId === undefined) {
+      return pokemonForms;
+    }
+
+    const selectedForm = pokemonForms.find((form) => form.id === selectedFormId);
+
+    if (!selectedForm) {
+      return [];
+    }
+
+    const rest = pokemonForms.filter((form) => form.id !== selectedFormId);
+    const orderedForms = [selectedForm].concat(rest);
+    setPokemonIndividualId(selectedFormId);
+
+    return orderedForms;
+  }, [pokemonForms, setPokemonIndividualId, selectedFormId]) satisfies PokemonForm[];
+
+  const handleClickPokemonImage = useCallback((selectedFormId: number) => {
+    setSelectedFormId(selectedFormId);
+  }, []);
 
   return (
-    <Skeleton isLoaded={!loading}>
-      <Presentation
-        handleClickPokemonImage={handleClickPokemonImage}
-        pokemonForms={pokemonForms}
-      />
-    </Skeleton>
+    <Presentation
+      handleClickPokemonImage={handleClickPokemonImage}
+      pokemonForms={pokemonFormsView}
+    />
+
   );
 }

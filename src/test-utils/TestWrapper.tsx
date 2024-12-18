@@ -1,11 +1,11 @@
 import { Provider as JotaiProvider } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
+import { type ReactNode } from "react";
 import { cacheExchange, Client, fetchExchange, Provider as UrqlProvider } from "urql";
 
 import { API_ENDPOINT } from "@/features/constants";
 
 import type { WritableAtom } from "jotai";
-import type { ReactNode } from "react";
 
 const mockClient = new Client({
   url: API_ENDPOINT,

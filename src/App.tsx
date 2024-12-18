@@ -11,6 +11,8 @@ import { Home } from "./pages/index.page.tsx";
 const client = new Client({
   url: API_ENDPOINT,
   exchanges: [cacheExchange, fetchExchange],
+  requestPolicy: "cache-first",
+  suspense: true,
 });
 
 export function App() {
