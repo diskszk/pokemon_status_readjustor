@@ -60,5 +60,6 @@ export const garchomp = {
   forms: [{
     name: "garchomp",
     imageSrc: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png",
+    id: 445,
   }],
 } satisfies Pokemon;
