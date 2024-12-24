@@ -22,6 +22,7 @@ export function Footer() {
               color="blue.500"
               fontSize="sm"
               textDecoration="underline"
+              to="/disclaimer"
             >
               免責事項
             </ChakraLink>
@@ -36,6 +37,7 @@ export function Footer() {
               color="blue.500"
               fontSize="sm"
               textDecoration="underline"
+              to="/policy"
             >
               ポリシー
             </ChakraLink>

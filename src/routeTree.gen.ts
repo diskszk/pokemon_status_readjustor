@@ -11,9 +11,23 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PolicyRouteImport } from './routes/policy.route'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer.route'
 import { Route as IndexRouteImport } from './routes/index.route'
 
 // Create/Update Routes
+
+const PolicyRouteRoute = PolicyRouteImport.update({
+  id: '/policy',
+  path: '/policy',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DisclaimerRouteRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRouteRoute = IndexRouteImport.update({
   id: '/',
@@ -32,6 +46,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRoute
     }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/policy': {
+      id: '/policy'
+      path: '/policy'
+      fullPath: '/policy'
+      preLoaderRoute: typeof PolicyRouteImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRouteRoute
+  '/disclaimer': typeof DisclaimerRouteRoute
+  '/policy': typeof PolicyRouteRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRouteRoute
+  '/disclaimer': typeof DisclaimerRouteRoute
+  '/policy': typeof PolicyRouteRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRouteRoute
+  '/disclaimer': typeof DisclaimerRouteRoute
+  '/policy': typeof PolicyRouteRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/disclaimer' | '/policy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/disclaimer' | '/policy'
+  id: '__root__' | '/' | '/disclaimer' | '/policy'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRouteRoute: typeof IndexRouteRoute
+  DisclaimerRouteRoute: typeof DisclaimerRouteRoute
+  PolicyRouteRoute: typeof PolicyRouteRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRouteRoute: IndexRouteRoute,
+  DisclaimerRouteRoute: DisclaimerRouteRoute,
+  PolicyRouteRoute: PolicyRouteRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +115,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/disclaimer",
+        "/policy"
       ]
     },
     "/": {
       "filePath": "index.route.tsx"
+    },
+    "/disclaimer": {
+      "filePath": "disclaimer.route.tsx"
+    },
+    "/policy": {
+      "filePath": "policy.route.tsx"
     }
   }
 }

@@ -8,7 +8,7 @@ export function Header() {
       pt="16px"
     >
       <Center>
-        <Heading>ステータス再調整ツール</Heading>
+        <Heading as="h1">ステータス再調整ツール</Heading>
       </Center>
     </Box>
   );
