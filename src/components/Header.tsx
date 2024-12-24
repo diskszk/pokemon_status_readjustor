@@ -3,6 +3,7 @@ import { Box, Center, Heading } from "@chakra-ui/react";
 export function Header() {
   return (
     <Box
+      as="header"
       minWidth="100vw"
       pt="16px"
     >
