@@ -28,3 +28,6 @@ dist-ssr
 *storybook.log
 ladle-static
 *.tsbuildinfo
+
+# msw
+public/mockServiceWorker.js

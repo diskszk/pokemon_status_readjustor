@@ -11,4 +11,3 @@ export const server = ({ mockApis }: Worker) => {
 };
 
 server({ mockApis: ["QueryPokemonBaseStats"] });
-// export const server = setupServer(...handlers);

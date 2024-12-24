@@ -4,7 +4,7 @@ import type { PokemonForm } from "@/types";
 
 type Props = {
   pokemonForms: PokemonForm[];
-  handleClickPokemonImage: (target: PokemonForm) => void;
+  handleClickPokemonImage: (targetId: number) => void;
 
 };
 
@@ -20,7 +20,7 @@ export function Presentation({ pokemonForms, handleClickPokemonImage }: Props) {
           cursor={index === 0 ? "default" : "pointer"}
           disabled={index === 0}
           key={index}
-          onClick={() => handleClickPokemonImage(form)}
+          onClick={() => handleClickPokemonImage(form.id)}
         >
           <Image
             alt={`${form.name}の画像`}
