@@ -1,4 +1,5 @@
-import { Box, Center, Heading } from "@chakra-ui/react";
+import { Box, Center, Heading, Link as ChakraLink } from "@chakra-ui/react";
+import { Link as TanstackLink } from "@tanstack/react-router";
 
 export function Header() {
   return (
@@ -8,7 +9,12 @@ export function Header() {
       pt="16px"
     >
       <Center>
-        <Heading as="h1">ステータス再調整ツール</Heading>
+        <ChakraLink
+          as={TanstackLink}
+          to="/"
+        >
+          <Heading as="h1">ステータス再調整ツール</Heading>
+        </ChakraLink>
       </Center>
     </Box>
   );
