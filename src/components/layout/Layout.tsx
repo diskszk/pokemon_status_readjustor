@@ -1,5 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 
+import { Footer } from "../Footer";
 import { Header } from "../Header";
 
 import type { PropsWithChildren } from "react";
@@ -15,6 +16,7 @@ export function Layout({ children }: PropsWithChildren) {
     >
       <Header />
       {children}
+      <Footer />
     </Flex>
   );
 }
