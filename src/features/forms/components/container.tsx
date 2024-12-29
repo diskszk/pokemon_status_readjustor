@@ -39,7 +39,7 @@ export function Container() {
     const selectedForm = pokemonForms.find((form) => form.id === selectedFormId);
 
     if (!selectedForm) {
-      return [];
+      return pokemonForms;
     }
 
     const rest = pokemonForms.filter((form) => form.id !== selectedFormId);
