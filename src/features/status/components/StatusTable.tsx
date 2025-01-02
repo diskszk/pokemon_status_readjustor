@@ -31,11 +31,10 @@ import { HpStatusTableBody, StatusTableBody } from "./StatusTableBody";
 type Props = {
   pokemonBaseStats: PokemonStatus[];
   statusType: StatusType;
-  pokemonName: string;
   header: string;
 };
 
-export function StatusTable({ pokemonBaseStats, statusType, pokemonName, header }: Props) {
+export function StatusTable({ pokemonBaseStats, statusType, header }: Props) {
   const [level, setLevel] = useState(50);
 
   const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
@@ -102,7 +101,6 @@ export function StatusTable({ pokemonBaseStats, statusType, pokemonName, header 
                     baseStat={p.value}
                     key={key}
                     level={level}
-                    pokemonName={pokemonName}
                     statusType={statusType}
                   />
                 ) : (

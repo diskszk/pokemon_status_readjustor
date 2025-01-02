@@ -2,7 +2,7 @@ import { useSetAtom } from "jotai";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
-import { pokemonSpeciesIdAtom } from "@/atoms";
+import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/features/hooks";
 import type { PokemonNameChart } from "@/types";
 
@@ -25,6 +25,7 @@ export function Container() {
 
   const { queryPokemonId } = usePokemonIdQuery();
   const setPokemonSpeciesId = useSetAtom(pokemonSpeciesIdAtom);
+  const setPokemonIndividualId = useSetAtom(pokemonIndividualIdAtom);
 
   const handleChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormDisabled(true);
@@ -55,7 +56,8 @@ export function Container() {
       return;
     }
     setPokemonSpeciesId(id);
-  }, [queryPokemonId, setPokemonSpeciesId, showErrorToast]);
+    setPokemonIndividualId(id);
+  }, [queryPokemonId, setPokemonIndividualId, setPokemonSpeciesId, showErrorToast]);
 
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
