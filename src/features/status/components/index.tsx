@@ -7,7 +7,7 @@ import { useErrorToast } from "@/features/hooks";
 import { garchomp } from "@/features/mock/pokemons";
 
 import { usePokemonBaseStats } from "../hooks";
-import { StatusTable } from "./StatusTable";
+import { StatusTable } from "./table/StatusTable";
 
 export function StatusTableWrapper() {
   const pokemonIndividualId = useAtomValue(pokemonIndividualIdAtom);
@@ -27,14 +27,14 @@ export function StatusTableWrapper() {
     <HStack spacing="32px">
       <Skeleton isLoaded={!fetching}>
         <StatusTable
-          header="現在のステータス"
+          label="現在のステータス"
           pokemonBaseStats={baseStats}
           statusType={CURRENT}
         />
       </Skeleton>
       <Skeleton isLoaded={!fetching}>
         <StatusTable
-          header="調整後のステータス"
+          label="調整後のステータス"
           pokemonBaseStats={baseStats}
           statusType={ADJUSTED}
         />

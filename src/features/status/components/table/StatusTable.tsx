@@ -2,21 +2,9 @@ import {
   Card,
   CardBody,
   CardHeader,
-  FormControl,
-  FormLabel,
-  Heading,
   HStack,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Table,
   TableContainer,
-  Th,
-  Thead,
-  Tr,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -26,15 +14,19 @@ import { CURRENT, HP } from "@/features/constants";
 import { useEffortValue } from "@/features/hooks";
 import type { PokemonStatus, StatusType } from "@/types";
 
-import { HpStatusTableBody, StatusTableBody } from "./StatusTableBody";
+import { HpStatusTableBody, StatusTableBody } from "../StatusTableBody";
+import { LevelControl } from "./ui/LevelControl";
+import { TableHead } from "./ui/TableHead";
+import { TableHeading } from "./ui/TableHeading";
+import { TotalEffortValue } from "./ui/TotalEffortValue";
 
 type Props = {
   pokemonBaseStats: PokemonStatus[];
   statusType: StatusType;
-  header: string;
+  label: string;
 };
 
-export function StatusTable({ pokemonBaseStats, statusType, header }: Props) {
+export function StatusTable({ pokemonBaseStats, statusType, label }: Props) {
   const [level, setLevel] = useState(50);
 
   const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
@@ -47,35 +39,11 @@ export function StatusTable({ pokemonBaseStats, statusType, header }: Props) {
         pt="12px"
       >
         <HStack alignItems="center">
-          <Heading
-            as="h3"
-            px="16px"
-            size="sm"
-            width="100%"
-          >
-            {header}
-          </Heading>
-          <FormControl>
-            <HStack>
-              <FormLabel m="0 2px">レベル</FormLabel>
-              <NumberInput
-                aria-label="レベル"
-                max={100}
-                min={1}
-                onChange={(value) => setLevel(Number(value))}
-                size="sm"
-                value={level}
-                variant="flushed"
-                width="60px"
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </HStack>
-          </FormControl>
+          <TableHeading label={label} />
+          <LevelControl
+            level={level}
+            setLevel={setLevel}
+          />
         </HStack>
       </CardHeader>
       <CardBody py="8px">
@@ -85,16 +53,7 @@ export function StatusTable({ pokemonBaseStats, statusType, header }: Props) {
               size="sm"
               variant="simple"
             >
-              <Thead alignItems="center">
-                <Tr>
-                  <Th />
-                  <Th>実数値</Th>
-                  <Th>努力値</Th>
-                  <Th>個体値</Th>
-                  <Th>性格</Th>
-                </Tr>
-                <Tr />
-              </Thead>
+              <TableHead />
               {pokemonBaseStats.map((p, key) => (
                 p.name === HP ? (
                   <HpStatusTableBody
@@ -116,11 +75,7 @@ export function StatusTable({ pokemonBaseStats, statusType, header }: Props) {
             </Table>
           </TableContainer>
         </VStack>
-        <Text color={totalEffortValue > 510 ? "red" : "normal"}>
-          total:
-          {totalEffortValue}
-          /510
-        </Text>
+        <TotalEffortValue totalEffortValue={totalEffortValue} />
       </CardBody>
     </Card>
   );
