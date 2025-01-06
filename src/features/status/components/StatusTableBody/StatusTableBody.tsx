@@ -2,10 +2,11 @@ import { useState, useCallback, useEffect } from "react";
 
 import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms";
 import { CURRENT } from "@/constants";
-import { useEffortValue, useErrorToast } from "@/features/hooks";
+import { useErrorToast } from "@/hooks";
 import type { StatusSpecies, StatusType } from "@/types";
 
 import { Presentation } from "./presentation";
+import { useEffortValue } from "../../hooks";
 import { calcActualValue } from "../../logic/calcActualValue";
 import { calcEffortValue } from "../../logic/calcEffortValue";
 import { MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../styleConfig";

@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useState } from "react";
 
 import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
-import { useErrorToast } from "@/features/hooks";
+import { useErrorToast } from "@/hooks";
 import { garchomp } from "@/mockData/pokemons";
 import type { PokemonForm } from "@/types";
 

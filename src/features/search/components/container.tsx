@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
 import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
-import { useErrorToast } from "@/features/hooks";
+import { useErrorToast } from "@/hooks";
 import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";

@@ -3,7 +3,7 @@ import { useAtomValue } from "jotai";
 
 import { pokemonIndividualIdAtom } from "@/atoms";
 import { ADJUSTED, CURRENT } from "@/constants";
-import { useErrorToast } from "@/features/hooks";
+import { useErrorToast } from "@/hooks";
 import { garchomp } from "@/mockData/pokemons";
 
 import { usePokemonBaseStats } from "../hooks";
