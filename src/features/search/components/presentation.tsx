@@ -13,11 +13,11 @@ type Props = {
   handleChangeSearchForm: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 };
 
-export function Presentation(
-  { formDisabled,
-    suggested,
-    handleSubmit,
-    handleChangeSearchForm }: Props,
+export function Presentation({
+  formDisabled,
+  suggested,
+  handleSubmit,
+  handleChangeSearchForm }: Props,
 ) {
   return (
     <Flex>

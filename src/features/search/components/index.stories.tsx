@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { Presentation } from "./presentation";
 
@@ -18,14 +18,10 @@ export default {
 } satisfies StoryDefault;
 
 export const Default: Story<SearchFormProps> = (args) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const datalistRef = useRef<HTMLDataListElement>(null);
   return (
 
     <Presentation
       {...args}
-      datalistRef={datalistRef}
-      pokemonEnInputRef={inputRef}
     />
   );
 };

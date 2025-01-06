@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Presentation } from "./presentation";
-import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "../../constants";
+import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "../../../constants";
 
 import type { Story, StoryDefault } from "@ladle/react";
 import type { ComponentProps } from "react";
