@@ -1,6 +1,6 @@
 import { graphql, HttpResponse } from "msw";
 
-import type { QueryPokemonIdQueryVariables, QueryPokemonIdQuery } from "@/features/infrastructures/gql/graphql";
+import type { QueryPokemonIdQueryVariables, QueryPokemonIdQuery } from "@/infrastructures/gql/graphql";
 
 import { graphqlError } from "./graphqlError";
 import { speciesIdMockData } from "../mockData";

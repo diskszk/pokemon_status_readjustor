@@ -1,6 +1,6 @@
 import { graphql, HttpResponse } from "msw";
 
-import type { QueryPokemonBaseStatsQueryVariables, QueryPokemonBaseStatsQuery } from "@/features/infrastructures/gql/graphql";
+import type { QueryPokemonBaseStatsQueryVariables, QueryPokemonBaseStatsQuery } from "@/infrastructures/gql/graphql";
 
 import { graphqlError } from "./graphqlError";
 import { baseStatsMockData } from "../mockData/baseStatsMockData";
