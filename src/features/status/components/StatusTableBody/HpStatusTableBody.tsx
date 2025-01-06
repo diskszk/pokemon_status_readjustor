@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 
-import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms/effortValueAtom";
+import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms";
 import { CURRENT, HP } from "@/features/constants";
 import { useEffortValue, useErrorToast } from "@/features/hooks";
 import type { StatusType } from "@/types";
