@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useClient } from "urql";
 
-import type { Pokemon_V2_Pokemonspeciesname } from "@/features/infrastructures/gql/graphql";
-import { QueryPokemonId } from "@/features/infrastructures/queries";
+import type { Pokemon_V2_Pokemonspeciesname } from "@/infrastructures/gql/graphql";
+import { QueryPokemonId } from "@/infrastructures/queries";
 
 import type { CombinedError } from "urql";
 

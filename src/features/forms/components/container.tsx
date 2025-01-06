@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/features/hooks";
-import { garchomp } from "@/features/mock/pokemons";
+import { garchomp } from "@/mockData/pokemons";
 import type { PokemonForm } from "@/types";
 
 import { Presentation } from "./presentation";

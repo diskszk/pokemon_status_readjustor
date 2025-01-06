@@ -1,7 +1,7 @@
 import { useQuery } from "urql";
 
-import type { Pokemon_V2_Pokemon } from "@/features/infrastructures/gql/graphql";
-import { QueryPokemonBaseStats } from "@/features/infrastructures/queries";
+import type { Pokemon_V2_Pokemon } from "@/infrastructures/gql/graphql";
+import { QueryPokemonBaseStats } from "@/infrastructures/queries";
 import type { PokemonStatus, StatusSpecies } from "@/types";
 
 import type { CombinedError } from "urql";

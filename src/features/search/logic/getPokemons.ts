@@ -1,4 +1,4 @@
-import { mockPokemons } from "@/features/mock/pokemons";
+import { mockPokemons } from "@/mockData/pokemons";
 import type { PokemonNameChart } from "@/types";
 
 import pokemonsJson from "../../../../pokemon.json";
