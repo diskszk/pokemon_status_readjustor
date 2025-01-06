@@ -1,4 +1,3 @@
-import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import { useState, useCallback, useEffect } from "react";
 
 import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms/effortValueAtom";
@@ -128,27 +127,6 @@ export function StatusTableBody({
     updateActualValue({ nature: value });
   }, [updateActualValue]);
 
-  const natureInputUi = (
-    <NumberInput
-      aria-label="性格補正"
-      defaultValue={1}
-      height="16px"
-      max={1.1}
-      min={0.9}
-      onChange={handleChangeNature}
-      size="sm"
-      step={0.1}
-      variant="flushed"
-      width="64px"
-    >
-      <NumberInputField />
-      <NumberInputStepper>
-        <NumberIncrementStepper />
-        <NumberDecrementStepper />
-      </NumberInputStepper>
-    </NumberInput>
-  );
-
   return (
     <Presentation
       actualValue={actualValue}
@@ -156,6 +134,7 @@ export function StatusTableBody({
       handleChangeActualValue={handleChangeActualValue}
       handleChangeEffortValue={handleChangeEffortValue}
       handleChangeIndividualValue={handleChangeIndividualValue}
+      handleChangeNature={handleChangeNature}
       individualValue={individualValue}
       maximizeEffortValue={maximizeEffortValue}
       maximizeIndividualValue={maximizeIndividualValue}
@@ -163,7 +142,6 @@ export function StatusTableBody({
       minimizeEffortValue={minimizeEffortValue}
       minimizeIndividualValue={minimizeIndividualValue}
       minimumActualValue={minimumActualValue}
-      natureInputUi={natureInputUi}
       speciesName={speciesName}
       totalEffortValue={totalEffortValue}
     />

@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Spacer } from "@chakra-ui/react";
+import { Box, Center, HStack, Skeleton, Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 import { Differences } from "@/features/differences/components";
@@ -16,7 +16,9 @@ export function Home() {
         </Suspense>
       </HStack>
       <Center width="100vw">
-        <StatusTableWrapper />
+        <Suspense fallback={<Skeleton />}>
+          <StatusTableWrapper />
+        </Suspense>
       </Center>
       <Box width="100%">
         <Differences />
