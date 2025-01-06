@@ -1,8 +1,6 @@
 import {
   Card,
   CardBody,
-  CardHeader,
-  HStack,
   Table,
   TableContainer,
   VStack,
@@ -10,15 +8,12 @@ import {
 import { useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms/effortValueAtom";
-import { CURRENT, HP } from "@/features/constants";
+import { CURRENT } from "@/features/constants";
 import { useEffortValue } from "@/features/hooks";
 import type { PokemonStatus, StatusType } from "@/types";
 
-import { HpStatusTableBody, StatusTableBody } from "../StatusTableBody";
-import { LevelControl } from "./ui/LevelControl";
-import { TableHead } from "./ui/TableHead";
-import { TableHeading } from "./ui/TableHeading";
-import { TotalEffortValue } from "./ui/TotalEffortValue";
+import { HeadLine, TableBody } from "./partials";
+import { TableHead, TotalEffortValue } from "./ui";
 
 type Props = {
   pokemonBaseStats: PokemonStatus[];
@@ -34,18 +29,11 @@ export function StatusTable({ pokemonBaseStats, statusType, label }: Props) {
 
   return (
     <Card borderRadius="lg">
-      <CardHeader
-        pb="8px"
-        pt="12px"
-      >
-        <HStack alignItems="center">
-          <TableHeading label={label} />
-          <LevelControl
-            level={level}
-            setLevel={setLevel}
-          />
-        </HStack>
-      </CardHeader>
+      <HeadLine
+        label={label}
+        level={level}
+        setLevel={setLevel}
+      />
       <CardBody py="8px">
         <VStack>
           <TableContainer>
@@ -54,24 +42,11 @@ export function StatusTable({ pokemonBaseStats, statusType, label }: Props) {
               variant="simple"
             >
               <TableHead />
-              {pokemonBaseStats.map((p, key) => (
-                p.name === HP ? (
-                  <HpStatusTableBody
-                    baseStat={p.value}
-                    key={key}
-                    level={level}
-                    statusType={statusType}
-                  />
-                ) : (
-                  <StatusTableBody
-                    baseStat={p.value}
-                    key={key}
-                    level={level}
-                    speciesName={p.name}
-                    statusType={statusType}
-                  />
-                )
-              ))}
+              <TableBody
+                level={level}
+                pokemonBaseStats={pokemonBaseStats}
+                statusType={statusType}
+              />
             </Table>
           </TableContainer>
         </VStack>

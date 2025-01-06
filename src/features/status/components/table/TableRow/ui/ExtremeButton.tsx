@@ -2,10 +2,8 @@ import {
   Button,
   InputRightElement,
   VStack,
+  type ButtonProps,
 } from "@chakra-ui/react";
-
-import type {
-  ButtonProps } from "@chakra-ui/react";
 
 export function ExtremeButton({ maxButtonProps, minimumButtonProps }: { maxButtonProps: ButtonProps; minimumButtonProps: ButtonProps }) {
   return (

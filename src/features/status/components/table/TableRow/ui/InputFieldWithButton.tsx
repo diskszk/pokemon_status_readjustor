@@ -7,7 +7,7 @@ import {
 
 import { INPUT_GROUP_WIDTH } from "@/features/status/constants";
 
-import { InputField } from "./InputField";
+import { InputField } from "../ui";
 
 import type {
   ButtonProps,
