@@ -1,6 +1,6 @@
 import { Tbody } from "@chakra-ui/react";
 
-import { HP } from "@/features/constants";
+import { HP } from "@/constants";
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { HpStatusTableBody, StatusTableBody } from "../../StatusTableBody";

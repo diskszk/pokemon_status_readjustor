@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
-import { CURRENT } from "@/features/constants";
+import { CURRENT } from "@/constants";
 import { useEffortValue } from "@/features/hooks";
 import type { PokemonStatus, StatusType } from "@/types";
 

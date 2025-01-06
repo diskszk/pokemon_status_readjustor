@@ -1,7 +1,7 @@
 import { Link, ListItem, Text, UnorderedList, VStack } from "@chakra-ui/react";
 
 import { ContentWrapper, PolicyAndDisclaimerLayout } from "@/components/layout";
-import { EMAIL_ADDRESS } from "@/features/constants";
+import { EMAIL_ADDRESS } from "@/constants";
 
 export function PolicyPage() {
   return (

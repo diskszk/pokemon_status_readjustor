@@ -2,7 +2,7 @@ import { HStack, Skeleton } from "@chakra-ui/react";
 import { useAtomValue } from "jotai";
 
 import { pokemonIndividualIdAtom } from "@/atoms";
-import { ADJUSTED, CURRENT } from "@/features/constants";
+import { ADJUSTED, CURRENT } from "@/constants";
 import { useErrorToast } from "@/features/hooks";
 import { garchomp } from "@/features/mock/pokemons";
 

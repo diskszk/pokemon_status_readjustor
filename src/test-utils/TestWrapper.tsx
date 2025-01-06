@@ -3,7 +3,7 @@ import { useHydrateAtoms } from "jotai/utils";
 import { type ReactNode } from "react";
 import { cacheExchange, Client, fetchExchange, Provider as UrqlProvider } from "urql";
 
-import { API_ENDPOINT } from "@/features/constants";
+import { API_ENDPOINT } from "@/constants";
 
 import type { WritableAtom } from "jotai";
 

@@ -1,14 +1,14 @@
 import { useState, useCallback, useEffect } from "react";
 
 import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms";
-import { CURRENT } from "@/features/constants";
+import { CURRENT } from "@/constants";
 import { useEffortValue, useErrorToast } from "@/features/hooks";
 import type { StatusSpecies, StatusType } from "@/types";
 
 import { Presentation } from "./presentation";
-import { MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../../constants";
 import { calcActualValue } from "../../logic/calcActualValue";
 import { calcEffortValue } from "../../logic/calcEffortValue";
+import { MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../styleConfig";
 
 import type { MouseEventHandler } from "react";
 
