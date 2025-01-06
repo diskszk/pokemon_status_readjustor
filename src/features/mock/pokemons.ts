@@ -1,6 +1,6 @@
 import type { PokemonForm } from "@/types";
 
-import type { PokemonStatus, PokemonNameChart } from "../types";
+import type { PokemonStatus, PokemonNameChart } from "../../types";
 
 export const mockPokemons = [
   {

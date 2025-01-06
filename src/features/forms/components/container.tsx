@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/features/hooks";
 import { garchomp } from "@/features/mock/pokemons";
-import type { PokemonForm } from "@/features/types";
+import type { PokemonForm } from "@/types";
 
 import { Presentation } from "./presentation";
 import { usePokemonFormsQuery } from "../hooks";

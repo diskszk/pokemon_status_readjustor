@@ -1,4 +1,4 @@
-import type { PokemonNameChart } from "./types";
+import type { PokemonNameChart } from "../../types";
 import type { Pokemon_V2_Pokemonspecies } from "cli/infrastructures/gql/graphql";
 
 export function convert(data: Pokemon_V2_Pokemonspecies[],
