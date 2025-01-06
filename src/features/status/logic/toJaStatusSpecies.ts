@@ -1,6 +1,8 @@
-import type { STATUS_SPECIES_JA } from "@/features/constants";
-import { HP_JA, ATK_JA, DEF_JA, SP_ATK_JA, SP_DEF_JA, SPD_JA } from "@/features/constants";
 import type { StatusSpecies } from "@/types";
+
+import { ATK_JA, DEF_JA, HP_JA, SP_ATK_JA, SP_DEF_JA, SPD_JA } from "./term";
+
+import type { STATUS_SPECIES_JA } from "./term";
 
 type StatusSpeciesJA = typeof STATUS_SPECIES_JA[number];
 

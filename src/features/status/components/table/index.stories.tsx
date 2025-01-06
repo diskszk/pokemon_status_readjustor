@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StatusTable } from "./StatusTable";
-import { garchomp } from "../../../mock/pokemons";
+import { garchomp } from "../../../../mockData/pokemons";
 
 import type { StoryDefault, Story } from "@ladle/react";
 import type { ComponentProps } from "react";

@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 
 import type { PokemonNameChart } from "@/types";
 
-import { mockPokemons } from "../../../mock/pokemons";
+import { mockPokemons } from "../../../../mockData/pokemons";
 
 import { suggestPokemonName } from ".";
 

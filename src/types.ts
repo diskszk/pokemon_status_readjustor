@@ -1,4 +1,4 @@
-import type { ADJUSTED, CURRENT, STATUS_SPECIES } from "@/features/constants";
+import type { ADJUSTED, CURRENT, STATUS_SPECIES } from "@/constants";
 
 export type StatusSpecies = typeof STATUS_SPECIES[number];
 

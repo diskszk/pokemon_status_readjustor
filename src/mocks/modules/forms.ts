@@ -1,6 +1,6 @@
 import { graphql, HttpResponse } from "msw";
 
-import type { QueryPokemonFormsQueryVariables, QueryPokemonFormsQuery } from "@/features/infrastructures/gql/graphql";
+import type { QueryPokemonFormsQueryVariables, QueryPokemonFormsQuery } from "@/infrastructures/gql/graphql";
 
 import { graphqlError } from "./graphqlError";
 import { formsMockData } from "../mockData";

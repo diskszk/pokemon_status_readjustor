@@ -2,9 +2,9 @@ import { HStack, Skeleton } from "@chakra-ui/react";
 import { useAtomValue } from "jotai";
 
 import { pokemonIndividualIdAtom } from "@/atoms";
-import { ADJUSTED, CURRENT } from "@/features/constants";
-import { useErrorToast } from "@/features/hooks";
-import { garchomp } from "@/features/mock/pokemons";
+import { ADJUSTED, CURRENT } from "@/constants";
+import { useErrorToast } from "@/hooks";
+import { garchomp } from "@/mockData/pokemons";
 
 import { usePokemonBaseStats } from "../hooks";
 import { StatusTable } from "./table/StatusTable";

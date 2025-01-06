@@ -1,5 +1,5 @@
-import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/features/constants";
-import type { PokemonStatus } from "@/features/types";
+import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/constants";
+import type { PokemonStatus } from "@/types";
 
 type MockData = {
   id: number;

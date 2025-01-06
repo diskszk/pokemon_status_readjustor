@@ -6,7 +6,7 @@ import {
   NumberInputStepper,
 } from "@chakra-ui/react";
 
-import { TABLE_WIDTH } from "@/features/status/constants";
+import { TABLE_WIDTH } from "@/features/status/components/styleConfig";
 
 import type {
   NumberInputProps } from "@chakra-ui/react";

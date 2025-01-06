@@ -3,7 +3,7 @@ import { StrictMode } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { cacheExchange, Client, fetchExchange, Provider as UrqlProvider } from "urql";
 
-import { API_ENDPOINT } from "@/features/constants/index.ts";
+import { API_ENDPOINT } from "@/constants";
 
 import { Head } from "./meta/head";
 

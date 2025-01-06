@@ -8,12 +8,12 @@ import {
 import { useState } from "react";
 
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
-import { CURRENT } from "@/features/constants";
-import { useEffortValue } from "@/features/hooks";
+import { CURRENT } from "@/constants";
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { HeadLine, TableBody } from "./partials";
 import { TableHead, TotalEffortValue } from "./ui";
+import { useEffortValue } from "../../hooks";
 
 type Props = {
   pokemonBaseStats: PokemonStatus[];
