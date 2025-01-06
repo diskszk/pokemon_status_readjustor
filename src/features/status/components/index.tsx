@@ -1,19 +1,19 @@
 import { HStack, Skeleton } from "@chakra-ui/react";
 import { useAtomValue } from "jotai";
 
+import { pokemonIndividualIdAtom } from "@/atoms";
 import { ADJUSTED, CURRENT } from "@/features/constants";
 import { useErrorToast } from "@/features/hooks";
 import { garchomp } from "@/features/mock/pokemons";
-import { pokemonNameAtom } from "@/features/stores";
 
 import { usePokemonBaseStats } from "../hooks";
-import { StatusTable } from "./StatusTable";
+import { StatusTable } from "./table/StatusTable";
 
 export function StatusTableWrapper() {
-  const pokemonName = useAtomValue(pokemonNameAtom);
+  const pokemonIndividualId = useAtomValue(pokemonIndividualIdAtom);
 
   const { showErrorToast } = useErrorToast();
-  const { baseStatsData, fetching, error } = usePokemonBaseStats(pokemonName);
+  const { baseStatsData, fetching, error } = usePokemonBaseStats(pokemonIndividualId);
 
   if (error) {
     showErrorToast({
@@ -27,17 +27,15 @@ export function StatusTableWrapper() {
     <HStack spacing="32px">
       <Skeleton isLoaded={!fetching}>
         <StatusTable
-          header="現在のステータス"
+          label="現在のステータス"
           pokemonBaseStats={baseStats}
-          pokemonName={pokemonName}
           statusType={CURRENT}
         />
       </Skeleton>
       <Skeleton isLoaded={!fetching}>
         <StatusTable
-          header="調整後のステータス"
+          label="調整後のステータス"
           pokemonBaseStats={baseStats}
-          pokemonName={pokemonName}
           statusType={ADJUSTED}
         />
       </Skeleton>

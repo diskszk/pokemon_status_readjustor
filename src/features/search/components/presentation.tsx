@@ -1,6 +1,6 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { Flex, FormControl, VStack, InputGroup, Input, InputRightElement, Spinner, VisuallyHiddenInput, FormHelperText } from "@chakra-ui/react";
-import { forwardRef, useImperativeHandle, type FormEventHandler, type RefObject } from "react";
+import { Flex, FormControl, VStack, InputGroup, Input, InputRightElement, Spinner, FormHelperText } from "@chakra-ui/react";
+import { type FormEventHandler } from "react";
 
 import type { PokemonNameChart } from "@/types";
 
@@ -8,35 +8,17 @@ import { inputCss } from "./css";
 
 type Props = {
   formDisabled: boolean;
-  pokemonEnInputRef: RefObject<HTMLInputElement | null>;
-  datalistRef: RefObject<HTMLDataListElement | null>;
   suggested: PokemonNameChart[];
   handleSubmit: FormEventHandler<HTMLFormElement>;
   handleChangeSearchForm: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 };
 
-export const Presentation = forwardRef((
-  {
-    formDisabled,
-    pokemonEnInputRef,
-    datalistRef,
+export function Presentation(
+  { formDisabled,
     suggested,
     handleSubmit,
-    handleChangeSearchForm,
-  }: Props, ref,
-) => {
-  useImperativeHandle(ref, () => {
-    const inputDom = pokemonEnInputRef.current;
-    const dataListDom = datalistRef.current;
-
-    if (inputDom != null && dataListDom != null) {
-      return [inputDom, dataListDom];
-    }
-    else {
-      return [];
-    }
-  });
-
+    handleChangeSearchForm }: Props,
+) {
   return (
     <Flex>
       <form onSubmit={handleSubmit}>
@@ -49,7 +31,7 @@ export const Presentation = forwardRef((
                   borderColor="blue.200"
                   css={inputCss}
                   list="suggested-list"
-                  name="pokemon-ja"
+                  name="pokemon-name"
                   onChange={handleChangeSearchForm}
                   placeholder="(例) ガブリアス"
                   type="search"
@@ -64,10 +46,6 @@ export const Presentation = forwardRef((
                     <SearchIcon color="gray.300" />
                   )}
                 </InputRightElement>
-                <VisuallyHiddenInput
-                  name="pokemon-en"
-                  ref={pokemonEnInputRef}
-                />
                 <button
                   disabled={formDisabled}
                   hidden
@@ -76,15 +54,11 @@ export const Presentation = forwardRef((
                   submit
                 </button>
               </InputGroup>
-              <FormHelperText>ポケモンの名前をカタカナで入力してください。</FormHelperText>
+              <FormHelperText>ポケモンの名前を入力してください。</FormHelperText>
             </VStack>
-            <datalist
-              id="suggested-list"
-              ref={datalistRef}
-            >
+            <datalist id="suggested-list">
               {suggested.map((p, key) => (
                 <option
-                  data-en={p.en}
                   key={key}
                   tabIndex={-1}
                   value={p.ja}
@@ -96,4 +70,4 @@ export const Presentation = forwardRef((
       </form>
     </Flex>
   );
-});
+};

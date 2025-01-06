@@ -1,13 +1,13 @@
 import { useSetAtom } from "jotai";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
-import { usePokemonFormsQuery } from "@/features/forms/hooks";
+import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/features/hooks";
-import { loadingAtom, pokemonFormsAtom, pokemonNameAtom } from "@/features/stores";
 import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";
+import { usePokemonIdQuery } from "../hooks";
 import { getPokemons } from "../logic";
 import { suggestPokemonName } from "../logic/suggestPokemonName";
 
@@ -18,61 +18,46 @@ const DEBOUNCE_TIME = 500;
 
 export function Container() {
   const pokemons = useMemo(() => getPokemons(), []);
-
+  const { showErrorToast } = useErrorToast();
   const [suggested, setSuggested] = useState<PokemonNameChart[]>([]);
 
-  const pokemonEnInputRef = useRef<HTMLInputElement>(null);
-  const datalistRef = useRef<HTMLDataListElement>(null);
-
-  const { showErrorToast } = useErrorToast();
-  const setLoading = useSetAtom(loadingAtom);
-
-  const setPokemonName = useSetAtom(pokemonNameAtom);
-
   const [formDisabled, setFormDisabled] = useState(false);
+
+  const { queryPokemonId } = usePokemonIdQuery();
+  const setPokemonSpeciesId = useSetAtom(pokemonSpeciesIdAtom);
+  const setPokemonIndividualId = useSetAtom(pokemonIndividualIdAtom);
 
   const handleChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormDisabled(true);
     inputValue$.next(event.target.value);
   }, []);
 
-  const { queryPokemonForm } = usePokemonFormsQuery();
-
-  const setPokemonForm = useSetAtom(pokemonFormsAtom);
   const onSubmitSearchForm = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const ja = form.get("pokemon-ja");
-    let en = form.get("pokemon-en")?.toString();
 
-    if (!ja) {
+    const name = form.get("pokemon-name");
+    if (!name) {
       return;
     }
 
-    if (!en) {
-      if (!suggested) {
-        showErrorToast({
-          description: `${ja}は存在しない可能性があります。`,
-        });
-        return;
-      }
-      en = suggested[0].en;
-    }
-    setLoading(true);
-    setPokemonName(en);
+    const { id, error } = await queryPokemonId(name.toString());
 
-    const { pokemonForms, error } = await queryPokemonForm(en);
-
-    if (error || !pokemonForms) {
+    if (error) {
       showErrorToast({
         description: "データの取得に失敗しました",
       });
       return;
     }
-
-    setPokemonForm(pokemonForms);
-    setLoading(false);
-  }, [queryPokemonForm, setLoading, setPokemonForm, setPokemonName, showErrorToast, suggested]);
+    if (!id) {
+      showErrorToast({
+        description: `${name}は存在しない可能性があります`,
+      });
+      return;
+    }
+    setPokemonSpeciesId(id);
+    setPokemonIndividualId(id);
+  }, [queryPokemonId, setPokemonIndividualId, setPokemonSpeciesId, showErrorToast]);
 
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
@@ -80,19 +65,6 @@ export function Container() {
 
       setSuggested(suggestResult);
 
-      if (!datalistRef.current) {
-        return;
-      }
-
-      // 入力値と一致するポケモンの英語名をinputに設定する
-      const options = datalistRef.current.querySelectorAll("option");
-      const option = Array.from(options).find((option) => option.value === inputValue);
-
-      const enName = option ? option.getAttribute("data-en") : null;
-
-      if (pokemonEnInputRef.current) {
-        pokemonEnInputRef.current.value = enName || "";
-      }
       setFormDisabled(false);
     });
 
@@ -101,11 +73,9 @@ export function Container() {
 
   return (
     <Presentation
-      datalistRef={datalistRef}
       formDisabled={formDisabled}
       handleChangeSearchForm={handleChange}
       handleSubmit={onSubmitSearchForm}
-      pokemonEnInputRef={pokemonEnInputRef}
       suggested={suggested}
     />
   );

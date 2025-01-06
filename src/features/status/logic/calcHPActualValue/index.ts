@@ -3,10 +3,10 @@
   HP実数値 = (種族値×2+個体値+努力値÷4)×レベル÷100+レベル+10
 */
 
-export function calcHPActualValue({ baseStat, individual, effort, level, pokemonName }: {
-  baseStat: number; individual: number; effort: number; level: number; pokemonName: string;
+export function calcHPActualValue({ baseStat, individual, effort, level }: {
+  baseStat: number; individual: number; effort: number; level: number;
 }): number {
-  if (pokemonName === "shedinja") {
+  if (baseStat === 1) {
     return 1;
   }
 

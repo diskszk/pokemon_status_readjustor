@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 
+import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms";
 import { CURRENT, HP } from "@/features/constants";
 import { useEffortValue, useErrorToast } from "@/features/hooks";
-import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/features/stores/effortValueAtom";
 import type { StatusType } from "@/types";
 
 import { Presentation } from "./presentation";
@@ -15,7 +15,6 @@ import type { MouseEventHandler } from "react";
 
 type Props = {
   level: number;
-  pokemonName: string;
   baseStat: number;
   statusType: StatusType;
 };
@@ -23,7 +22,6 @@ type Props = {
 export function HpStatusTableBody({
   baseStat,
   level,
-  pokemonName,
   statusType,
 }: Props) {
   const [individualValue, setIndividualValue] = useState(31);
@@ -46,7 +44,6 @@ export function HpStatusTableBody({
     individual: individualValue,
     effort: effortValue.value,
     level,
-    pokemonName,
   }));
 
   const minimumActualValue = calcHPActualValue({
@@ -54,7 +51,6 @@ export function HpStatusTableBody({
     individual: individualValue,
     effort: 0,
     level,
-    pokemonName,
   });
 
   const maximumActualValue = calcHPActualValue({
@@ -62,16 +58,15 @@ export function HpStatusTableBody({
     individual: individualValue,
     effort: 252,
     level,
-    pokemonName,
   });
 
   const updateActualValue = useCallback((updateValue: Partial<typeof calcActualValue | typeof calcHPActualValue>) => {
     const newActualValue = calcHPActualValue({
-      baseStat, individual: individualValue, effort: effortValue.value, level, pokemonName, ...updateValue,
+      baseStat, individual: individualValue, effort: effortValue.value, level, ...updateValue,
     });
 
     setActualValue(newActualValue);
-  }, [baseStat, effortValue.value, individualValue, level, pokemonName]);
+  }, [baseStat, effortValue.value, individualValue, level]);
 
   useEffect(() => {
     updateActualValue(level);

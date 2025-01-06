@@ -10,6 +10,7 @@ export type PokemonNameChart = {
 export type PokemonForm = {
   name: string;
   imageSrc: string;
+  id: number;
 };
 
 export type PokemonStatus = {
