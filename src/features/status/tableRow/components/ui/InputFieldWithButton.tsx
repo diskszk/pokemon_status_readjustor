@@ -5,9 +5,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { INPUT_GROUP_WIDTH } from "@/features/status/components/styleConfig";
+import { INPUT_GROUP_WIDTH } from "@/features/status/tableRow/components/styleConfig";
 
-import { InputField } from "../ui";
+import { InputField } from "./InputField";
 
 import type {
   ButtonProps,

@@ -3,7 +3,7 @@ import { Tbody } from "@chakra-ui/react";
 import { HP } from "@/constants";
 import type { PokemonStatus, StatusType } from "@/types";
 
-import { HpStatusTableBody, StatusTableBody } from "../../StatusTableBody";
+import { HpStatusTableBody, StatusTableBody } from "../../../tableRow/components";
 
 type Props = {
   pokemonBaseStats: PokemonStatus[];

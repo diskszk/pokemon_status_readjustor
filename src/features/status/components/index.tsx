@@ -1,19 +1,29 @@
-import { HStack, Skeleton } from "@chakra-ui/react";
 import { useAtomValue } from "jotai";
+import { useState } from "react";
 
-import { pokemonIndividualIdAtom } from "@/atoms";
-import { ADJUSTED, CURRENT } from "@/constants";
+import { adjustedEffortValueAtom, currentEffortValueAtom, pokemonIndividualIdAtom } from "@/atoms";
+import { CURRENT } from "@/constants";
 import { useErrorToast } from "@/hooks";
-import { garchomp } from "@/mockData/pokemons";
+import type { StatusType } from "@/types";
 
-import { usePokemonBaseStats } from "../hooks";
-import { StatusTable } from "./table/StatusTable";
+import { useEffortValue, usePokemonBaseStats } from "../hooks";
+import { Presentation } from "./presentation";
 
-export function StatusTableWrapper() {
+type Props = {
+  statusType: StatusType;
+  label: string;
+};
+
+export function Status({ statusType, label }: Props) {
+  const [level, setLevel] = useState(50);
+
+  const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
+  const { totalEffortValue } = useEffortValue(effortValueAtom);
+
   const pokemonIndividualId = useAtomValue(pokemonIndividualIdAtom);
 
   const { showErrorToast } = useErrorToast();
-  const { baseStatsData, fetching, error } = usePokemonBaseStats(pokemonIndividualId);
+  const { baseStatsData, error } = usePokemonBaseStats(pokemonIndividualId);
 
   if (error) {
     showErrorToast({
@@ -21,24 +31,14 @@ export function StatusTableWrapper() {
     });
   }
 
-  const baseStats = baseStatsData || garchomp.baseStats;
-
   return (
-    <HStack spacing="32px">
-      <Skeleton isLoaded={!fetching}>
-        <StatusTable
-          label="現在のステータス"
-          pokemonBaseStats={baseStats}
-          statusType={CURRENT}
-        />
-      </Skeleton>
-      <Skeleton isLoaded={!fetching}>
-        <StatusTable
-          label="調整後のステータス"
-          pokemonBaseStats={baseStats}
-          statusType={ADJUSTED}
-        />
-      </Skeleton>
-    </HStack>
+    <Presentation
+      baseStats={baseStatsData}
+      label={label}
+      level={level}
+      setLevel={setLevel}
+      statusType={statusType}
+      totalEffortValue={totalEffortValue}
+    />
   );
 }

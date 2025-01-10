@@ -1,25 +1,32 @@
 import React from "react";
 
-import { StatusTable } from "./StatusTable";
-import { garchomp } from "../../../../mockData/pokemons";
+import { Presentation as Status } from "./presentation";
+import { garchomp } from "../../../mockData/pokemons";
 
 import type { StoryDefault, Story } from "@ladle/react";
 import type { ComponentProps } from "react";
 
 export default {
-  title: "components/StatusTable",
+  title: "components/Status",
+  args: {
+    label: "現在のステータス",
+    level: 50,
+    setLevel: () => void 0,
+    statusType: "current",
+    TotalEffortValue: 0,
+  },
 } satisfies StoryDefault;
 
-type Props = ComponentProps<typeof StatusTable>;
+type Props = ComponentProps<typeof Status>;
 
 export const Garchomp: Story<Props> = (props) => (
-  <StatusTable {...props} />
+  <Status {...props} />
 );
 
-Garchomp.args = { pokemonBaseStats: garchomp.baseStats, statusType: "current", label: "ステータス" };
+Garchomp.args = { baseStats: garchomp.baseStats };
 
 export const Shedinja: Story<Props> = (props) => (
-  <StatusTable {...props} />
+  <Status {...props} />
 );
 const shedinja = {
   name: "shedinja",
@@ -33,4 +40,4 @@ const shedinja = {
   ],
   forms: [],
 };
-Shedinja.args = { pokemonBaseStats: shedinja.baseStats, statusType: "adjusted", label: "ステータス" };
+Shedinja.args = { baseStats: shedinja.baseStats, statusType: "adjusted" };

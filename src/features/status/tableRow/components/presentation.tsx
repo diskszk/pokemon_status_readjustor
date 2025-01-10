@@ -6,9 +6,9 @@ import {
 
 import type { StatusSpecies } from "@/types";
 
+import { MAX_TOTAL_EFFORT_VALUE, MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "./styleConfig";
+import { InputField, InputFieldWithButton } from "./ui";
 import { toJaStatusSpecies } from "../../logic/toJaStatusSpecies";
-import { MAX_TOTAL_EFFORT_VALUE, MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../styleConfig";
-import { InputFieldWithButton, InputField } from "../table/TableRow/ui";
 
 import type { MouseEventHandler } from "react";
 

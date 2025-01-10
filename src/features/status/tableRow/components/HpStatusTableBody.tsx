@@ -1,38 +1,36 @@
 import { useState, useCallback, useEffect } from "react";
 
 import { currentEffortValueAtom, adjustedEffortValueAtom } from "@/atoms";
-import { CURRENT } from "@/constants";
+import { CURRENT, HP } from "@/constants";
 import { useErrorToast } from "@/hooks";
-import type { StatusSpecies, StatusType } from "@/types";
+import type { StatusType } from "@/types";
 
 import { Presentation } from "./presentation";
+import { MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "./styleConfig";
 import { useEffortValue } from "../../hooks";
-import { calcActualValue } from "../../logic/calcActualValue";
-import { calcEffortValue } from "../../logic/calcEffortValue";
-import { MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "../styleConfig";
+import { calcHPActualValue } from "../../logic/calcHPActualValue";
+import { calcHPEffortValue } from "../../logic/calcHPEffortValue";
 
+import type { calcActualValue } from "../../logic/calcActualValue";
 import type { MouseEventHandler } from "react";
 
 type Props = {
   level: number;
-  speciesName: StatusSpecies;
   baseStat: number;
   statusType: StatusType;
 };
 
-export function StatusTableBody({
-  speciesName,
+export function HpStatusTableBody({
   baseStat,
   level,
   statusType,
 }: Props) {
   const [individualValue, setIndividualValue] = useState(31);
   const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
-  const [nature, setNature] = useState(1);
 
   const { totalEffortValue, allEffortValue, updateEffortValue } = useEffortValue(effortValueAtom);
 
-  const effortValue = allEffortValue.find((v) => v.name === speciesName);
+  const effortValue = allEffortValue.find((v) => v.name === HP);
 
   const { showErrorToast } = useErrorToast();
   if (!effortValue) {
@@ -42,37 +40,34 @@ export function StatusTableBody({
     throw Error();
   }
 
-  const [actualValue, setActualValue] = useState(calcActualValue({
+  const [actualValue, setActualValue] = useState(calcHPActualValue({
     baseStat,
     individual: individualValue,
     effort: effortValue.value,
     level,
-    nature,
   }));
 
-  const minimumActualValue = calcActualValue({
+  const minimumActualValue = calcHPActualValue({
     baseStat,
     individual: individualValue,
     effort: 0,
     level,
-    nature,
   });
 
-  const maximumActualValue = calcActualValue({
+  const maximumActualValue = calcHPActualValue({
     baseStat,
     individual: individualValue,
     effort: 252,
     level,
-    nature,
   });
 
-  const updateActualValue = useCallback((updateValue: Partial<typeof calcActualValue>) => {
-    const newActualValue = calcActualValue({
-      baseStat, individual: individualValue, effort: effortValue.value, level, nature, ...updateValue,
+  const updateActualValue = useCallback((updateValue: Partial<typeof calcActualValue | typeof calcHPActualValue>) => {
+    const newActualValue = calcHPActualValue({
+      baseStat, individual: individualValue, effort: effortValue.value, level, ...updateValue,
     });
 
     setActualValue(newActualValue);
-  }, [baseStat, effortValue.value, individualValue, level, nature]);
+  }, [baseStat, effortValue.value, individualValue, level]);
 
   useEffect(() => {
     updateActualValue(level);
@@ -80,17 +75,17 @@ export function StatusTableBody({
 
   const handleChangeActualValue: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {
     setActualValue((value));
-    const newEffortValue = calcEffortValue({
-      actual: value, level, baseStat, individual: individualValue, nature,
+    const newEffortValue = calcHPEffortValue({
+      actual: value, level, baseStat, individual: individualValue,
     });
-    updateEffortValue({ name: speciesName, value: newEffortValue });
-  }, [baseStat, individualValue, level, nature, speciesName, updateEffortValue]);
+    updateEffortValue({ name: HP, value: newEffortValue });
+  }, [baseStat, individualValue, level, updateEffortValue]);
 
   const handleChangeEffortValue: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {
-    updateEffortValue({ name: speciesName, value });
+    updateEffortValue({ name: HP, value });
 
     updateActualValue({ effort: value });
-  }, [speciesName, updateActualValue, updateEffortValue]);
+  }, [updateActualValue, updateEffortValue]);
 
   const maximizeEffortValue: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
     updateEffortValue({
@@ -123,11 +118,6 @@ export function StatusTableBody({
     updateActualValue({ individual: 0 });
   }, [updateActualValue]);
 
-  const handleChangeNature: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {
-    setNature(value);
-    updateActualValue({ nature: value });
-  }, [updateActualValue]);
-
   return (
     <Presentation
       actualValue={actualValue}
@@ -135,7 +125,6 @@ export function StatusTableBody({
       handleChangeActualValue={handleChangeActualValue}
       handleChangeEffortValue={handleChangeEffortValue}
       handleChangeIndividualValue={handleChangeIndividualValue}
-      handleChangeNature={handleChangeNature}
       individualValue={individualValue}
       maximizeEffortValue={maximizeEffortValue}
       maximizeIndividualValue={maximizeIndividualValue}
@@ -143,7 +132,7 @@ export function StatusTableBody({
       minimizeEffortValue={minimizeEffortValue}
       minimizeIndividualValue={minimizeIndividualValue}
       minimumActualValue={minimumActualValue}
-      speciesName={speciesName}
+      speciesName={HP}
       totalEffortValue={totalEffortValue}
     />
   );
