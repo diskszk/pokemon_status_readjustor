@@ -133,6 +133,7 @@ export function HpStatusTableBody({
       minimizeIndividualValue={minimizeIndividualValue}
       minimumActualValue={minimumActualValue}
       speciesName={HP}
+      statusType={statusType}
       totalEffortValue={totalEffortValue}
     />
   );

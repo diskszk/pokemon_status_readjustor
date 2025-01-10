@@ -144,6 +144,7 @@ export function StatusTableBody({
       minimizeIndividualValue={minimizeIndividualValue}
       minimumActualValue={minimumActualValue}
       speciesName={speciesName}
+      statusType={statusType}
       totalEffortValue={totalEffortValue}
     />
   );

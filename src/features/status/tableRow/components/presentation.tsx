@@ -4,7 +4,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-import type { StatusSpecies } from "@/types";
+import type { StatusSpecies, StatusType } from "@/types";
 
 import { MAX_TOTAL_EFFORT_VALUE, MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "./styleConfig";
 import { InputField, InputFieldWithButton } from "./ui";
@@ -28,6 +28,7 @@ type Props = {
   maximizeIndividualValue: MouseEventHandler<HTMLButtonElement>;
   minimizeIndividualValue: MouseEventHandler<HTMLButtonElement>;
   handleChangeNature?: (_: string, valueAsNumber: number) => void;
+  statusType: StatusType;
 };
 
 export function Presentation({
@@ -46,13 +47,17 @@ export function Presentation({
   maximizeIndividualValue,
   minimizeIndividualValue,
   handleChangeNature,
+  statusType,
 }: Props) {
+  // 外に出せないか検討
+  const speciesNameJA = toJaStatusSpecies(speciesName);
+
   return (
     <Tr>
-      <Th>{toJaStatusSpecies(speciesName)}</Th>
+      <Th>{speciesNameJA}</Th>
       <Td>
         <InputField
-          aria-label="実数値"
+          aria-label={`${statusType}テーブルの${speciesNameJA}実数値`}
           defaultValue={actualValue}
           max={maximumActualValue}
           min={minimumActualValue}
@@ -63,7 +68,7 @@ export function Presentation({
       <Td>
         <InputFieldWithButton
           inputProps={{
-            "aria-label": "努力値",
+            "aria-label": `${statusType}テーブルの${toJaStatusSpecies(speciesName)}努力値`,
             "defaultValue": 0,
             "isInvalid": (totalEffortValue > MAX_TOTAL_EFFORT_VALUE),
             "max": MAX_EFFORT_VALUE,
@@ -72,7 +77,7 @@ export function Presentation({
             "step": (effortValue === 0 ? 4 : 8),
             "value": effortValue,
           }}
-          maxButtonProps={{ "aria-label": "努力値を最大", "onClick": maximizeEffortValue }}
+          maxButtonProps={{ "aria-label": `${statusType}テーブルの${speciesNameJA}努力値を最大`, "onClick": maximizeEffortValue }}
           minimumButtonProps={{ "aria-label": "努力値を0", "onClick": minimizeEffortValue }}
         />
       </Td>
