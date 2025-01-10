@@ -13,7 +13,7 @@ export default {
     level: 50,
     setLevel: () => void 0,
     statusType: "current",
-    TotalEffortValue: 0,
+    totalEffortValue: 0,
   },
 } satisfies StoryDefault;
 
