@@ -23,6 +23,8 @@ export function Status({ statusType, label }: Props) {
   const pokemonIndividualId = useAtomValue(pokemonIndividualIdAtom);
 
   const { showErrorToast } = useErrorToast();
+
+  // TODO: 外に出す
   const { baseStatsData, error } = usePokemonBaseStats(pokemonIndividualId);
 
   if (error) {
