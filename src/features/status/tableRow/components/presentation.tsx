@@ -68,7 +68,7 @@ export function Presentation({
       <Td>
         <InputFieldWithButton
           inputProps={{
-            "aria-label": `${statusType}テーブルの${toJaStatusSpecies(speciesName)}努力値`,
+            "aria-label": `${statusType}テーブルの${speciesNameJA}努力値`,
             "defaultValue": 0,
             "isInvalid": (totalEffortValue > MAX_TOTAL_EFFORT_VALUE),
             "max": MAX_EFFORT_VALUE,
@@ -84,7 +84,7 @@ export function Presentation({
       <Td>
         <InputFieldWithButton
           inputProps={{
-            "aria-label": "個体値",
+            "aria-label": `${statusType}テーブルの${speciesNameJA}個体値`,
             "defaultValue": 31,
             "max": MAX_INDIVIDUAL_VALUE,
             "min": 0,
@@ -99,7 +99,7 @@ export function Presentation({
       {speciesName !== "hp" && (
         <Td>
           <InputField
-            aria-label="性格補正"
+            aria-label={`${statusType}テーブルの${speciesNameJA}性格補正`}
             defaultValue={1}
             height="16px"
             max={1.1}
