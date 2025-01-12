@@ -4,7 +4,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-import type { StatusSpecies, StatusType } from "@/types";
+import type { NatureValue, StatusSpecies, StatusType } from "@/types";
 
 import { MAX_TOTAL_EFFORT_VALUE, MAX_EFFORT_VALUE, MAX_INDIVIDUAL_VALUE } from "./styleConfig";
 import { InputField, InputFieldWithButton } from "./ui";
@@ -27,7 +27,7 @@ type Props = {
   handleChangeIndividualValue: (valueAsString: string, valueAsNumber: number) => void;
   maximizeIndividualValue: MouseEventHandler<HTMLButtonElement>;
   minimizeIndividualValue: MouseEventHandler<HTMLButtonElement>;
-  handleChangeNature?: (_: string, valueAsNumber: number) => void;
+  handleChangeNature?: (_: string, valueAsNumber: NatureValue) => void;
   statusType: StatusType;
 };
 

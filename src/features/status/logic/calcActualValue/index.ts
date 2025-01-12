@@ -3,9 +3,20 @@
   実数値 = {(種族値×2+個体値+努力値÷4)×レベル÷100+5}×せいかく補正
  */
 
-export function calcActualValue({ baseStat, individual, effort, level, nature,
+import type { NatureValue } from "@/types";
+
+export function calcActualValue({
+  baseStat,
+  level,
+  effortValue,
+  individualValue,
+  natureValue,
 }: {
-  baseStat: number; individual: number; effort: number; level: number; nature: number;
+  baseStat: number;
+  level: number;
+  effortValue: number;
+  individualValue: number;
+  natureValue: NatureValue;
 }): number {
-  return Math.trunc(((baseStat * 2 + individual + effort / 4) * level / 100 + 5) * nature);
+  return Math.trunc(((baseStat * 2 + individualValue + effortValue / 4) * level / 100 + 5) * natureValue);
 }

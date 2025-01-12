@@ -42,28 +42,28 @@ export function HpStatusTableBody({
 
   const [actualValue, setActualValue] = useState(calcHPActualValue({
     baseStat,
-    individual: individualValue,
-    effort: effortValue.value,
+    individualValue,
+    effortValue: effortValue.value,
     level,
   }));
 
   const minimumActualValue = calcHPActualValue({
     baseStat,
-    individual: individualValue,
-    effort: 0,
+    individualValue,
+    effortValue: 0,
     level,
   });
 
   const maximumActualValue = calcHPActualValue({
     baseStat,
-    individual: individualValue,
-    effort: 252,
+    individualValue,
+    effortValue: 252,
     level,
   });
 
   const updateActualValue = useCallback((updateValue: Partial<typeof calcActualValue | typeof calcHPActualValue>) => {
     const newActualValue = calcHPActualValue({
-      baseStat, individual: individualValue, effort: effortValue.value, level, ...updateValue,
+      baseStat, individualValue, effortValue: effortValue.value, level, ...updateValue,
     });
 
     setActualValue(newActualValue);
@@ -76,7 +76,7 @@ export function HpStatusTableBody({
   const handleChangeActualValue: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {
     setActualValue((value));
     const newEffortValue = calcHPEffortValue({
-      actual: value, level, baseStat, individual: individualValue,
+      actualValue: value, level, baseStat, individualValue,
     });
     updateEffortValue({ name: HP, value: newEffortValue });
   }, [baseStat, individualValue, level, updateEffortValue]);
@@ -84,7 +84,7 @@ export function HpStatusTableBody({
   const handleChangeEffortValue: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {
     updateEffortValue({ name: HP, value });
 
-    updateActualValue({ effort: value });
+    updateActualValue({ effortValue: value });
   }, [updateActualValue, updateEffortValue]);
 
   const maximizeEffortValue: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
@@ -92,7 +92,7 @@ export function HpStatusTableBody({
       ...effortValue,
       value: MAX_EFFORT_VALUE,
     });
-    updateActualValue({ effort: MAX_EFFORT_VALUE });
+    updateActualValue({ effortValue: MAX_EFFORT_VALUE });
   }, [effortValue, updateActualValue, updateEffortValue]);
 
   const minimizeEffortValue: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
@@ -100,7 +100,7 @@ export function HpStatusTableBody({
       ...effortValue,
       value: 0,
     });
-    updateActualValue({ effort: 0 });
+    updateActualValue({ effortValue: 0 });
   }, [effortValue, updateActualValue, updateEffortValue]);
 
   const handleChangeIndividualValue: (_: string, valueAsNumber: number) => void = useCallback((_, value) => {

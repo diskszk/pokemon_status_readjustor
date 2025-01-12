@@ -3,12 +3,20 @@
   HP実数値 = (種族値×2+個体値+努力値÷4)×レベル÷100+レベル+10
 */
 
-export function calcHPActualValue({ baseStat, individual, effort, level }: {
-  baseStat: number; individual: number; effort: number; level: number;
+export function calcHPActualValue({
+  baseStat,
+  level,
+  effortValue,
+  individualValue,
+}: {
+  baseStat: number;
+  level: number;
+  effortValue: number;
+  individualValue: number;
 }): number {
   if (baseStat === 1) {
     return 1;
   }
 
-  return Math.trunc((baseStat * 2 + individual + effort / 4) * level / 100 + level + 10);
+  return Math.trunc((baseStat * 2 + individualValue + effortValue / 4) * level / 100 + level + 10);
 }
