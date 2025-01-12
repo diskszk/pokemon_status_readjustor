@@ -5,17 +5,20 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 
 import { Differences } from "@/features/differences/components";
-import { Status } from "@/features/status/components";
+import { Status } from "@/features/status/components/Status";
+import { garchomp } from "@/mockData/pokemons";
 import { TestWrapper } from "@/test-utils";
 
 describe("努力値の変化に伴って与えるアイテムの個数が変化する", () => {
   const testRenderer = () => render(
     <TestWrapper>
       <Status
+        baseStats={garchomp.baseStats}
         label="現在のステータス"
         statusType="current"
       />
       <Status
+        baseStats={garchomp.baseStats}
         label="調整後のステータス"
         statusType="adjusted"
       />

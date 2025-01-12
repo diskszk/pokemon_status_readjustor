@@ -4,7 +4,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { garchomp } from "@/mockData/pokemons";
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { HeadLine } from "./partials";
@@ -17,7 +16,7 @@ type Props = {
   label: string;
   level: number;
   setLevel: Dispatch<SetStateAction<number>>;
-  baseStats: PokemonStatus[] | undefined;
+  baseStats: PokemonStatus[];
   statusType: StatusType;
   totalEffortValue: number;
 };
@@ -26,7 +25,7 @@ export function Presentation({
   label,
   level,
   setLevel,
-  baseStats = garchomp.baseStats,
+  baseStats,
   statusType,
   totalEffortValue,
 }: Props) {

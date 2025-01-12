@@ -1,30 +1,20 @@
+import { HStack, Skeleton } from "@chakra-ui/react";
 import { useAtomValue } from "jotai";
-import { useState } from "react";
+import { Suspense } from "react";
 
-import { adjustedEffortValueAtom, currentEffortValueAtom, pokemonIndividualIdAtom } from "@/atoms";
-import { CURRENT } from "@/constants";
+import { pokemonIndividualIdAtom } from "@/atoms";
+import { ADJUSTED, CURRENT } from "@/constants";
 import { useErrorToast } from "@/hooks";
-import type { StatusType } from "@/types";
+import { garchomp } from "@/mockData/pokemons";
 
-import { useEffortValue, usePokemonBaseStats } from "../hooks";
-import { Presentation } from "./presentation";
+import { Status } from "./Status";
+import { usePokemonBaseStats } from "../hooks";
 
-type Props = {
-  statusType: StatusType;
-  label: string;
-};
-
-export function Status({ statusType, label }: Props) {
-  const [level, setLevel] = useState(50);
-
-  const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
-  const { totalEffortValue } = useEffortValue(effortValueAtom);
-
+export function StatusTableList() {
   const pokemonIndividualId = useAtomValue(pokemonIndividualIdAtom);
 
   const { showErrorToast } = useErrorToast();
 
-  // TODO: 外に出す
   const { baseStatsData, error } = usePokemonBaseStats(pokemonIndividualId);
 
   if (error) {
@@ -32,15 +22,22 @@ export function Status({ statusType, label }: Props) {
       description: "データの取得に失敗しました",
     });
   }
-
   return (
-    <Presentation
-      baseStats={baseStatsData}
-      label={label}
-      level={level}
-      setLevel={setLevel}
-      statusType={statusType}
-      totalEffortValue={totalEffortValue}
-    />
+    <HStack spacing="32px">
+      <Suspense fallback={<Skeleton />}>
+        <Status
+          baseStats={baseStatsData || garchomp.baseStats}
+          label="現在のステータス"
+          statusType={CURRENT}
+        />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <Status
+          baseStats={baseStatsData || garchomp.baseStats}
+          label="調整後のステータス"
+          statusType={ADJUSTED}
+        />
+      </Suspense>
+    </HStack>
   );
 }

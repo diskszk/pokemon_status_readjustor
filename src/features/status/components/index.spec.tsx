@@ -3,14 +3,16 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect, test } from "vitest";
 
+import { garchomp } from "@/mockData/pokemons";
 import { TestWrapper } from "@/test-utils";
 
-import { Status } from ".";
+import { Status } from "./Status";
 
 const setup = () => {
   render(
     <TestWrapper>
       <Status
+        baseStats={garchomp.baseStats}
         label="現在のステータス"
         statusType="current"
       />
