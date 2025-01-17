@@ -2,9 +2,7 @@ import type { StatusSpecies } from "@/types";
 
 import { ATK_JA, DEF_JA, HP_JA, SP_ATK_JA, SP_DEF_JA, SPD_JA } from "./term";
 
-import type { STATUS_SPECIES_JA } from "./term";
-
-type StatusSpeciesJA = typeof STATUS_SPECIES_JA[number];
+import type { StatusSpeciesJA } from "./term";
 
 export function toJaStatusSpecies(str: StatusSpecies): StatusSpeciesJA {
   switch (str.toLowerCase()) {
