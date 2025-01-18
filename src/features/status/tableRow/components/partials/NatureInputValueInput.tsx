@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
 
-import { controllersReducerAtom } from "@/features/status/reducers";
 import type { NatureValue } from "@/types";
 
+import { controllersReducerAtom } from "../../reducers";
 import { InputField } from "../ui";
 
 import type { AriaLabel } from "./types";

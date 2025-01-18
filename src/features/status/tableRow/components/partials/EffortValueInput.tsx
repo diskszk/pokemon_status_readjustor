@@ -3,9 +3,9 @@ import { useAtom } from "jotai";
 import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
 import { CURRENT } from "@/constants";
 import { useEffortValue } from "@/features/status/hooks";
-import { controllersReducerAtom } from "@/features/status/reducers";
 import type { StatusSpecies, StatusType } from "@/types";
 
+import { controllersReducerAtom } from "../../reducers";
 import { MAX_EFFORT_VALUE, MAX_TOTAL_EFFORT_VALUE } from "../styleConfig";
 import { InputFieldWithButton } from "../ui";
 

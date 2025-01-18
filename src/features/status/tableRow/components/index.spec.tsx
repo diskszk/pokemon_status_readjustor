@@ -8,7 +8,7 @@ import { describe, expect, test } from "vitest";
 import { TestWrapper } from "@/test-utils";
 import type { StatusSpecies } from "@/types";
 
-import { StatusTableBody } from "./StatusTableBody";
+import { TableRow } from "./TableRow";
 
 import type { STATUS_SPECIES_JA } from "../../logic/term";
 
@@ -17,7 +17,7 @@ const setup = ({ speciesName = "attack", speciesNameJA = "こうげき" }: Parti
     <TestWrapper>
       <Table>
         <Tbody>
-          <StatusTableBody
+          <TableRow
             baseStat={100}
             level={50}
             speciesName={speciesName}

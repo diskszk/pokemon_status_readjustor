@@ -21,7 +21,7 @@ export function LevelControl({ level, setLevel }: { level: number; setLevel: Dis
           aria-label="レベル"
           max={100}
           min={1}
-          onChange={(value) => setLevel(Number(value))}
+          onChange={(_, value) => setLevel((value))}
           size="sm"
           value={level}
           variant="flushed"

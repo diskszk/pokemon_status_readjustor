@@ -1,7 +1,6 @@
 import { useAtom } from "jotai";
 
-import { controllersReducerAtom } from "@/features/status/reducers";
-
+import { controllersReducerAtom } from "../../reducers";
 import { InputFieldWithButton } from "../ui";
 
 import type { AriaLabel } from "./types";
