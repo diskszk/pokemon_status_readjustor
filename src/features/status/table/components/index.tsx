@@ -4,7 +4,7 @@ import { Provider } from "jotai";
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { TableHead } from "./ui";
-import { TableRow } from "../../tableRow/components/TableRow";
+import { TableRow } from "../../tableRow/components";
 
 type Props = {
   level: number;

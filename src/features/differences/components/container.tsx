@@ -1,7 +1,6 @@
 import { ATK, DEF, HP, SP_ATK, SP_DEF, SPD } from "@/constants";
-import type { EffortValue } from "@/features/status/hooks";
-import { useEffortValue } from "@/features/status/hooks";
-import type { PokemonStatus, StatusSpecies } from "@/types";
+import { useEffortValues } from "@/features/status/hooks";
+import type { PokemonStatus, StatusSpecies, EffortValue } from "@/types";
 
 import { Presentation } from "./presentation";
 import { getEffortValueDiff } from "../logic/getEffortValueDiff";
@@ -22,7 +21,7 @@ const convert = (object: EffortValue): PokemonStatus[] => {
 };
 
 export function Container() {
-  const { effortValues } = useEffortValue();
+  const { effortValues } = useEffortValues();
 
   const currentEffortValues = convert(effortValues.current);
   const adjustedEffortValues = convert(effortValues.adjusted);

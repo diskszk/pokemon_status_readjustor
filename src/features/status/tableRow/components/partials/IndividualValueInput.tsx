@@ -1,13 +1,12 @@
 import { useAtomValue } from "jotai";
 
+import { MAX_INDIVIDUAL_VALUE, MINIMUM_INDIVIDUAL_VALUE } from "@/features/status/constants";
+
 import { useUserInputValues } from "../../hooks";
 import { controllersReducerAtom } from "../../reducers";
 import { InputFieldWithButton } from "../ui";
 
 import type { AriaLabel } from "./types";
-
-const MAX_INDIVIDUAL_VALUE = 31 as const;
-const MINIMUM_INDIVIDUAL_VALUE = 0 as const;
 
 type Props = {
   ariaLabel: AriaLabel<"個体値">;

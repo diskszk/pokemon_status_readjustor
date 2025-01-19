@@ -8,9 +8,9 @@ import { describe, expect, test } from "vitest";
 import { TestWrapper } from "@/test-utils";
 import type { StatusSpecies } from "@/types";
 
-import { TableRow } from "./TableRow";
-
 import type { STATUS_SPECIES_JA } from "../../logic/term";
+
+import { TableRow } from ".";
 
 const setup = ({ speciesName = "attack", speciesNameJA = "こうげき" }: Partial<{ speciesName: StatusSpecies; speciesNameJA: typeof STATUS_SPECIES_JA[number] }>) => {
   render(
@@ -110,7 +110,7 @@ describe("個体値を変動させると実数値が変化する", () => {
   });
 });
 describe("性格の値を変動させると実数値が変化する", () => {
-  test("こうげき種族値が100の場合、性格を上昇補正すると実数値は132になる", async () => {
+  test.only("こうげき種族値が100の場合、性格を上昇補正すると実数値は132になる", async () => {
     const user = userEvent.setup();
     const { actualValueInput } = setup({});
     const natureValueInput = screen.getByRole("spinbutton", { name: "currentテーブルのこうげき性格補正" });

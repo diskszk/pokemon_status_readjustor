@@ -3,14 +3,14 @@ import { useCallback } from "react";
 
 import type { NatureValue, StatusType } from "@/types";
 
-import { useEffortValue } from "../../hooks";
+import { useEffortValues } from "../../hooks";
 import { calculators } from "../../logic";
 import { controllersReducerAtom } from "../reducers";
 
 export function useUserInputValues() {
   const [state, dispatch] = useAtom(controllersReducerAtom);
 
-  const { updateEffortValue } = useEffortValue();
+  const { updateEffortValue } = useEffortValues();
 
   const updateActualValueInput = useCallback(({
     type,

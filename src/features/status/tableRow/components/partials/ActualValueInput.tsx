@@ -1,6 +1,7 @@
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 
+import { MAX_EFFORT_VALUE, MINIMUM_EFFORT_VALUE } from "@/features/status/constants";
 import type { StatusSpecies, StatusType } from "@/types";
 
 import { calculators } from "../../../logic";
@@ -30,7 +31,7 @@ export function ActualValueInput({
     calculators.actualValue(speciesName, {
       baseStat,
       individualValue: controller.individualValue,
-      effortValue: 0,
+      effortValue: MINIMUM_EFFORT_VALUE,
       level: controller.level,
       natureValue: controller.natureValue,
     }), [baseStat, controller.individualValue, controller.level, controller.natureValue, speciesName]);
@@ -39,7 +40,7 @@ export function ActualValueInput({
     calculators.actualValue(speciesName, {
       baseStat,
       individualValue: controller.individualValue,
-      effortValue: 252,
+      effortValue: MAX_EFFORT_VALUE,
       level: controller.level,
       natureValue: controller.natureValue,
     }), [baseStat, controller.individualValue, controller.level, controller.natureValue, speciesName]);

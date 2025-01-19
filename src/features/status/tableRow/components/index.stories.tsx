@@ -2,11 +2,12 @@ import { Table, Tbody } from "@chakra-ui/react";
 import { Provider } from "jotai";
 import React from "react";
 
-import { TableRow } from "./TableRow";
 import { garchomp } from "../../../../mockData/pokemons";
 
 import type { Story, StoryDefault } from "@ladle/react";
 import type { ComponentProps } from "react";
+
+import { TableRow } from ".";
 
 type Props = ComponentProps<typeof TableRow>;
 

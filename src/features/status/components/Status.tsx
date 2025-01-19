@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import type { PokemonStatus, StatusType } from "@/types";
 
-import { useEffortValue } from "../hooks";
+import { useEffortValues } from "../hooks";
 import { Presentation } from "./presentation";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 export function Status({ statusType, label, baseStats }: Props) {
   const [level, setLevel] = useState(50);
 
-  const { getTotalEffortValue } = useEffortValue();
+  const { getTotalEffortValue } = useEffortValues();
 
   return (
     <Presentation

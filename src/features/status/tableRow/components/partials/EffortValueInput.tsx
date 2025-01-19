@@ -1,11 +1,11 @@
 import { useAtomValue } from "jotai";
 
-import { useEffortValue } from "@/features/status/hooks";
+import { MAX_EFFORT_VALUE, MAX_TOTAL_EFFORT_VALUE, MINIMUM_EFFORT_VALUE } from "@/features/status/constants";
+import { useEffortValues } from "@/features/status/hooks";
 import type { StatusType } from "@/types";
 
 import { useUserInputValues } from "../../hooks";
 import { controllersReducerAtom } from "../../reducers";
-import { MAX_EFFORT_VALUE, MAX_TOTAL_EFFORT_VALUE } from "../styleConfig";
 import { InputFieldWithButton } from "../ui";
 
 import type { AriaLabel } from "./types";
@@ -23,7 +23,7 @@ export function EffortValueInput({
 
   const { updateEffortValueInput } = useUserInputValues();
 
-  const { getTotalEffortValue } = useEffortValue();
+  const { getTotalEffortValue } = useEffortValues();
 
   const totalEffortValue = getTotalEffortValue({ type: statusType });
 
@@ -50,7 +50,7 @@ export function EffortValueInput({
       minimumButtonProps={{
         "aria-label": `${ariaLabel}を0`,
         "onClick": () => {
-          updateEffortValueInput({ type: statusType, value: 0 });
+          updateEffortValueInput({ type: statusType, value: MINIMUM_EFFORT_VALUE });
         },
       }}
     />

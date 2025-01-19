@@ -21,3 +21,5 @@ export type PokemonStatus = {
 export type StatusType = typeof CURRENT | typeof ADJUSTED;
 
 export type NatureValue = 1.1 | 1 | 0.9;
+
+export type EffortValue = Record<StatusSpecies, number>;

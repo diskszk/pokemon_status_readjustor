@@ -5,7 +5,7 @@ import { cacheExchange, Client, fetchExchange, Provider as UrqlProvider } from "
 
 import { API_ENDPOINT } from "@/constants";
 
-import { EffortValueContext, store } from "./features/status/hooks";
+import { EffortValueProvider } from "./contexts";
 import { Head } from "./meta/head";
 
 import type { PropsWithChildren } from "react";
@@ -24,9 +24,9 @@ export function Providers({ children }: PropsWithChildren) {
         <ChakraProvider resetCSS={true}>
           <HelmetProvider>
             <Head />
-            <EffortValueContext.Provider value={store}>
+            <EffortValueProvider>
               {children}
-            </EffortValueContext.Provider>
+            </EffortValueProvider>
           </HelmetProvider>
         </ChakraProvider>
       </UrqlProvider>
