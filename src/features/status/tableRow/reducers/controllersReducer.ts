@@ -14,32 +14,44 @@ type InitializeAction = {
     type: StatusSpecies;
   };
 };
-type UpdateActualValueAction = {
-  type: "UPDATE_ACTUAL_VALUE_ACTION";
-  payload: number;
-};
-type UpdateEffortValueAction = {
-  type: "UPDATE_EFFORT_VALUE_ACTION";
-  payload: number;
-};
 type UpdateLevelAction = {
   type: "UPDATE_LEVEL_ACTION";
   payload: number;
 };
+type UpdateActualValueAction = {
+  type: "UPDATE_ACTUAL_VALUE_ACTION";
+  payload: {
+    actualValue: number;
+    effortValue: number;
+  };
+};
+type UpdateEffortValueAction = {
+  type: "UPDATE_EFFORT_VALUE_ACTION";
+  payload: {
+    actualValue: number;
+    effortValue: number;
+  };
+};
 type UpdateIndividualValueAction = {
   type: "UPDATE_INDIVIDUAL_VALUE_ACTION";
-  payload: number;
+  payload: {
+    actualValue: number;
+    individualValue: number;
+  };
 };
 type UpdateNatureValueAction = {
   type: "UPDATE_NATURE_VALUE_ACTION";
-  payload: NatureValue;
+  payload: {
+    actualValue: number;
+    natureValue: NatureValue;
+  };
 };
 
 type Action =
   | InitializeAction
+  | UpdateLevelAction
   | UpdateEffortValueAction
   | UpdateActualValueAction
-  | UpdateLevelAction
   | UpdateIndividualValueAction
   | UpdateNatureValueAction;
 
@@ -80,27 +92,41 @@ const controllersReducer: Reducer<State, Action> = (state, action) => {
         type,
       };
     }
-    case "UPDATE_ACTUAL_VALUE_ACTION": {
-      const newEffortValue = calculators.effortValue(state.type, { ...state, actualValue: action.payload });
-
-      return { ...state, effortValue: newEffortValue, actualValue: action.payload };
-    }
-    case "UPDATE_EFFORT_VALUE_ACTION": {
-      const newActualValue = calculators.actualValue(state.type, { ...state, effortValue: action.payload });
-
-      return { ...state, actualValue: newActualValue, effortValue: action.payload };
-    }
     case "UPDATE_LEVEL_ACTION": {
       const newActualValue = calculators.actualValue(state.type, { ...state, level: action.payload });
-      return { ...state, actualValue: newActualValue, level: action.payload };
+      return {
+        ...state,
+        actualValue: newActualValue,
+        level: action.payload,
+      };
+    }
+    case "UPDATE_ACTUAL_VALUE_ACTION": {
+      return {
+        ...state,
+        actualValue: action.payload.actualValue,
+        effortValue: action.payload.effortValue,
+      };
+    }
+    case "UPDATE_EFFORT_VALUE_ACTION": {
+      return {
+        ...state,
+        actualValue: action.payload.actualValue,
+        effortValue: action.payload.effortValue,
+      };
     }
     case "UPDATE_INDIVIDUAL_VALUE_ACTION": {
-      const newActualValue = calculators.actualValue(state.type, { ...state, individualValue: action.payload });
-      return { ...state, actualValue: newActualValue, individualValue: action.payload };
+      return {
+        ...state,
+        actualValue: action.payload.actualValue,
+        individualValue: action.payload.individualValue,
+      };
     }
     case "UPDATE_NATURE_VALUE_ACTION": {
-      const newActualValue = calculators.actualValue(state.type, { ...state, natureValue: action.payload });
-      return { ...state, actualValue: newActualValue, natureValue: action.payload };
+      return {
+        ...state,
+        actualValue: action.payload.actualValue,
+        natureValue: action.payload.natureValue,
+      };
     }
     default:
       return state;

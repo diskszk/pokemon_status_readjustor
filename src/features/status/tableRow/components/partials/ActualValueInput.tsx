@@ -1,9 +1,10 @@
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 
-import type { StatusSpecies } from "@/types";
+import type { StatusSpecies, StatusType } from "@/types";
 
 import { calculators } from "../../../logic";
+import { useUserInputValues } from "../../hooks";
 import { controllersReducerAtom } from "../../reducers";
 import { InputField } from "../ui";
 
@@ -12,11 +13,18 @@ import type { AriaLabel } from "./types";
 type Props = {
   ariaLabel: AriaLabel<"実数値">;
   baseStat: number;
+  statusType: StatusType;
   speciesName: StatusSpecies;
 };
 
-export function ActualValueInput({ ariaLabel, baseStat, speciesName }: Props) {
-  const [controller, dispatch] = useAtom(controllersReducerAtom);
+export function ActualValueInput({
+  ariaLabel,
+  baseStat,
+  statusType,
+  speciesName,
+}: Props) {
+  const controller = useAtomValue(controllersReducerAtom);
+  const { updateActualValueInput } = useUserInputValues();
 
   const minimumActualValue = useMemo(() =>
     calculators.actualValue(speciesName, {
@@ -43,7 +51,7 @@ export function ActualValueInput({ ariaLabel, baseStat, speciesName }: Props) {
       max={maximumActualValue}
       min={minimumActualValue}
       onChange={(_, value) => {
-        dispatch({ type: "UPDATE_ACTUAL_VALUE_ACTION", payload: value });
+        updateActualValueInput({ type: statusType, value });
       }}
       value={controller.actualValue}
     />

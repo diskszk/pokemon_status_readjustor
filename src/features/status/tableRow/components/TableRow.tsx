@@ -1,5 +1,5 @@
 import { Td, Th, Tr } from "@chakra-ui/react";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 
 import { HP } from "@/constants";
@@ -23,7 +23,7 @@ export function TableRow({
   speciesName,
 }: Props) {
   const speciesNameJA = toJaStatusSpecies(speciesName);
-  const [_, dispatch] = useAtom(controllersReducerAtom);
+  const dispatch = useSetAtom(controllersReducerAtom);
 
   useEffect(() => {
     dispatch({ type: "INITIALIZE_ACTION", payload: {
@@ -34,7 +34,6 @@ export function TableRow({
 
   useEffect(() => {
     // 変更されたlevelが渡ってきた時 action を行う
-    // <input />変更時にactionを行うようにしたい
     dispatch({ type: "UPDATE_LEVEL_ACTION", payload: level });
   }, [dispatch, level]);
 
@@ -46,12 +45,12 @@ export function TableRow({
           ariaLabel={`${statusType}テーブルの${speciesNameJA}実数値`}
           baseStat={baseStat}
           speciesName={speciesName}
+          statusType={statusType}
         />
       </Td>
       <Td>
         <EffortValueInput
           ariaLabel={`${statusType}テーブルの${speciesNameJA}努力値`}
-          speciesName={speciesName}
           statusType={statusType}
         />
       </Td>

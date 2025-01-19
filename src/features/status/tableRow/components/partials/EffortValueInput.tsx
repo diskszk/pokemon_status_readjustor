@@ -1,8 +1,9 @@
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 
 import { useEffortValue } from "@/features/status/hooks";
-import type { StatusSpecies, StatusType } from "@/types";
+import type { StatusType } from "@/types";
 
+import { useUserInputValues } from "../../hooks";
 import { controllersReducerAtom } from "../../reducers";
 import { MAX_EFFORT_VALUE, MAX_TOTAL_EFFORT_VALUE } from "../styleConfig";
 import { InputFieldWithButton } from "../ui";
@@ -12,17 +13,17 @@ import type { AriaLabel } from "./types";
 type Props = {
   ariaLabel: AriaLabel<"努力値">;
   statusType: StatusType;
-  speciesName: StatusSpecies;
 };
 
 export function EffortValueInput({
   ariaLabel,
   statusType,
-  speciesName,
 }: Props) {
-  const [controller, dispatch] = useAtom(controllersReducerAtom);
+  const controller = useAtomValue(controllersReducerAtom);
 
-  const { getTotalEffortValue, updateEffortValue } = useEffortValue();
+  const { updateEffortValueInput } = useUserInputValues();
+
+  const { getTotalEffortValue } = useEffortValue();
 
   const totalEffortValue = getTotalEffortValue({ type: statusType });
 
@@ -35,8 +36,7 @@ export function EffortValueInput({
         "max": MAX_EFFORT_VALUE,
         "min": 0,
         "onChange": (_, value) => {
-          dispatch({ type: "UPDATE_EFFORT_VALUE_ACTION", payload: value });
-          updateEffortValue({ type: statusType, statusSpecies: speciesName, value });
+          updateEffortValueInput({ type: statusType, value });
         },
         "step": (controller.effortValue === 0 ? 4 : 8),
         "value": controller.effortValue,
@@ -44,15 +44,13 @@ export function EffortValueInput({
       maxButtonProps={{
         "aria-label": `${ariaLabel}を最大`,
         "onClick": () => {
-          dispatch({ type: "UPDATE_EFFORT_VALUE_ACTION", payload: MAX_EFFORT_VALUE });
-          updateEffortValue({ type: statusType, statusSpecies: speciesName, value: MAX_EFFORT_VALUE });
+          updateEffortValueInput({ type: statusType, value: MAX_EFFORT_VALUE });
         },
       }}
       minimumButtonProps={{
         "aria-label": `${ariaLabel}を0`,
         "onClick": () => {
-          dispatch({ type: "UPDATE_EFFORT_VALUE_ACTION", payload: 0 });
-          updateEffortValue({ type: statusType, statusSpecies: speciesName, value: 0 });
+          updateEffortValueInput({ type: statusType, value: 0 });
         },
       }}
     />

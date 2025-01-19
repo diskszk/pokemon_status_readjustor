@@ -1,7 +1,8 @@
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 
 import type { NatureValue } from "@/types";
 
+import { useUserInputValues } from "../../hooks";
 import { controllersReducerAtom } from "../../reducers";
 import { InputField } from "../ui";
 
@@ -16,7 +17,8 @@ const isNature = (value: number): value is NatureValue => {
 };
 
 export function NatureValueValueInput({ ariaLabel }: Props) {
-  const [controller, dispatch] = useAtom(controllersReducerAtom);
+  const controller = useAtomValue(controllersReducerAtom);
+  const { updateNatureValueInput } = useUserInputValues();
 
   return (
     <InputField
@@ -29,8 +31,7 @@ export function NatureValueValueInput({ ariaLabel }: Props) {
         if (!isNature(value)) {
           throw new Error("不正な値が入力されました");
         }
-
-        dispatch({ type: "UPDATE_NATURE_VALUE_ACTION", payload: value });
+        updateNatureValueInput({ value });
       }}
       size="sm"
       step={0.1}

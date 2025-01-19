@@ -1,5 +1,6 @@
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 
+import { useUserInputValues } from "../../hooks";
 import { controllersReducerAtom } from "../../reducers";
 import { InputFieldWithButton } from "../ui";
 
@@ -13,7 +14,8 @@ type Props = {
 };
 
 export function IndividualValueInput({ ariaLabel }: Props) {
-  const [controller, dispatch] = useAtom(controllersReducerAtom);
+  const controller = useAtomValue(controllersReducerAtom);
+  const { updateIndividualValueInput } = useUserInputValues();
 
   return (
     <InputFieldWithButton
@@ -23,16 +25,16 @@ export function IndividualValueInput({ ariaLabel }: Props) {
         "max": MAX_INDIVIDUAL_VALUE,
         "min": MINIMUM_INDIVIDUAL_VALUE,
         "onChange": (_, value) => {
-          dispatch({ type: "UPDATE_INDIVIDUAL_VALUE_ACTION", payload: value });
+          updateIndividualValueInput({ value });
         },
         "step": 1,
         "value": controller.individualValue,
       }}
       maxButtonProps={{ "aria-label": `${ariaLabel}を最大`, "onClick": () => {
-        dispatch({ type: "UPDATE_INDIVIDUAL_VALUE_ACTION", payload: MAX_INDIVIDUAL_VALUE });
+        updateIndividualValueInput({ value: MAX_INDIVIDUAL_VALUE });
       } }}
       minimumButtonProps={{ "aria-label": `${ariaLabel}を0`, "onClick": () => {
-        dispatch({ type: "UPDATE_INDIVIDUAL_VALUE_ACTION", payload: MINIMUM_INDIVIDUAL_VALUE });
+        updateIndividualValueInput({ value: 0 });
       } }}
     />
   );
