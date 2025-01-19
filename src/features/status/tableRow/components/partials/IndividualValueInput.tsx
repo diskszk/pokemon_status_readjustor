@@ -28,10 +28,10 @@ export function IndividualValueInput({ ariaLabel }: Props) {
         "step": 1,
         "value": controller.individualValue,
       }}
-      maxButtonProps={{ "aria-label": "個体値を最大", "onClick": () => {
+      maxButtonProps={{ "aria-label": `${ariaLabel}を最大`, "onClick": () => {
         dispatch({ type: "UPDATE_INDIVIDUAL_VALUE_ACTION", payload: MAX_INDIVIDUAL_VALUE });
       } }}
-      minimumButtonProps={{ "aria-label": "個体値を0", "onClick": () => {
+      minimumButtonProps={{ "aria-label": `${ariaLabel}を0`, "onClick": () => {
         dispatch({ type: "UPDATE_INDIVIDUAL_VALUE_ACTION", payload: MINIMUM_INDIVIDUAL_VALUE });
       } }}
     />

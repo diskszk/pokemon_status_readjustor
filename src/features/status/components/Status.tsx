@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
-import { CURRENT } from "@/constants";
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { useEffortValue } from "../hooks";
@@ -16,8 +14,7 @@ type Props = {
 export function Status({ statusType, label, baseStats }: Props) {
   const [level, setLevel] = useState(50);
 
-  const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
-  const { totalEffortValue } = useEffortValue(effortValueAtom);
+  const { getTotalEffortValue } = useEffortValue();
 
   return (
     <Presentation
@@ -26,7 +23,7 @@ export function Status({ statusType, label, baseStats }: Props) {
       level={level}
       setLevel={setLevel}
       statusType={statusType}
-      totalEffortValue={totalEffortValue}
+      totalEffortValue={getTotalEffortValue({ type: statusType })}
     />
   );
 }

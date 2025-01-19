@@ -1,7 +1,5 @@
 import { useAtom } from "jotai";
 
-import { adjustedEffortValueAtom, currentEffortValueAtom } from "@/atoms";
-import { CURRENT } from "@/constants";
 import { useEffortValue } from "@/features/status/hooks";
 import type { StatusSpecies, StatusType } from "@/types";
 
@@ -24,8 +22,9 @@ export function EffortValueInput({
 }: Props) {
   const [controller, dispatch] = useAtom(controllersReducerAtom);
 
-  const effortValueAtom = statusType === CURRENT ? currentEffortValueAtom : adjustedEffortValueAtom;
-  const { totalEffortValue } = useEffortValue(effortValueAtom);
+  const { getTotalEffortValue, updateEffortValue } = useEffortValue();
+
+  const totalEffortValue = getTotalEffortValue({ type: statusType });
 
   return (
     <InputFieldWithButton
@@ -37,20 +36,23 @@ export function EffortValueInput({
         "min": 0,
         "onChange": (_, value) => {
           dispatch({ type: "UPDATE_EFFORT_VALUE_ACTION", payload: value });
+          updateEffortValue({ type: statusType, statusSpecies: speciesName, value });
         },
         "step": (controller.effortValue === 0 ? 4 : 8),
         "value": controller.effortValue,
       }}
       maxButtonProps={{
-        "aria-label": `${statusType}テーブルの${speciesName}努力値を最大`,
+        "aria-label": `${ariaLabel}を最大`,
         "onClick": () => {
           dispatch({ type: "UPDATE_EFFORT_VALUE_ACTION", payload: MAX_EFFORT_VALUE });
+          updateEffortValue({ type: statusType, statusSpecies: speciesName, value: MAX_EFFORT_VALUE });
         },
       }}
       minimumButtonProps={{
-        "aria-label": "努力値を0",
+        "aria-label": `${ariaLabel}を0`,
         "onClick": () => {
           dispatch({ type: "UPDATE_EFFORT_VALUE_ACTION", payload: 0 });
+          updateEffortValue({ type: statusType, statusSpecies: speciesName, value: 0 });
         },
       }}
     />

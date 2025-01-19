@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 import { cacheExchange, Client, fetchExchange, Provider as UrqlProvider } from "urql";
 
 import { API_ENDPOINT } from "@/constants";
+import { EffortValueContext, store } from "@/features/status/hooks";
 
 import type { WritableAtom } from "jotai";
 
@@ -36,9 +37,11 @@ export function TestWrapper<T>({
   return (
     <UrqlProvider value={mockClient}>
       <JotaiProvider>
-        <AtomsHydrator atomValues={atomValues}>
-          {children}
-        </AtomsHydrator>
+        <EffortValueContext.Provider value={store}>
+          <AtomsHydrator atomValues={atomValues}>
+            {children}
+          </AtomsHydrator>
+        </EffortValueContext.Provider>
       </JotaiProvider>
     </UrqlProvider>
   );

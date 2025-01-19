@@ -1,35 +1,77 @@
-import { useAtom, useAtomValue } from "jotai";
-import { useCallback } from "react";
+import { atom, createStore, useAtom } from "jotai";
+import { createContext, useCallback, useContext } from "react";
 
-import type { PokemonStatus } from "@/types";
+import type { StatusSpecies, StatusType } from "@/types";
 
-import type { PrimitiveAtom } from "jotai";
+export type EffortValue = Record<StatusSpecies, number>;
 
-export function useEffortValue(effortValueAtom: PrimitiveAtom<PokemonStatus[]>): {
-  allEffortValue: PokemonStatus[];
-  totalEffortValue: number;
-  updateEffortValue: (newValue: PokemonStatus) => void;
-} {
-  const allEffortValue = useAtomValue(effortValueAtom);
+type EffortValueAtom = {
+  current: EffortValue;
+  adjusted: EffortValue;
+};
 
-  const totalEffortValue = allEffortValue.reduce((prev, current) => prev + current.value, 0);
+const initialValue = {
+  current: {
+    "hp": 0,
+    "attack": 0,
+    "defense": 0,
+    "special-attack": 0,
+    "special-defense": 0,
+    "speed": 0,
+  },
+  adjusted: {
+    "hp": 0,
+    "attack": 0,
+    "defense": 0,
+    "special-attack": 0,
+    "special-defense": 0,
+    "speed": 0,
+  },
+};
 
-  const [, setEffortValue] = useAtom(effortValueAtom);
+export const effortValuesAtom = atom<EffortValueAtom>(initialValue);
 
-  const updateEffortValue = useCallback((newValue: PokemonStatus) => {
-    setEffortValue((prev) => {
-      return prev.map((effortValue) => {
-        if (effortValue.name === newValue.name) {
-          return { name: effortValue.name, value: newValue.value };
-        }
-        return effortValue;
-      });
+export const store = createStore();
+store.set(effortValuesAtom, initialValue);
+
+export const EffortValueContext = createContext<typeof store>(store);
+
+export function useEffortValue() {
+  const store = useContext(EffortValueContext);
+
+  const [effortValues, setEffortValue] = useAtom(effortValuesAtom, { store });
+
+  const getTotalEffortValue = useCallback(({ type }: { type: StatusType }) => {
+    let totalEffortValue = 0;
+    for (const [_, value] of Object.entries(effortValues[type])) {
+      totalEffortValue += value;
+    }
+    return totalEffortValue;
+  }, [effortValues]);
+
+  const updateEffortValue = useCallback(({
+    type,
+    statusSpecies,
+    value,
+  }: {
+    type: StatusType;
+    statusSpecies: StatusSpecies;
+    value: number;
+  }) => {
+    const newValue = {
+      ...effortValues[type],
+      [statusSpecies]: value,
+    };
+
+    setEffortValue({
+      ...effortValues,
+      [type]: newValue,
     });
-  }, [setEffortValue]);
+  }, [effortValues, setEffortValue]);
 
   return {
-    allEffortValue,
-    totalEffortValue,
+    getTotalEffortValue,
     updateEffortValue,
+    effortValues,
   };
 }
