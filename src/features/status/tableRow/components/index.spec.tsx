@@ -40,8 +40,7 @@ const setup = ({ speciesName = "attack", speciesNameJA = "こうげき" }: Parti
 };
 
 describe("実数値を変動させると努力値が変化する", () => {
-  // Issue #92
-  test.skip("実数値の入力欄に121と入力すると努力値の値が4増加する", async () => {
+  test("実数値の入力欄に121と入力すると努力値の値が4増加する", async () => {
     const user = userEvent.setup();
     const { actualValueInput, effortValueInput } = setup({});
     expect(effortValueInput).toHaveValue("0");
@@ -110,7 +109,7 @@ describe("個体値を変動させると実数値が変化する", () => {
   });
 });
 describe("性格の値を変動させると実数値が変化する", () => {
-  test.only("こうげき種族値が100の場合、性格を上昇補正すると実数値は132になる", async () => {
+  test("こうげき種族値が100の場合、性格を上昇補正すると実数値は132になる", async () => {
     const user = userEvent.setup();
     const { actualValueInput } = setup({});
     const natureValueInput = screen.getByRole("spinbutton", { name: "currentテーブルのこうげき性格補正" });
