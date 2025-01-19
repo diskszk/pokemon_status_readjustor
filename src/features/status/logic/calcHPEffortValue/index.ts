@@ -1,12 +1,15 @@
 export function calcHPEffortValue({
-  actual, level, baseStat, individual,
+  baseStat,
+  level,
+  actualValue,
+  individualValue,
 }: {
-  actual: number;
-  level: number;
   baseStat: number;
-  individual: number;
+  level: number;
+  actualValue: number;
+  individualValue: number;
 }): number {
-  const calculationResult = ((actual - level - 10) * 100 / level - baseStat * 2 - individual) * 4;
+  const calculationResult = ((actualValue - level - 10) * 100 / level - baseStat * 2 - individualValue) * 4;
 
   if (calculationResult < 0) {
     return 0;

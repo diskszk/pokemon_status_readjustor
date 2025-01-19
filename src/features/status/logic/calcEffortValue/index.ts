@@ -1,13 +1,13 @@
+import type { CalcEffortValueParams } from "../types";
+
 export function calcEffortValue({
-  actual, level, baseStat, individual, nature,
-}: {
-  actual: number;
-  level: number;
-  baseStat: number;
-  individual: number;
-  nature: number;
-}): number {
-  const calculationResult = ((actual / nature - 5) * 100 / level - (baseStat * 2 + individual)) * 4;
+  baseStat,
+  level,
+  actualValue,
+  individualValue,
+  natureValue,
+}: CalcEffortValueParams): number {
+  const calculationResult = ((actualValue / natureValue - 5) * 100 / level - (baseStat * 2 + individualValue)) * 4;
 
   if (calculationResult < 0) {
     return 0;
