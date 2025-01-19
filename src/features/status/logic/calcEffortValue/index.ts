@@ -1,4 +1,4 @@
-import type { NatureValue } from "@/types";
+import type { CalcEffortValueParams } from "../types";
 
 export function calcEffortValue({
   baseStat,
@@ -6,13 +6,7 @@ export function calcEffortValue({
   actualValue,
   individualValue,
   natureValue,
-}: {
-  baseStat: number;
-  level: number;
-  actualValue: number;
-  individualValue: number;
-  natureValue: NatureValue;
-}): number {
+}: CalcEffortValueParams): number {
   const calculationResult = ((actualValue / natureValue - 5) * 100 / level - (baseStat * 2 + individualValue)) * 4;
 
   if (calculationResult < 0) {

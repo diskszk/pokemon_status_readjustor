@@ -1,35 +1,46 @@
-import { useAtom, useAtomValue } from "jotai";
-import { useCallback } from "react";
+import { useAtom } from "jotai";
+import { useCallback, useContext } from "react";
 
-import type { PokemonStatus } from "@/types";
+import { effortValuesAtom } from "@/atoms";
+import { EffortValueContext } from "@/contexts";
+import type { StatusSpecies, StatusType } from "@/types";
 
-import type { PrimitiveAtom } from "jotai";
+export function useEffortValues() {
+  const store = useContext(EffortValueContext);
 
-export function useEffortValue(effortValueAtom: PrimitiveAtom<PokemonStatus[]>): {
-  allEffortValue: PokemonStatus[];
-  totalEffortValue: number;
-  updateEffortValue: (newValue: PokemonStatus) => void;
-} {
-  const allEffortValue = useAtomValue(effortValueAtom);
+  const [effortValues, setEffortValue] = useAtom(effortValuesAtom, { store });
 
-  const totalEffortValue = allEffortValue.reduce((prev, current) => prev + current.value, 0);
+  const getTotalEffortValue = useCallback(({ type }: { type: StatusType }) => {
+    let totalEffortValue = 0;
+    for (const [_, value] of Object.entries(effortValues[type])) {
+      totalEffortValue += value;
+    }
+    return totalEffortValue;
+  }, [effortValues]);
 
-  const [, setEffortValue] = useAtom(effortValueAtom);
+  const updateEffortValue = useCallback(({
+    type,
+    statusSpecies,
+    value,
+  }: {
+    type: StatusType;
+    statusSpecies: StatusSpecies;
+    value: number;
+  }) => {
+    const newValue = {
+      ...effortValues[type],
+      [statusSpecies]: value,
+    };
 
-  const updateEffortValue = useCallback((newValue: PokemonStatus) => {
-    setEffortValue((prev) => {
-      return prev.map((effortValue) => {
-        if (effortValue.name === newValue.name) {
-          return { name: effortValue.name, value: newValue.value };
-        }
-        return effortValue;
-      });
+    setEffortValue({
+      ...effortValues,
+      [type]: newValue,
     });
-  }, [setEffortValue]);
+  }, [effortValues, setEffortValue]);
 
   return {
-    allEffortValue,
-    totalEffortValue,
+    getTotalEffortValue,
     updateEffortValue,
+    effortValues,
   };
 }

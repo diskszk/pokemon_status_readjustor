@@ -108,6 +108,15 @@ export default [
         },
       ],
       "unused-imports/no-unused-imports": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+        },
+      ],
       "@stylistic/jsx/jsx-one-expression-per-line": [
         "error",
         { allow: "single-child" },

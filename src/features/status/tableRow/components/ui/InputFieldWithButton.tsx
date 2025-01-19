@@ -9,9 +9,7 @@ import { INPUT_GROUP_WIDTH } from "@/features/status/tableRow/components/styleCo
 
 import { InputField } from "./InputField";
 
-import type {
-  ButtonProps,
-  NumberInputProps } from "@chakra-ui/react";
+import type { ButtonProps, NumberInputProps } from "@chakra-ui/react";
 
 export function InputFieldWithButton({ inputProps, maxButtonProps, minimumButtonProps }: { inputProps: NumberInputProps; maxButtonProps: ButtonProps; minimumButtonProps: ButtonProps }) {
   return (

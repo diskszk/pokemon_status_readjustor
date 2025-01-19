@@ -32,7 +32,7 @@ test("努力値の合計が510を超えた場合、赤色で表示する", async
   expect(result).toHaveStyle({ color: "red" });
 });
 
-test.skip("こうげき種族値が100の場合、レベルを100にすると実数値は236になる", async () => {
+test("こうげき種族値が130の場合、レベルを100にすると実数値は296になる", async () => {
   const user = userEvent.setup();
   setup();
 
@@ -40,5 +40,5 @@ test.skip("こうげき種族値が100の場合、レベルを100にすると実
   await user.clear(levelInput);
   await user.type(levelInput, "100");
 
-  expect(screen.getByRole("spinbutton", { name: "currentテーブルのこうげき実数値" })).toHaveValue("236");
+  expect(screen.getByRole("spinbutton", { name: "currentテーブルのこうげき実数値" })).toHaveValue("296");
 });

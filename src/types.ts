@@ -22,10 +22,4 @@ export type StatusType = typeof CURRENT | typeof ADJUSTED;
 
 export type NatureValue = 1.1 | 1 | 0.9;
 
-export type Controller = {
-  level: number;
-  actualValue: number;
-  effortValue: number;
-  individualValue: number;
-  natureValue: NatureValue;
-};
+export type EffortValue = Record<StatusSpecies, number>;

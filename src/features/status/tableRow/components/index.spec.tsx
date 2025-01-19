@@ -8,16 +8,16 @@ import { describe, expect, test } from "vitest";
 import { TestWrapper } from "@/test-utils";
 import type { StatusSpecies } from "@/types";
 
-import { StatusTableBody } from "./StatusTableBody";
-
 import type { STATUS_SPECIES_JA } from "../../logic/term";
+
+import { TableRow } from ".";
 
 const setup = ({ speciesName = "attack", speciesNameJA = "こうげき" }: Partial<{ speciesName: StatusSpecies; speciesNameJA: typeof STATUS_SPECIES_JA[number] }>) => {
   render(
     <TestWrapper>
       <Table>
         <Tbody>
-          <StatusTableBody
+          <TableRow
             baseStat={100}
             level={50}
             speciesName={speciesName}
@@ -40,8 +40,7 @@ const setup = ({ speciesName = "attack", speciesNameJA = "こうげき" }: Parti
 };
 
 describe("実数値を変動させると努力値が変化する", () => {
-  // Issue #92
-  test.skip("実数値の入力欄に121と入力すると努力値の値が4増加する", async () => {
+  test("実数値の入力欄に121と入力すると努力値の値が4増加する", async () => {
     const user = userEvent.setup();
     const { actualValueInput, effortValueInput } = setup({});
     expect(effortValueInput).toHaveValue("0");
