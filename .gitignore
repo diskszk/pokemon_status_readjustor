@@ -32,3 +32,9 @@ cosmos-export
 
 # msw
 public/mockServiceWorker.js
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
