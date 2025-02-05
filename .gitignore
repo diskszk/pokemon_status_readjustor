@@ -27,6 +27,7 @@ dist-ssr
 
 *storybook.log
 ladle-static
+cosmos-export
 *.tsbuildinfo
 
 # msw
