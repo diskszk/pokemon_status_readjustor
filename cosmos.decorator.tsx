@@ -1,16 +1,15 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 
-import type { GlobalProvider } from "@ladle/react";
+import type { PropsWithChildren } from "react";
 
-export const Provider: GlobalProvider = ({ children }) => (
-  <div>
+export default function ({ children }: PropsWithChildren) {
+  return (
     <ChakraProvider
       resetCSS={true}
       toastOptions={{ defaultOptions: { position: "bottom" } }}
     >
       {children}
     </ChakraProvider>
-  </div>
-
-);
+  );
+}
