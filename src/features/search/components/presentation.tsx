@@ -1,32 +1,39 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Flex, FormControl, VStack, InputGroup, Input, InputRightElement, Spinner, FormHelperText } from "@chakra-ui/react";
-import { type FormEventHandler } from "react";
-
-import type { PokemonNameChart } from "@/types";
+import { type FormEventHandler, type RefObject, type ReactNode } from "react";
 
 import { inputCss } from "./css";
 
 type Props = {
   formDisabled: boolean;
-  suggested: PokemonNameChart[];
+  inputRef: RefObject<HTMLInputElement | null>;
   handleSubmit: FormEventHandler<HTMLFormElement>;
   handleChangeSearchForm: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+  datalist: ReactNode;
 };
 
 export function Presentation({
   formDisabled,
-  suggested,
+  inputRef,
+  datalist,
   handleSubmit,
   handleChangeSearchForm }: Props,
 ) {
   return (
-    <Flex>
-      <form onSubmit={handleSubmit}>
+    <Flex
+      direction="column"
+      height="40px"
+      position="relative"
+    >
+      <form
+        onSubmit={handleSubmit}
+      >
         <FormControl>
           <Flex>
             <VStack>
               <InputGroup>
                 <Input
+                  aria-label="pokemon-search"
                   autoComplete="off"
                   borderColor="blue.200"
                   css={inputCss}
@@ -34,6 +41,7 @@ export function Presentation({
                   name="pokemon-name"
                   onChange={handleChangeSearchForm}
                   placeholder="(例) ガブリアス"
+                  ref={inputRef}
                   type="search"
                 />
                 <InputRightElement pointerEvents="none">
@@ -56,18 +64,11 @@ export function Presentation({
               </InputGroup>
               <FormHelperText>ポケモンの名前を入力してください。</FormHelperText>
             </VStack>
-            <datalist id="suggested-list">
-              {suggested.map((p, key) => (
-                <option
-                  key={key}
-                  tabIndex={-1}
-                  value={p.ja}
-                />
-              ))}
-            </datalist>
+
           </Flex>
         </FormControl>
       </form>
+      {datalist}
     </Flex>
   );
 };

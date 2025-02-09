@@ -1,15 +1,13 @@
 import { useSetAtom } from "jotai";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
 import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/hooks";
-import type { PokemonNameChart } from "@/types";
 
 import { Presentation } from "./presentation";
-import { usePokemonIdQuery } from "../hooks";
-import { getPokemons } from "../logic";
-import { suggestPokemonName } from "../logic/suggestPokemonName";
+import { Datalist } from "../datalist";
+import { useInputValue, usePokemonIdQuery } from "../hooks";
 
 import type { FormEvent } from "react";
 
@@ -17,15 +15,26 @@ const inputValue$ = new BehaviorSubject("");
 const DEBOUNCE_TIME = 500;
 
 export function Container() {
-  const pokemons = useMemo(() => getPokemons(), []);
   const { showErrorToast } = useErrorToast();
-  const [suggested, setSuggested] = useState<PokemonNameChart[]>([]);
 
   const [formDisabled, setFormDisabled] = useState(false);
 
   const { queryPokemonId } = usePokemonIdQuery();
   const setPokemonSpeciesId = useSetAtom(pokemonSpeciesIdAtom);
   const setPokemonIndividualId = useSetAtom(pokemonIndividualIdAtom);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { setInputValue } = useInputValue();
+
+  const updateFormValue = useCallback((inputValue: string) => {
+    if (!inputRef.current) {
+      return;
+    }
+
+    inputRef.current.value = inputValue;
+    inputRef.current.focus();
+    setInputValue(inputValue);
+  }, [setInputValue]);
 
   const handleChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormDisabled(true);
@@ -61,22 +70,21 @@ export function Container() {
 
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
-      const suggestResult = suggestPokemonName(inputValue, pokemons);
-
-      setSuggested(suggestResult);
+      setInputValue(inputValue);
 
       setFormDisabled(false);
     });
 
     return () => subscription.unsubscribe();
-  }, [pokemons]);
+  }, [setInputValue]);
 
   return (
     <Presentation
+      datalist={<Datalist updateFormValue={updateFormValue} />}
       formDisabled={formDisabled}
       handleChangeSearchForm={handleChange}
       handleSubmit={onSubmitSearchForm}
-      suggested={suggested}
+      inputRef={inputRef}
     />
   );
 }

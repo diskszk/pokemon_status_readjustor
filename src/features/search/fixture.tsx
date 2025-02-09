@@ -1,14 +1,17 @@
+import { useRef } from "react";
+
 import { Presentation } from "./components/presentation";
 
-import type { ComponentProps } from "react";
+export default () => {
+  const inputRef = useRef(null);
 
-type SearchFormProps = ComponentProps<typeof Presentation>;
-
-const props: SearchFormProps = {
-  formDisabled: false,
-  suggested: [],
-  handleSubmit: () => void 0,
-  handleChangeSearchForm: async () => void 0,
+  return (
+    <Presentation
+      datalist={null}
+      formDisabled={false}
+      handleChangeSearchForm={async () => void 0}
+      handleSubmit={() => void 0}
+      inputRef={inputRef}
+    />
+  );
 };
-
-export default () => <Presentation {...props} />;
