@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/vitest";
-import { render, screen, waitForElementToBeRemoved, within } from "@testing-library/react";
+import { cleanup, render, screen, waitForElementToBeRemoved, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { expect, test } from "vitest";
+import { afterEach, expect, test } from "vitest";
 
 import { TestWrapper } from "@/test-utils";
 
@@ -35,13 +35,15 @@ const action = async ({
   await waitForElementToBeRemoved(screen.queryByText("Loading..."));
 };
 
+afterEach(() => cleanup());
+
 test("searchフォームに`ふしぎだね`と入力すると、候補一覧に`フシギダネ`を表示する", async () => {
   const user = userEvent.setup();
   const { searchForm } = setup();
 
   await action({ user, searchForm, inputValue: "ふしぎだね" });
 
-  const list = await screen.findByRole("list", { name: "suggested-pokemon-list" });
+  const list = await screen.findByRole("tablist", { name: "suggested-pokemon-list" });
   expect(within(list).getByText("フシギダネ")).toBeInTheDocument();
 });
 
@@ -51,8 +53,8 @@ test("searchフォームに`やど`と入力すると、候補一覧に`ヤド�
 
   await action({ user, searchForm, inputValue: "やど" });
 
-  const list = await screen.findByRole("list", { name: "suggested-pokemon-list" });
-  const listItem = within(list).getAllByRole("listitem");
+  const list = await screen.findByRole("tablist", { name: "suggested-pokemon-list" });
+  const listItem = within(list).getAllByRole("tab");
   const listTexts = listItem.map((item) => item.textContent);
 
   expect(listTexts).toEqual(expect.arrayContaining(["ヤドン", "ヤドラン", "ヤドキング"]));
@@ -64,8 +66,8 @@ test("searchフォームに`どん`と入力すると、候補一覧に`リザ�
 
   await action({ user, searchForm, inputValue: "どん" });
 
-  const list = await screen.findByRole("list", { name: "suggested-pokemon-list" });
-  const listItem = within(list).getAllByRole("listitem");
+  const list = await screen.findByRole("tablist", { name: "suggested-pokemon-list" });
+  const listItem = within(list).getAllByRole("tab");
   const listText = listItem.map((item) => item.textContent);
 
   expect(listText).toEqual(expect.arrayContaining(["リザードン", "ヤドン"]));

@@ -2,7 +2,9 @@ import { Presentation } from "./presentation";
 
 export default () => (
   <Presentation
-    suggestedPokemonList={["ヒトカゲ", "フシギダネ", "ゼニガメ"]}
-    updateFormValue={() => void 0}
+    suggestedPokemonList={["フシギダネ", "ヒトカゲ", "ゼニガメ"]}
+    updateFormValue={(value: string) => {
+      console.log(value);
+    }}
   />
 );
