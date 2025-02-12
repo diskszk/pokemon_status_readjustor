@@ -30,10 +30,7 @@ export function Presentation({
   totalEffortValue,
 }: Props) {
   return (
-    <Card
-      borderRadius="lg"
-      position="static"
-    >
+    <Card borderRadius="lg">
       <HeadLine
         label={label}
         level={level}

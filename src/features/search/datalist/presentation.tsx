@@ -61,6 +61,7 @@ export function Presentation({
       role="tablist"
       top="40px"
       width="100%"
+      zIndex="1"
     >
       {suggestedPokemonList.map((value, index) => (
         <ListItem
@@ -73,6 +74,8 @@ export function Presentation({
           <Button
             _focus={{ bgColor: "blue.400" }}
             color={index === focusedIndex ? "white" : "black"}
+            fontWeight="normal"
+            justifyContent="flex-start"
             onClick={() => updateFormValue(value)}
             ref={(el) => focusOnButton(el, index)}
             width="100%"
