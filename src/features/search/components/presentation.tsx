@@ -64,7 +64,6 @@ export function Presentation({
               </InputGroup>
               <FormHelperText>ポケモンの名前を入力してください。</FormHelperText>
             </VStack>
-
           </Flex>
         </FormControl>
       </form>
