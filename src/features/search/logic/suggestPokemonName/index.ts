@@ -8,7 +8,7 @@ export function suggestPokemonName(input: string, pokemonNameChart: PokemonNameC
   }
   const inputKatakana = hiraganaToKatakana(input);
   return pokemonNameChart.filter((val) => {
-    if (val.ja.startsWith(inputKatakana)) {
+    if (val.ja.includes(inputKatakana)) {
       return val;
     }
   });
