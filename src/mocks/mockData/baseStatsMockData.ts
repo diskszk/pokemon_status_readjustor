@@ -41,28 +41,6 @@ export const baseStatsMockData = [
     ],
   },
   {
-    id: 10033,
-    baseStats: [
-      { value: 80, name: HP },
-      { value: 100, name: ATK },
-      { value: 123, name: DEF },
-      { value: 122, name: SP_ATK },
-      { value: 120, name: SP_DEF },
-      { value: 80, name: SPD },
-    ],
-  },
-  {
-    id: 10195,
-    baseStats: [
-      { value: 80, name: HP },
-      { value: 82, name: ATK },
-      { value: 83, name: DEF },
-      { value: 100, name: SP_ATK },
-      { value: 100, name: SP_DEF },
-      { value: 80, name: SPD },
-    ],
-  },
-  {
     id: 6,
     baseStats: [
       { value: 78, name: HP },
@@ -71,50 +49,6 @@ export const baseStatsMockData = [
       { value: 109, name: SP_ATK },
       { value: 85, name: SP_DEF },
       { value: 100, name: SPD },
-    ],
-  },
-  {
-    id: 10196,
-    baseStats: [
-      { value: 78, name: HP },
-      { value: 84, name: ATK },
-      { value: 78, name: DEF },
-      { value: 109, name: SP_ATK },
-      { value: 85, name: SP_DEF },
-      { value: 100, name: SPD },
-    ],
-  },
-  {
-    id: 10034,
-    baseStats: [
-      { value: 78, name: HP },
-      { value: 130, name: ATK },
-      { value: 111, name: DEF },
-      { value: 130, name: SP_ATK },
-      { value: 85, name: SP_DEF },
-      { value: 100, name: SPD },
-    ],
-  },
-  {
-    id: 10035,
-    baseStats: [
-      { value: 78, name: HP },
-      { value: 104, name: ATK },
-      { value: 78, name: DEF },
-      { value: 159, name: SP_ATK },
-      { value: 115, name: SP_DEF },
-      { value: 100, name: SPD },
-    ],
-  },
-  {
-    id: 10195,
-    baseStats: [
-      { value: 80, name: HP },
-      { value: 82, name: ATK },
-      { value: 83, name: DEF },
-      { value: 100, name: SP_ATK },
-      { value: 100, name: SP_DEF },
-      { value: 80, name: SPD },
     ],
   },
   {
@@ -137,6 +71,39 @@ export const baseStatsMockData = [
       { value: 100, name: SP_ATK },
       { value: 100, name: SP_DEF },
       { value: 100, name: SPD },
+    ],
+  },
+  {
+    id: 1024,
+    baseStats: [
+      { value: 90, name: HP },
+      { value: 65, name: ATK },
+      { value: 85, name: DEF },
+      { value: 65, name: SP_ATK },
+      { value: 85, name: SP_DEF },
+      { value: 60, name: SPD },
+    ],
+  },
+  {
+    id: 10276,
+    baseStats: [
+      { value: 95, name: HP },
+      { value: 95, name: ATK },
+      { value: 110, name: DEF },
+      { value: 105, name: SP_ATK },
+      { value: 110, name: SP_DEF },
+      { value: 85, name: SPD },
+    ],
+  },
+  {
+    id: 10277,
+    baseStats: [
+      { value: 160, name: HP },
+      { value: 105, name: ATK },
+      { value: 110, name: DEF },
+      { value: 130, name: SP_ATK },
+      { value: 110, name: SP_DEF },
+      { value: 85, name: SPD },
     ],
   },
 

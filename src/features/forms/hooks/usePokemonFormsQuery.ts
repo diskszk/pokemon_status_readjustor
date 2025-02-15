@@ -6,18 +6,17 @@ import type { PokemonForm } from "@/types";
 
 import type { CombinedError } from "urql";
 
-export function usePokemonFormsQuery(id: QueryPokemonFormsQueryVariables): {
+export function usePokemonFormsQuery(param: QueryPokemonFormsQueryVariables): {
   pokemonForms: PokemonForm[] | undefined;
   originalName: string | undefined;
   error: CombinedError | undefined;
 } {
-  const [result] = useQuery<QueryPokemonFormsQuery>({
+  const [{ data, error }] = useQuery<QueryPokemonFormsQuery>({
     query: QueryPokemonForms,
-    variables: { id },
-    pause: !id,
+    variables: { id: param.id },
+    pause: !param.id,
   });
 
-  const { data, error } = result;
   if (error || !data) {
     return {
       pokemonForms: undefined,

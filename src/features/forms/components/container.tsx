@@ -58,6 +58,5 @@ export function Container() {
       handleClickPokemonImage={handleClickPokemonImage}
       pokemonForms={pokemonFormsView}
     />
-
   );
 }
