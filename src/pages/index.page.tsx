@@ -2,7 +2,7 @@ import { Box, Center, HStack, Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 import { Differences } from "@/features/differences/components";
-import { FormImages } from "@/features/forms/components";
+import { Forms } from "@/features/forms";
 import { SearchForm } from "@/features/search/components";
 import { StatusTableList } from "@/features/status/components";
 
@@ -12,7 +12,7 @@ export function Home() {
       <HStack>
         <SearchForm />
         <Suspense fallback={<p>loading...forms</p>}>
-          <FormImages />
+          <Forms />
         </Suspense>
       </HStack>
       <Center width="100vw">

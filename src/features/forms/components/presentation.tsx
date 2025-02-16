@@ -1,34 +1,28 @@
-import { Box, HStack, Image } from "@chakra-ui/react";
-
 import type { PokemonForm } from "@/types";
+
+import type { ChangeEventHandler } from "react";
 
 type Props = {
   pokemonForms: PokemonForm[];
-  handleClickPokemonImage: (targetId: number) => void;
-
+  handleChangePokemonForm: ChangeEventHandler<HTMLSelectElement>;
+  speciesId: number;
 };
 
-export function Presentation({ pokemonForms, handleClickPokemonImage }: Props) {
+export function Presentation({ pokemonForms, handleChangePokemonForm, speciesId }: Props) {
   return (
-    <HStack
-      alignItems="flex-end"
-      height="120px"
+    <select
+      aria-label="異なるすがた"
+      onChange={handleChangePokemonForm}
     >
-      {pokemonForms.map((form, index) => (
-        <Box
-          as="button"
-          cursor={index === 0 ? "default" : "pointer"}
-          disabled={index === 0}
-          key={index}
-          onClick={() => handleClickPokemonImage(form.id)}
+      <option value={speciesId}>通常のすがた</option>
+      {pokemonForms.map((form) => (
+        <option
+          key={form.id}
+          value={form.id}
         >
-          <Image
-            alt={`${form.name}の画像`}
-            boxSize={index === 0 ? "120px" : "90px"}
-            src={form.imageSrc}
-          />
-        </Box>
+          {form.name}
+        </option>
       ))}
-    </HStack>
+    </select>
   );
 }
