@@ -16,12 +16,15 @@ const formsQueryHandler = graphql.query<QueryPokemonFormsQuery, QueryPokemonForm
     return graphqlError(QUERY_NAME, "NOT_FOUND");
   }
 
-  const pokemons = found.forms.map((form) => ({
-    name: form.name,
-    id: form.id,
-    pokemon_v2_pokemonsprites: [
+  const pokemons = found.forms.pokemonForms.map((p) => ({
+    id: p.id,
+    pokemon_v2_pokemonforms: [
       {
-        sprites: form.sprites,
+        pokemon_v2_pokemonformnames: [
+          {
+            name: p.name,
+          },
+        ],
       },
     ],
   }));
@@ -31,7 +34,6 @@ const formsQueryHandler = graphql.query<QueryPokemonFormsQuery, QueryPokemonForm
       data: {
         pokemon_v2_pokemonspecies: [
           {
-            id: found.id,
             pokemon_v2_pokemons: pokemons,
           },
         ],

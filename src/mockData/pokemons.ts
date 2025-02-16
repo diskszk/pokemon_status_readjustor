@@ -37,6 +37,9 @@ export const mockPokemons = [
     en: "slowking",
     ja: "ヤドキング",
   },
+  { en: "terapagos",
+    ja: "テラパゴス",
+  },
 ] satisfies PokemonNameChart[];
 
  type Pokemon = {
@@ -56,8 +59,7 @@ export const garchomp = {
     { value: 102, name: "speed" },
   ],
   forms: [{
-    name: "garchomp",
-    imageSrc: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png",
     id: 445,
+    name: "garchomp",
   }],
 } satisfies Pokemon;

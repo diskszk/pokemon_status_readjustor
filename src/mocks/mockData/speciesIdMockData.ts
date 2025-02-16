@@ -5,4 +5,5 @@ export const speciesIdMockData = [
   { id: 6, name: "リザードン" },
   { id: 151, name: "ミュウ" },
   { id: 445, name: "ガブリアス" },
+  { id: 1024, name: "テラパゴス" },
 ] satisfies { id: number; name: string }[];

@@ -1,31 +1,21 @@
 import { useQuery } from "urql";
 
-import type { Pokemon_V2_Pokemon, Query_Root } from "@/infrastructures/gql/graphql";
+import type { QueryPokemonFormsQuery, QueryPokemonFormsQueryVariables } from "@/infrastructures/gql/graphql";
 import { QueryPokemonForms } from "@/infrastructures/queries";
 import type { PokemonForm } from "@/types";
 
 import type { CombinedError } from "urql";
 
-type Pokemon = Pick<Pokemon_V2_Pokemon, "name" | "id" | "pokemon_v2_pokemonsprites">;
-
-type PokemonSpecies = Pick<Query_Root, "pokemon_v2_pokemonspecies"> & {
-  pokemon_v2_pokemons: Pokemon[];
-};
-type QueryReturnType = {
-  pokemon_v2_pokemonspecies: PokemonSpecies[];
-};
-
-export function usePokemonFormsQuery(id: number): {
+export function usePokemonFormsQuery(variables: QueryPokemonFormsQueryVariables): {
   pokemonForms: PokemonForm[] | undefined;
   error: CombinedError | undefined;
 } {
-  const [result] = useQuery<QueryReturnType>({
+  const [{ data, error }] = useQuery<QueryPokemonFormsQuery>({
     query: QueryPokemonForms,
-    variables: { id },
-    pause: !id,
+    variables: { id: variables.id },
+    pause: !variables.id,
   });
 
-  const { data, error } = result;
   if (error || !data) {
     return {
       pokemonForms: undefined,
@@ -33,15 +23,19 @@ export function usePokemonFormsQuery(id: number): {
     };
   }
 
-  const pokemons = data?.pokemon_v2_pokemonspecies[0].pokemon_v2_pokemons;
+  const pokemon_v2_pokemonspecy = data.pokemon_v2_pokemonspecies[0];
 
-  const pokemonForms = pokemons?.map((pokemon) => (
-    {
-      name: pokemon.name,
-      imageSrc: pokemon.pokemon_v2_pokemonsprites[0].sprites || "",
-      id: pokemon.id,
+  const pokemonForms = pokemon_v2_pokemonspecy.pokemon_v2_pokemons.map((p) => {
+    if (!p.pokemon_v2_pokemonforms[0].pokemon_v2_pokemonformnames.length) {
+      return undefined;
     }
-  ));
+
+    const formName = p.pokemon_v2_pokemonforms[0].pokemon_v2_pokemonformnames[0].name;
+    return {
+      name: formName,
+      id: p.id,
+    };
+  }).filter((v) => v !== undefined);
 
   return {
     pokemonForms,
