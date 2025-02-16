@@ -6,27 +6,24 @@ import type { PokemonForm } from "@/types";
 
 import type { CombinedError } from "urql";
 
-export function usePokemonFormsQuery(param: QueryPokemonFormsQueryVariables): {
+export function usePokemonFormsQuery(variables: QueryPokemonFormsQueryVariables): {
   pokemonForms: PokemonForm[] | undefined;
-  originalName: string | undefined;
   error: CombinedError | undefined;
 } {
   const [{ data, error }] = useQuery<QueryPokemonFormsQuery>({
     query: QueryPokemonForms,
-    variables: { id: param.id },
-    pause: !param.id,
+    variables: { id: variables.id },
+    pause: !variables.id,
   });
 
   if (error || !data) {
     return {
       pokemonForms: undefined,
-      originalName: undefined,
       error,
     };
   }
 
   const pokemon_v2_pokemonspecy = data.pokemon_v2_pokemonspecies[0];
-  const originalName = pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames[0].name;
 
   const pokemonForms = pokemon_v2_pokemonspecy.pokemon_v2_pokemons.map((p) => {
     if (!p.pokemon_v2_pokemonforms[0].pokemon_v2_pokemonformnames.length) {
@@ -42,7 +39,6 @@ export function usePokemonFormsQuery(param: QueryPokemonFormsQueryVariables): {
 
   return {
     pokemonForms,
-    originalName,
     error,
   };
 }

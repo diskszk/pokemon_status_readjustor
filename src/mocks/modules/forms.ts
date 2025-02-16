@@ -34,11 +34,6 @@ const formsQueryHandler = graphql.query<QueryPokemonFormsQuery, QueryPokemonForm
       data: {
         pokemon_v2_pokemonspecies: [
           {
-            pokemon_v2_pokemonspeciesnames: [
-              {
-                name: found.forms.originalName,
-              },
-            ],
             pokemon_v2_pokemons: pokemons,
           },
         ],
