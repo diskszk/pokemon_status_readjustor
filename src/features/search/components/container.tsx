@@ -51,7 +51,7 @@ export function Container() {
       return;
     }
 
-    const { id, error } = await queryPokemonId(name.toString());
+    const { id, error } = await queryPokemonId({ inputName: name.toString() });
 
     if (error) {
       showErrorToast({
