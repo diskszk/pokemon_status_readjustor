@@ -15,7 +15,7 @@ export function StatusTableList() {
 
   const { showErrorToast } = useErrorToast();
 
-  const { baseStatsData, error } = usePokemonBaseStatsQuery(pokemonIndividualId);
+  const { baseStatsData, error } = usePokemonBaseStatsQuery({ id: pokemonIndividualId });
 
   if (error) {
     showErrorToast({
