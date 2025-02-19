@@ -1,4 +1,4 @@
-import type { usePokemonFormsQuery } from "@/features/forms/hooks";
+import type { usePokemonFormsQuery } from "@/api";
 
 type MockData = {
   id: number;

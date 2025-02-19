@@ -10,7 +10,7 @@ import type { CombinedError } from "urql";
    pokemon_v2_pokemon: Pick<Pokemon_V2_Pokemon, "pokemon_v2_pokemonstats">[];
  };
 
-export function usePokemonBaseStats(id: number): {
+export function usePokemonBaseStatsQuery(id: number): {
   baseStatsData: PokemonStatus[] | undefined;
   fetching: boolean;
   error: CombinedError | undefined;
