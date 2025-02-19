@@ -1,11 +1,11 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback } from "react";
 
+import { usePokemonFormsQuery } from "@/api";
 import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/hooks";
 
 import { Presentation } from "./presentation";
-import { usePokemonFormsQuery } from "../hooks";
 import { mergeDuplicates } from "../logic";
 
 import type { ChangeEventHandler } from "react";
