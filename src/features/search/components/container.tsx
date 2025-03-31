@@ -2,12 +2,13 @@ import { useSetAtom } from "jotai";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BehaviorSubject, debounceTime } from "rxjs";
 
+import { usePokemonIdQuery } from "@/api";
 import { pokemonIndividualIdAtom, pokemonSpeciesIdAtom } from "@/atoms";
 import { useErrorToast } from "@/hooks";
 
 import { Presentation } from "./presentation";
 import { Datalist } from "../datalist";
-import { useInputValue, usePokemonIdQuery } from "../hooks";
+import { useInputValue } from "../hooks";
 
 import type { FormEvent } from "react";
 
@@ -50,7 +51,7 @@ export function Container() {
       return;
     }
 
-    const { id, error } = await queryPokemonId(name.toString());
+    const { id, error } = await queryPokemonId({ inputName: name.toString() });
 
     if (error) {
       showErrorToast({
