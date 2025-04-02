@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/search/*": ["src/features/search/*"],
+      "@/status/*": ["src/features/status/*"],
+      "@/forms/*": ["src/features/forms/*"],
+      "@/differences/*": ["src/features/differences/*"],
+    },
+    "types": ["@emotion/react/types/css-prop"]
+  },
+  "include": ["src", ".ladle", "cli/infrastructures/api/pokeApi.ts", "cli/features/names/getAllPokemonName.ts", "cli/infrastructures/queries/queryAllPokemonName.ts"],
+  "exclude": ["src/**/*.stories.tsx", "src/mockData/*.ts"]
+}

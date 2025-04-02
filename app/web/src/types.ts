@@ -1,0 +1,24 @@
+import type { ADJUSTED, CURRENT, STATUS_SPECIES } from "@/constants";
+
+export type StatusSpecies = typeof STATUS_SPECIES[number];
+
+export type PokemonNameChart = {
+  en: string;
+  ja: string;
+};
+
+export type PokemonForm = {
+  name: string;
+  id: number;
+};
+
+export type PokemonStatus = {
+  value: number;
+  name: StatusSpecies;
+};
+
+export type StatusType = typeof CURRENT | typeof ADJUSTED;
+
+export type NatureValue = 1.1 | 1 | 0.9;
+
+export type EffortValue = Record<StatusSpecies, number>;
