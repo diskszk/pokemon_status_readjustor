@@ -1,1 +1,1 @@
-export * from "./queryAllPokemonName.js";
+export * from "./queryAllPokemonName";

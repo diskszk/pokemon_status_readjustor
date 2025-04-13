@@ -1,6 +1,6 @@
 import { type Result, ok, err } from "neverthrow";
 
-import { API_ENDPOINT } from "@/constants.js";
+import { API_ENDPOINT } from "../../constants";
 
 export async function queryPokeAPI<T>(query: string): Promise<Result<T, Error>> {
   const response = await fetch(API_ENDPOINT!, {

@@ -1,1 +1,1 @@
-export * from "./pokeApi.js";
+export * from "./pokeApi";

@@ -1,4 +1,4 @@
-import type { Pokemon_V2_Pokemonspecies } from "@/infrastructures/gql/graphql.js";
+import type { Pokemon_V2_Pokemonspecies } from "./infrastructures/gql/graphql";
 
 export type ReturnAllPokemonNameType = {
   data: {

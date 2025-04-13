@@ -59,6 +59,7 @@ jspm_packages/
 # out directory
 dist
 build
+bin
 
 node_modules
 
