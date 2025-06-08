@@ -12,7 +12,6 @@
     "test:vrt": "playwright test",
     "preview": "vite preview",
     "codegen": "graphql-codegen --config codegen.ts",
-    "gen:pokemon-chart": "tsx --env-file=.env cli/command.ts",
     "cosmos": "cosmos",
     "build:cosmos": "cosmos-export",
     "ci": "run-s lint test check:type build",
