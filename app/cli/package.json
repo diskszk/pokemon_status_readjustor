@@ -1,6 +1,7 @@
 {
-  "name": "cli",
-  "version": "1.0.0",
+  "name": "@pokemon_status_readjustor/cli",
+  "version": "0.1.0",
+  "main": "bin/index.js",
   "scripts": {
     "prebuild": "rimraf bin",
     "build": "tsc",
@@ -22,6 +23,6 @@
     "tsx": "^4.19.1"
   },
   "bin": {
-    "gen:pokemon": "bin/index.js"
+    "gen-pokemon": "bin/index.js"
   }
 }

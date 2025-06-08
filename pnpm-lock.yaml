@@ -102,6 +102,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.13.0
         version: 11.14.0(@emotion/react@11.14.0(@types/react@19.0.10)(react@19.0.0))(@types/react@19.0.10)(react@19.0.0)
+      '@pokemon_status_readjustor/cli':
+        specifier: workspace:^
+        version: link:../cli
       '@tanstack/react-router':
         specifier: ^1.92.3
         version: 1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
