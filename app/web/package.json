@@ -1,7 +1,7 @@
 {
-  "name": "web",
+  "name": "@pokemon_status_readjustor/web",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,8 +17,7 @@
     "build:cosmos": "cosmos-export",
     "ci": "run-s lint test check:type build",
     "msw:init": "npx msw init ./public --no-save",
-    "gen:pokemon": "node ../cli/bin/index.js",
-    "build:cli": "pnpm -F cli build"
+    "gen:pokemon": "gen-pokemon"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.2",
@@ -35,7 +34,8 @@
     "react-helmet-async": "^2.0.5",
     "rxjs": "^7.8.1",
     "urql": "^4.1.0",
-    "vite-tsconfig-paths": "^5.0.1"
+    "vite-tsconfig-paths": "^5.0.1",
+    "@pokemon_status_readjustor/cli": "workspace:^"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
