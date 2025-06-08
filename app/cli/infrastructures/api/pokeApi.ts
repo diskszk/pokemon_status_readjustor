@@ -1,9 +1,9 @@
 import { type Result, ok, err } from "neverthrow";
 
-const apiEndpoint = "https://beta.pokeapi.co/graphql/v1beta";
+import { API_ENDPOINT } from "../../constants";
 
 export async function queryPokeAPI<T>(query: string): Promise<Result<T, Error>> {
-  const response = await fetch(apiEndpoint!, {
+  const response = await fetch(API_ENDPOINT!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

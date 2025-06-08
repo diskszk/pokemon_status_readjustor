@@ -14,7 +14,7 @@ import tseslint from "typescript-eslint";
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  { ignores: ["dist", "**/gql/graphql.ts", "ladle-static", "cosmos-export"] },
+  { ignores: ["**/dist", "**/bin", "app/web/**/gql/graphql.ts", "app/web/ladle-static", "app//web/cosmos-export"] },
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     ...pluginReact.configs.flat.recommended,
@@ -125,6 +125,16 @@ export default [
       "@stylistic/jsx/jsx-indent": ["error", 2],
       "@stylistic/jsx/jsx-indent-props": ["error", 2],
       "@stylistic/multiline-ternary": ["error", "never"],
+    },
+  }, {
+    files: ["app/cli/**/*.ts"],
+    rules: {
+      "no-console": [
+        "error",
+        {
+          allow: ["error"],
+        },
+      ],
     },
   },
 ];

@@ -1,8 +1,8 @@
-import { queryPokeAPI } from "cli/infrastructures/api";
-import { QueryAllPokemonName } from "cli/infrastructures/queries";
+import { queryPokeAPI } from "../../infrastructures/api";
+import { QueryAllPokemonName } from "../../infrastructures/queries/queryAllPokemonName";
 
+import type { Pokemon_V2_Pokemonspecies } from "../../infrastructures/gql/graphql";
 import type { ReturnAllPokemonNameType } from "../../types";
-import type { Pokemon_V2_Pokemonspecies } from "cli/infrastructures/gql/graphql";
 
 export async function getAllPokemonName(): Promise<Pokemon_V2_Pokemonspecies[]> {
   const response = await queryPokeAPI<ReturnAllPokemonNameType>(QueryAllPokemonName);
