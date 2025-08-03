@@ -24,6 +24,7 @@
     "@emotion/is-prop-valid": "^1.3.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@pokemon_status_readjustor/cli": "workspace:^",
     "@tanstack/react-router": "^1.92.3",
     "app-root-path": "^3.1.0",
     "jotai": "^2.10.0",
@@ -33,8 +34,7 @@
     "react-helmet-async": "^2.0.5",
     "rxjs": "^7.8.1",
     "urql": "^4.1.0",
-    "vite-tsconfig-paths": "^5.0.1",
-    "@pokemon_status_readjustor/cli": "workspace:^"
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
