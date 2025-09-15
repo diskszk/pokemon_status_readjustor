@@ -3,19 +3,18 @@ import {
   CardBody,
   VStack,
 } from "@chakra-ui/react";
+import { atom, Provider } from "jotai";
+import { useMemo } from "react";
 
 import type { PokemonStatus, StatusType } from "@/types";
 
-import { HeadLine } from "./partials";
-import { TotalEffortValue } from "./ui";
+import * as styles from "./styles.css";
+import { TotalEffortValue } from "./ui/TotalEffortValue";
 import { StatusTable } from "../table/components";
-
-import type { Dispatch, SetStateAction } from "react";
+import { LevelControl } from "./ui/LevelControl";
 
 type Props = {
   label: string;
-  level: number;
-  setLevel: Dispatch<SetStateAction<number>>;
   baseStats: PokemonStatus[];
   statusType: StatusType;
   totalEffortValue: number;
@@ -23,29 +22,37 @@ type Props = {
 
 export function Presentation({
   label,
-  level,
-  setLevel,
   baseStats,
   statusType,
   totalEffortValue,
 }: Props) {
+  // TODO: Presentationパターン再考する
+  const levelAtom = useMemo(() => atom(50), []);
+
   return (
-    <Card borderRadius="lg">
-      <HeadLine
-        label={label}
-        level={level}
-        setLevel={setLevel}
-      />
-      <CardBody py="8px">
-        <VStack>
-          <StatusTable
-            baseStats={baseStats}
-            level={level}
-            statusType={statusType}
-          />
-        </VStack>
-        <TotalEffortValue totalEffortValue={totalEffortValue} />
-      </CardBody>
-    </Card>
+
+    <Provider>
+      <Card borderRadius="lg">
+        <div
+          className={styles.headlineContainer}
+        >
+          <h2 className={styles.heading}>
+            {label}
+          </h2>
+          <LevelControl levelAtom={levelAtom} />
+        </div>
+        <CardBody py="8px">
+          <VStack>
+            <StatusTable
+              baseStats={baseStats}
+              levelAtom={levelAtom}
+              statusType={statusType}
+            />
+          </VStack>
+          <TotalEffortValue totalEffortValue={totalEffortValue} />
+        </CardBody>
+      </Card>
+    </Provider>
+
   );
 }

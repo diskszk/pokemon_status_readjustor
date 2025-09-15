@@ -21,9 +21,9 @@ function ChakraDecorator({ children }: PropsWithChildren) {
   return (
     <ChakraProvider
       resetCSS={true}
-      toastOptions={{ defaultOptions: { position: "bottom" } }}
+      toastOptions={{ }}
     >
-      <div style={{ display: "flex", justifyContent: "center", margin: "auto", verticalAlign: "bottom" }}>
+      <div style={{ margin: "auto", verticalAlign: "middle", width: 1080 }}>
         {children}
       </div>
 

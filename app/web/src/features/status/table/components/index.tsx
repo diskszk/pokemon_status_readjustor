@@ -1,18 +1,22 @@
 import { TableContainer, Table, Tbody } from "@chakra-ui/react";
-import { Provider } from "jotai";
+import { Provider, useAtomValue } from "jotai";
 
 import type { PokemonStatus, StatusType } from "@/types";
 
 import { TableHead } from "./ui";
 import { TableRow } from "../../tableRow/components";
 
+import type { atom } from "jotai";
+
 type Props = {
-  level: number;
   baseStats: PokemonStatus[];
   statusType: StatusType;
+  levelAtom: ReturnType<typeof atom<number>>;
 };
 
-export function StatusTable({ level, baseStats, statusType }: Props) {
+export function StatusTable({ baseStats, statusType, levelAtom }: Props) {
+  const level = useAtomValue(levelAtom);
+
   return (
     <TableContainer>
       <Table
