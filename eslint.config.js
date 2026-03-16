@@ -14,7 +14,7 @@ import tseslint from "typescript-eslint";
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  { ignores: ["**/dist", "**/bin", "app/web/**/gql/graphql.ts", "app/web/ladle-static", "app//web/cosmos-export"] },
+  { ignores: ["**/dist", "**/bin", "app/web/**/gql/graphql.ts", "app/web/ladle-static", "app/web/cosmos-export"] },
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     ...pluginReact.configs.flat.recommended,
@@ -55,7 +55,7 @@ export default [
       ...stylistic.configs["recommended-flat"].rules,
       ...stylisticPluginJSX.configs["all-flat"].rules,
       ...jsxA11yPlugin.configs.recommended.rules,
-      ...importPlugin.configs.rules,
+
       ...vitest.configs.recommended.rules,
       "@stylistic/indent": ["error", 2],
       "@stylistic/quotes": [
