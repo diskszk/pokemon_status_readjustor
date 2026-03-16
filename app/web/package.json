@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "check:type": "tsc --noEmit",
+    "type:check": "tsc --noEmit",
     "lint": "eslint .",
     "test:unit": "vitest run --exclude ./tests",
     "test:vrt": "playwright test",
@@ -14,7 +14,7 @@
     "codegen": "graphql-codegen --config codegen.ts",
     "cosmos": "cosmos",
     "build:cosmos": "cosmos-export",
-    "ci": "run-s lint test check:type build",
+    "ci": "run-s lint test type:check build",
     "msw:init": "npx msw init ./public --no-save",
     "gen:pokemon": "gen-pokemon"
   },
