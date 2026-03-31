@@ -13,9 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query QueryPokemonBaseStats ($id: Int!) {\n    pokemon_v2_pokemon(where: {id: {_eq: $id}}) {\n      pokemon_v2_pokemonstats {\n        base_stat\n        pokemon_v2_stat {\n          name\n        }\n      }\n    }\n  }\n": types.QueryPokemonBaseStatsDocument,
-    "\n  query QueryPokemonForms ($id: Int!) {\n    pokemon_v2_pokemonspecies(where: {id: {_eq: $id}}) {\n      pokemon_v2_pokemons {\n        id\n        pokemon_v2_pokemonforms {\n          pokemon_v2_pokemonformnames(where: {language_id: {_eq: 1}}) {\n            name\n          }\n        }\n      }\n    }\n  }\n": types.QueryPokemonFormsDocument,
-    "\n  query QueryPokemonId ($inputName: String!) {\n    pokemon_v2_pokemonspeciesname(where: {name: {_eq: $inputName}}) {\n      pokemon_species_id\n    }\n  }\n": types.QueryPokemonIdDocument,
+    "\n  query QueryPokemonBaseStats ($id: Int!) {\n    pokemon(where: {id: {_eq: $id}}) {\n      pokemonstats {\n        base_stat\n        stat {\n          name\n        }\n      }\n    }\n  }\n": types.QueryPokemonBaseStatsDocument,
+    "\n  query QueryPokemonForms ($id: Int!) {\n    pokemonspecies(where: {id: {_eq: $id}}) {\n      pokemons {\n        id\n        pokemonforms {\n          pokemonformnames(where: {language_id: {_eq: 1}}) {\n            name\n          }\n        }\n      }\n    }\n  }\n": types.QueryPokemonFormsDocument,
+    "\n  query QueryPokemonId ($inputName: String!) {\n    pokemonspeciesname(where: {name: {_eq: $inputName}}) {\n      pokemon_species_id\n    }\n  }\n": types.QueryPokemonIdDocument,
 };
 
 /**
@@ -35,15 +35,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query QueryPokemonBaseStats ($id: Int!) {\n    pokemon_v2_pokemon(where: {id: {_eq: $id}}) {\n      pokemon_v2_pokemonstats {\n        base_stat\n        pokemon_v2_stat {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query QueryPokemonBaseStats ($id: Int!) {\n    pokemon_v2_pokemon(where: {id: {_eq: $id}}) {\n      pokemon_v2_pokemonstats {\n        base_stat\n        pokemon_v2_stat {\n          name\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query QueryPokemonBaseStats ($id: Int!) {\n    pokemon(where: {id: {_eq: $id}}) {\n      pokemonstats {\n        base_stat\n        stat {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query QueryPokemonBaseStats ($id: Int!) {\n    pokemon(where: {id: {_eq: $id}}) {\n      pokemonstats {\n        base_stat\n        stat {\n          name\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query QueryPokemonForms ($id: Int!) {\n    pokemon_v2_pokemonspecies(where: {id: {_eq: $id}}) {\n      pokemon_v2_pokemons {\n        id\n        pokemon_v2_pokemonforms {\n          pokemon_v2_pokemonformnames(where: {language_id: {_eq: 1}}) {\n            name\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query QueryPokemonForms ($id: Int!) {\n    pokemon_v2_pokemonspecies(where: {id: {_eq: $id}}) {\n      pokemon_v2_pokemons {\n        id\n        pokemon_v2_pokemonforms {\n          pokemon_v2_pokemonformnames(where: {language_id: {_eq: 1}}) {\n            name\n          }\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query QueryPokemonForms ($id: Int!) {\n    pokemonspecies(where: {id: {_eq: $id}}) {\n      pokemons {\n        id\n        pokemonforms {\n          pokemonformnames(where: {language_id: {_eq: 1}}) {\n            name\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query QueryPokemonForms ($id: Int!) {\n    pokemonspecies(where: {id: {_eq: $id}}) {\n      pokemons {\n        id\n        pokemonforms {\n          pokemonformnames(where: {language_id: {_eq: 1}}) {\n            name\n          }\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query QueryPokemonId ($inputName: String!) {\n    pokemon_v2_pokemonspeciesname(where: {name: {_eq: $inputName}}) {\n      pokemon_species_id\n    }\n  }\n"): (typeof documents)["\n  query QueryPokemonId ($inputName: String!) {\n    pokemon_v2_pokemonspeciesname(where: {name: {_eq: $inputName}}) {\n      pokemon_species_id\n    }\n  }\n"];
+export function graphql(source: "\n  query QueryPokemonId ($inputName: String!) {\n    pokemonspeciesname(where: {name: {_eq: $inputName}}) {\n      pokemon_species_id\n    }\n  }\n"): (typeof documents)["\n  query QueryPokemonId ($inputName: String!) {\n    pokemonspeciesname(where: {name: {_eq: $inputName}}) {\n      pokemon_species_id\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
