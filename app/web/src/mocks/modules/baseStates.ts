@@ -18,15 +18,15 @@ const baseStatsQueryHandler = graphql.query<QueryPokemonBaseStatsQuery, QueryPok
 
   const baseStats = found.baseStats.map((baseStat) => ({
     base_stat: baseStat.value,
-    pokemon_v2_stat: {
+    stat: {
       name: baseStat.name,
     },
   }));
 
   return HttpResponse.json({
     data: {
-      pokemon_v2_pokemon: [{
-        pokemon_v2_pokemonstats: baseStats,
+      pokemon: [{
+        pokemonstats: baseStats,
       }],
     },
     errors: null,

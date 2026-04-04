@@ -23,11 +23,11 @@ export function usePokemonBaseStatsQuery(variables: QueryPokemonBaseStatsQueryVa
     };
   }
 
-  const pokemonStats = data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats;
+  const pokemonStats = data.pokemon[0].pokemonstats;
 
   const baseStatsData = pokemonStats.map((p) => ({
     value: p.base_stat,
-    name: p.pokemon_v2_stat?.name as StatusSpecies,
+    name: p.stat?.name as StatusSpecies,
   }));
 
   return {

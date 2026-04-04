@@ -24,7 +24,7 @@ export function usePokemonIdQuery(): {
       };
     }
 
-    const speciesNames = data.pokemon_v2_pokemonspeciesname[0];
+    const speciesNames = data.pokemonspeciesname[0];
 
     const id = speciesNames.pokemon_species_id;
 

@@ -18,9 +18,9 @@ const formsQueryHandler = graphql.query<QueryPokemonFormsQuery, QueryPokemonForm
 
   const pokemons = found.forms.pokemonForms.map((p) => ({
     id: p.id,
-    pokemon_v2_pokemonforms: [
+    pokemonforms: [
       {
-        pokemon_v2_pokemonformnames: [
+        pokemonformnames: [
           {
             name: p.name,
           },
@@ -32,9 +32,9 @@ const formsQueryHandler = graphql.query<QueryPokemonFormsQuery, QueryPokemonForm
   return HttpResponse.json(
     {
       data: {
-        pokemon_v2_pokemonspecies: [
+        pokemonspecies: [
           {
-            pokemon_v2_pokemons: pokemons,
+            pokemons: pokemons,
           },
         ],
       },
