@@ -1,11 +1,10 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "https://graphql.pokeapi.co/v1beta2",
-  documents: ["src/infrastructures/queries/*.query.ts"],
+  schema: "https://beta.pokeapi.co/graphql/v1beta",
   ignoreNoDocuments: true,
   generates: {
-    "src/infrastructures/gql/": {
+    "infrastructures/gql/": {
       preset: "client",
       plugins: [],
     },

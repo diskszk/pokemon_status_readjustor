@@ -18,7 +18,7 @@ const idQueryHandler = graphql.query<QueryPokemonIdQuery, QueryPokemonIdQueryVar
   return HttpResponse.json(
     {
       data: {
-        pokemon_v2_pokemonspeciesname: [
+        pokemonspeciesname: [
           {
             pokemon_species_id: id,
           },

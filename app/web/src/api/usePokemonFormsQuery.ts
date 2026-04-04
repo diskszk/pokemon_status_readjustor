@@ -23,14 +23,14 @@ export function usePokemonFormsQuery(variables: QueryPokemonFormsQueryVariables)
     };
   }
 
-  const pokemon_v2_pokemonspecy = data.pokemon_v2_pokemonspecies[0];
+  const pokemonspecy = data.pokemonspecies[0];
 
-  const pokemonForms = pokemon_v2_pokemonspecy.pokemon_v2_pokemons.map((p) => {
-    if (!p.pokemon_v2_pokemonforms[0].pokemon_v2_pokemonformnames.length) {
+  const pokemonForms = pokemonspecy.pokemons.map((p) => {
+    if (!p.pokemonforms[0].pokemonformnames.length) {
       return undefined;
     }
 
-    const formName = p.pokemon_v2_pokemonforms[0].pokemon_v2_pokemonformnames[0].name;
+    const formName = p.pokemonforms[0].pokemonformnames[0].name;
     return {
       name: formName,
       id: p.id,

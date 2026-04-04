@@ -22,6 +22,7 @@ export function StatusTableList() {
       description: "データの取得に失敗しました",
     });
   }
+
   return (
     <HStack spacing="32px">
       <Suspense fallback={<Skeleton />}>

@@ -69,6 +69,7 @@ export function Container() {
     setPokemonIndividualId(id);
   }, [queryPokemonId, setPokemonIndividualId, setPokemonSpeciesId, showErrorToast]);
 
+  // debounce処理
   useEffect(() => {
     const subscription = inputValue$.asObservable().pipe(debounceTime(DEBOUNCE_TIME)).subscribe((inputValue) => {
       setInputValue(inputValue);
