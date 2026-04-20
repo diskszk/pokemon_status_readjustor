@@ -9,8 +9,6 @@ type Props = ComponentProps<typeof Status>;
 
 const props: Omit<Props, "baseStats"> = {
   label: "現在のステータス",
-  level: 50,
-  setLevel: () => void 0,
   statusType: "current",
   totalEffortValue: 0,
 };
